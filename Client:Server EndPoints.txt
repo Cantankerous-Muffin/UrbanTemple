@@ -1,0 +1,125 @@
+Client/Server EndPoints
+
+-----------------------------------------------------
+Login
+-----------------------------------------------------
+Client: Post
+  Data Type: JSON Object
+  Data: {
+    *key: String,
+    username: String,
+    password: String,
+  }
+
+Server: Response
+  Data Type: JSON Object
+  Data: Status Code
+  Redirect: Dashboard or Login
+-----------------------------------------------------
+
+-----------------------------------------------------
+SignUp
+-----------------------------------------------------
+Client: Post
+  Data Type: JSON Object
+  Data: {
+    *key: String,
+    username: String,
+    password: String,
+    isStudent: Boolean,
+  }
+
+Server: Response
+  Data Type: JSON Object
+  Data: Status Code
+  Redirect: Dashboard or SignUp
+-----------------------------------------------------
+
+-----------------------------------------------------
+Dashboard
+-----------------------------------------------------
+Client: GET
+  Data Type: JSON Object
+  
+Server: Response
+  Data Type: JSON Object
+  Data: {
+    *key: String,
+    profile: {
+      username: String,
+      //other profile data
+    },
+    classes: {
+      category1: {
+        className: {
+          instructor: String,
+          rank: Number,
+          progress: Number,
+          feedback: Boolean
+        }
+      }
+    }
+      //Example
+    classes:{
+      'Kendo': {
+        'Steps': {
+          instructor: 'Ken',
+          rank: 1,
+          progress: 2,
+          feedback: true
+        },
+        'Strike': {
+          instructor: 'Ken',
+          rank: 1,
+          progress: 1,
+          feedback: false
+        }
+      },
+      'QiGong': {
+        'QiGong Basics Part 1': {
+          instructor: 'Pranav',
+          rank: 1,
+          
+        }
+      }
+    }
+  }
+-----------------------------------------------------
+
+-----------------------------------------------------
+Dashboard ~ Instructor
+-----------------------------------------------------
+Client: GET
+  Data Type: JSON Object
+  
+Server: Response
+  Data Type: JSON Object
+  Data: {
+    profile: {
+      username: String,
+      //Other profile data
+    },
+    classes:[
+      {
+        className: String,
+        
+      }
+    ],
+    activities: [
+      {
+        student: {
+          name: String,
+        }
+      },
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
