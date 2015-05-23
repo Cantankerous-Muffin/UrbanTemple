@@ -49,7 +49,6 @@ db.knex.schema.hasTable('classes').then(function(exists) {
     db.knex.schema.createTable('classes', function (class) {
       class.increments('id').primary();
       class.string('title', 255);
-      class.string('video_URL', 255);
       class.string('instructor_id', 10);
       class.text('description');
       class.string('image',255);
@@ -60,15 +59,33 @@ db.knex.schema.hasTable('classes').then(function(exists) {
   }
 });
 
-db.knex.schema.hasTable('invites').then(function(exists) {
+db.knex.schema.hasTable('studentVideos').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('invites', function (invite) {
-      invite.increments('id').primary();
-      invite.string('user_id', 255);
-      invite.string('event_id', 255);
-      invite.boolean('joined');
-      invite.boolean('declined');
-      invite.timestamps();
+    db.knex.schema.createTable('studentVideos', function (studentVideo) {
+      studentVideo.increments('id').primary();
+      // student_id is a ForeignKey attached to student
+      studentVideo.string('student_id', 255); 
+      // instructor_id is a ForeignKey attached to instructor
+      studentVideo.string('student_id', 255); 
+      // class_id is a ForeignKey attached to class
+      studentVideo.string('class_id', 255);
+      studentVideo.string('videoURL',255);
+      studentVideo.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+db.knex.schema.hasTable('instrVideos').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('instrVideos', function (instrVideo) {
+      instrVideo.increments('id').primary();
+      // class_id is a ForeignKey attached to class
+      instrVideo.string('class_id', 255); 
+      // instructor_id is a ForeignKey attached to instructor
+      instrVideo.string('instructor_id', 255);
+      instrVideo.string('videoURL',255);
+      instrVideo.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
