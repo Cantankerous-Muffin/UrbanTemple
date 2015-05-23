@@ -1,0 +1,41 @@
+<div id='container'>
+  <div layout="row">
+    <div class="center-form">
+      <section class="venmo-button" layout="row" layout-sm="column" layout-align="center center">
+        <md-button ng-show="!hasNotAuthorizedVenmo" ng-disabled="true" class="md-raised md-primary">Venmo Account Authorized</md-button>
+        <md-button ng-show="hasNotAuthorizedVenmo" ng-click="authorize()" class="md-raised md-warn">Authorize Your Venmo Account!</md-button>
+      </section>
+      <form ng-submit="accountUpdate()">
+        <div class="form-group" ng-controller="DemoCtrl" layout="column">
+          <md-content layout-padding>
+             <md-input-container class="md-icon-float" >
+               <label>Username</label>
+               <md-icon md-svg-src="assets/user168.svg" class="username"></md-icon>
+               <input ng-model="username" type="text" disabled=>
+             </md-input-container>
+             <md-input-container class="md-icon-float" >
+               <label>First Name</label>
+               <md-icon md-svg-src="assets/id17.svg" class="firstname"></md-icon>
+               <input ng-model="firstname" type="text" >
+             </md-input-container>
+             <md-input-container class="md-icon-float" >
+               <label>Last Name</label>
+               <md-icon md-svg-src="assets/id17.svg" class="lastname"></md-icon>
+               <input ng-model="lastname" type="text">
+             </md-input-container>
+             <md-input-container md-no-float>
+               <md-icon md-svg-src="assets/call60.svg"></md-icon>
+               <input ng-model="telephone" type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' placeholder="Phone Number">
+             </md-input-container>
+             <md-input-container >
+               <md-icon md-svg-src="assets/email5.svg" class="email"></md-icon>
+               <input ng-model="email" type="email" placeholder="Email (required)" ng-required="true">
+             </md-input-container>
+             <md-button type="submit" class="md-raised md-primary md-hue-1"> Save </md-button>
+           </md-content>
+      </form>
+    </div>
+  </div>
+</div>
+
+
