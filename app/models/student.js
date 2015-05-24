@@ -27,7 +27,8 @@ var Student = db.Model.extend({
   },
   classes: function() {
     return this.belongsToMany('Classes');
-  }
+  },
+  
 });
 
 
