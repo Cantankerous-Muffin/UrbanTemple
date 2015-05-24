@@ -1,14 +1,11 @@
 var db = require('../config');
 
-var StudentVideos = db.Model.extend({
-  tableName: 'studentVideos',
+var InstrVideos = db.Model.extend({
+  tableName: 'instrVideos',
   hasTimestamps: true,
   initialize: function(){
   },
 
-  student: function() {
-    return this.hasOne('Students');
-  },
   instructor: function() {
     return this.hasOne('Instructors');
   },
@@ -18,4 +15,4 @@ var StudentVideos = db.Model.extend({
 });
 
 
-module.exports = db.model('StudentVideos', StudentVideos);
+module.exports = db.model('InstrVideos', InstrVideos);

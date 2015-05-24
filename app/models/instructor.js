@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 
 
-var Instructor = db.Model.extend({
+var Instructors = db.Model.extend({
   tableName: 'instructors',
   hasTimestamps: true,
   initialize: function(){
@@ -33,10 +33,10 @@ var Instructor = db.Model.extend({
   },
   // Jimmy, you gotta debug this:
   student: function(){
-    return this.belongsToMany('Student').through('Classes');
+    return this.belongsToMany('Students').through('Classes');
   }
   
 });
 
 
-module.exports = db.model('Instructor', Instructor);
+module.exports = db.model('Instructors', Instructors);
