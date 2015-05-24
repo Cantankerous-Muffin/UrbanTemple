@@ -46,16 +46,16 @@ db.knex.schema.hasTable('instructors').then(function(exists) {
 
 db.knex.schema.hasTable('classes').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('classes', function (class) {
-      class.increments('id').primary();
-      class.string('title', 255);
+    db.knex.schema.createTable('classes', function (classe) {
+      classe.increments('id').primary();
+      classe.string('title', 255);
       // instructor_id is a ForeignKey attached to instructor
-      class.string('instructor_id', 10);
+      classe.string('instructor_id', 10);
       // student_id is a ForeignKey attached to student
-      class.string('student_id', 10);
-      class.text('description');
-      class.string('image',255);
-      class.timestamps();
+      classe.string('student_id', 10);
+      classe.text('description');
+      classe.string('image',255);
+      classe.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
