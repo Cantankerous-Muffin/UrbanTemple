@@ -1,0 +1,11 @@
+# ignore node_modules
+node_modules
+
+# ignore bower_components
+bower_components
+
+#ignore Procfile
+Procfile
+
+# Local config file for connecting to database
+app/local_config.js
