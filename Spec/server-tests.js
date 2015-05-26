@@ -5,12 +5,31 @@ var Instructors = require('../app/models/instructor.js');
 var Classes = require('../app/models/classes.js');
 var DBQuery = require('../utils/dbQueries.js');
 
-var stu = {
-  username: 'tim',
-  password: 'yim',
-  email: 'yim@gmail.com',
-};
-// DBQuery.newStudent(stu);
+// var stu = {
+//   username: 'tim',
+//   password: 'yim',
+//   email: 'yim@gmail.com',
+// };
+// var clas = {
+//   title: 'Karate',
+//   instructor_id: '1',
+//   description: 'Kicking ass with Ken!',
+// };
+
+// var vid = {
+//   student_id: 1,
+//   instructor_id: 1,
+//   class_id: 2,
+//   videoURL: 'This is another test URL.'
+// };
+// DBQuery.submitVid(vid);
+
+// db.knex('studentVideos')
+// .select('*').then(function(data){
+//   console.log('---------------------------------------');
+//   console.log('StuVids: ',data);
+//   console.log('---------------------------------------');
+// });
 //Find list of students for instructor through class
 // db.knex('classes_students')
 // .insert({

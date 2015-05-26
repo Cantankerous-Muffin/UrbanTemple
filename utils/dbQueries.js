@@ -6,6 +6,7 @@ var db = require('../app/config');
 var Student = require('../app/models/student.js');
 var Instructor = require('../app/models/instructor.js');
 var Class = require('../app/models/classes.js');
+var StudentVid = require('../app/models/studentVideos.js');
 
 
 var DBQuery = {
@@ -90,12 +91,14 @@ var DBQuery = {
             });
           }else{
             //instructor exists with that username
+            console.log('Instructor already used that username.');
             return false;
           }
         });
         //add student user to DB
       }else{
         //account already exists
+        console.log('Student already used that username.');
         return false;
       }
     });
@@ -116,16 +119,53 @@ var DBQuery = {
           title: classInfo.title,
           instructor_id: classInfo.instructor_id,
           description: classInfo.description,
-        }).catch(function(err){
-          if(err){
-            console.log('Error in newClass: ', err);
-          }
-        }).then(function(){
+        }).save()
+        .catch(function(err){
+          console.log('Error in newClass: ', err);
+          return false;
+        })
+        .then(function(){
           console.log('Added new class to DB.');
+          return true;
         });
       }else{
         //class of that title already exists
+        console.log('Class of that title already exist.');
         return false;
+      }
+    });
+  },
+
+  /**
+   * When student submits a video. Only one can exist at a time per student.
+   * If student have submitted video to a class before, will overwrite that URL.
+   * @vidInfo  {[Object]}
+   * @return {[Boolean]} if successful
+   */
+  submitVid: function(vidInfo){
+    //check if a video under the students id already exists
+    new StudentVid({
+      student_id: vidInfo.student_id,
+      class_id: vidInfo.class_id
+    }).fetch().then(function(exists){
+      if(!exists){
+        new StudentVid({
+          student_id: vidInfo.student_id,
+          instructor_id: vidInfo.instructor_id,
+          class_id: vidInfo.class_id,
+          videoURL: vidInfo.videoURL,
+        }).save()
+        .catch(function(err){
+          console.log('Error in submitVid: ', err);
+          return false;
+        })
+        .then(function(){
+          console.log('Saved new student video.');
+          return true;
+        });
+      }else{
+        exists.save( { videoURL: vidInfo.videoURL }, {patch: true} );
+        console.log('Updated previous video URL');
       }
     });
   },
