@@ -7,9 +7,7 @@ var knex =  !process.env.DATABASE_URL ? require('./local_config.js') :
 var db = require('bookshelf')(knex);
 db.plugin('registry');
 
-/**
- * Columns email, firstName, lastName, shippingAddress and phoneNumber are currently not being used.
- */
+
 db.knex.schema.hasTable('students').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('students', function (student) {
@@ -50,7 +48,7 @@ db.knex.schema.hasTable('classes').then(function(exists) {
       // instructor_id is a ForeignKey attached to instructor
       classe.string('instructor_id', 10);
       // student_id is a ForeignKey attached to student
-      classe.string('student_id', 10);
+      //classe.string('student_id', 10);
       classe.text('description');
       classe.string('image',255);
       classe.timestamps();
@@ -87,6 +85,20 @@ db.knex.schema.hasTable('instrVideos').then(function(exists) {
       instrVideo.string('instructor_id', 255);
       instrVideo.string('videoURL',255);
       instrVideo.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
+//Joing Tables
+//Classes to Students
+db.knex.schema.hasTable('classes_students').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('classes_students', function (class_student) {
+      class_student.increments('id').primary();
+      class_student.integer('class_id').references('classes.id');
+      class_student.integer('student_id').references('students.id');
     }).then(function (table) {
       console.log('Created Table', table);
     });

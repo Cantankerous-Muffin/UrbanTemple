@@ -1,23 +1,75 @@
-var expect = require('chai').expect;
+// var expect = require('chai').expect;
 var db = require('../app/config');
-var Students = require('../app/models/student');
-console.log('students',Students);
+var Students = require('../app/models/student.js');
+var Instructors = require('../app/models/instructor.js');
+var Classes = require('../app/models/classes.js');
+var DBQuery = require('../utils/dbQueries.js');
 
+// var stu = {
+//   username: 'tim',
+//   password: 'yim',
+//   email: 'yim@gmail.com',
+// };
+// var clas = {
+//   title: 'Karate',
+//   instructor_id: '1',
+//   description: 'Kicking ass with Ken!',
+// };
 
+// var vid = {
+//   student_id: 1,
+//   instructor_id: 1,
+//   class_id: 2,
+//   videoURL: 'This is another test URL.'
+// };
+// DBQuery.submitVid(vid);
 
-
-// Can run DB queries inside HTTP requests for information in the DB.
-// beforeEach(function() {
-// 	new Students({
-// 		username: 'jim'
-// 	}).fetch().then(function(a){console.log('a')});
+// db.knex('studentVideos')
+// .select('*').then(function(data){
+//   console.log('---------------------------------------');
+//   console.log('StuVids: ',data);
+//   console.log('---------------------------------------');
 // });
-
-// describe("DB tests", function() {
-//   var a;
-
-//   it("put a value in the database and query it", function() {
-//     a = true;
-//     expect(a).to.equal(true);
+//Find list of students for instructor through class
+// db.knex('classes_students')
+// .insert({
+//   class_id: '1',
+//   student_id: '2'
+// }).then(function(data) {
+//     console.log('Query: ', data);
 //   });
+
+// db.knex('students')
+// .join('classes_students', 'students.id', '=', 'classes_students.student_id')
+// .select('*').then(function(data){
+//   console.log('---------------------------------------');
+//   console.log('Students in class: ',data);
+//   console.log('---------------------------------------');
+//});
+// db.knex('students')
+// .select('*').then(function(data){
+//   console.log('---------------------------------------');
+//   console.log('Students: ',data);
+//   console.log('---------------------------------------');
 // });
+// db.knex('classes_students')
+// .select('*').then(function(data){
+//   console.log('---------------------------------------');
+//   console.log('Join: ',data);
+//   console.log('---------------------------------------');
+// });
+// new Students({
+//   username: 'Ben'
+// }).save()
+// .then(function(data){
+//   console.log('Saved!');
+// });
+
+// new Classes({
+//   title: 'Kendo',
+//   instructor_id: '1',
+//   description: 'Kendo with Ken.'
+// }).save().then(function(exist){
+//   console.log(exist);
+// });
+

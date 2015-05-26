@@ -10,7 +10,7 @@ var Classes = db.Model.extend({
     return this.hasMany('StudentVideos', 'class_id');
   },
   student: function() {
-    return this.belongsToMany('Students');
+    return this.belongsToMany('Students', 'classes_students', 'student_id', 'class_id');
   },
   instructor: function() {
     return this.hasOne('Instructors');
