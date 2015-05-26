@@ -10,7 +10,8 @@ var session      = require('express-session');
 // Routes
 var routes       = require('./../routes/index');
 var users        = require('./../routes/users');
-// var User        = require('../app/models/user');
+var Student        = require('../app/models/student');
+var Instructor        = require('../app/models/instructor');
 var auth         = require('./../routes/auth');
 
 // Authentication
@@ -62,7 +63,7 @@ passport.deserializeUser(function(obj, done) {
 // Local Auth
 passport.use('local',new LocalStrategy(
   function(username, password, done) {
-    new User({ username: username })
+    new Student({ username: username })
       .fetch()
       .then(function(user) {
       if (!user) {
@@ -72,11 +73,28 @@ passport.use('local',new LocalStrategy(
         if (x === true){
           return done(null, user);
         } else {
-          return done(null, false, { message: 'Incorrect password.' });
+          // we look for whether user is an instructor instead:
+          new Instructor({ username: username })
+            .fetch()
+            .then(function(user) {
+            if (!user) {
+              return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (user.comparePassword(password,function(x){
+              if (x === true){
+                return done(null, user);
+              } else {
+                return done(null, false, { message: 'Incorrect password.' });
+              }
+            })){
+            }
+          });
+          // return done(null, false, { message: 'Incorrect password.' });
         }
       })){
       }
     });
+
   }));
 
 // error handlers
