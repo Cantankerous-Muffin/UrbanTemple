@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Student  = require('./../app/models/Student');
+var Student  = require('./../app/models/student');
 var Instructor  = require('./../app/models/instructor');
 var passport = require('passport');
 
@@ -14,16 +14,17 @@ function handleAuth(req, res, username, id) {
     req.session.user = username;
     req.session.user_id = id.toString();
     console.log("SESSION!!! " + req.session.user + "ID!!! " + req.session.user_id);
-    res.end();
+    // res.end();
+    res.redirect('/dashboard');
   });
 };
 
 
 
 // Local Auth Sign-in
-router.post('/login', passport.authenticate('local', { failureRedirect: '#/signup' }), function(req, res) {
+router.post('/login', passport.authenticate('local'), function(req, res) {
   var username = req.body.username;
-
+  console.log('gets to login page');
   new User({username: username})
   .fetch()
   .then(function(model) {
