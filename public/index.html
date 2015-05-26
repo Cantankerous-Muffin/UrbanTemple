@@ -14,13 +14,13 @@
   <h1> Reverse Ed-tech </h1> 
     <script src="app/auth/auth.js"></script>
     <script src="app/app.js"></script>
-    <form>
-    Username:<br>
-    <input type="text" name="username">
-    <br>
-    Password:<br>
-    <input type="text" name="password">
-    <button type="submit">Sign In!</button>
+    <form action='/auth/login' method="POST">
+        Username:<br>
+        <input type="text" name="username">
+        <br>
+        Password:<br>
+        <input type="text" name="password">
+        <button type="submit">Sign In!</button>
     </form>
     <form>
     Username:<br>
