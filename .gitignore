@@ -9,3 +9,6 @@ Procfile
 
 # Local config file for connecting to database
 app/local_config.js
+
+# DS_Store
+.DS_Store

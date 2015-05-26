@@ -1,10 +1,9 @@
-var expect = require('chai').expect;
+// var expect = require('chai').expect;
 var db = require('../app/config');
-var Students = require('../app/models/student');
-console.log('students',Students);
-
-
-
+var Students = require('../app/models/student.js');
+var Instructors = require('../app/models/instructor.js');
+var Classes = require('../app/models/classes.js');
+// console.log('students',Students);
 
 // Can run DB queries inside HTTP requests for information in the DB.
 // beforeEach(function() {
