@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-// var User  = require('./../app/models/user');
+var Student  = require('./../app/models/Student');
+var Instructor  = require('./../app/models/instructor');
 var passport = require('passport');
 
 
@@ -20,7 +21,7 @@ function handleAuth(req, res, username, id) {
 
 
 // Local Auth Sign-in
-router.post('/local', passport.authenticate('local', { failureRedirect: '#/signup' }), function(req, res) {
+router.post('/login', passport.authenticate('local', { failureRedirect: '#/signup' }), function(req, res) {
   var username = req.body.username;
 
   new User({username: username})
@@ -31,8 +32,7 @@ router.post('/local', passport.authenticate('local', { failureRedirect: '#/signu
 });
 
 // Local Auth Sign-up
-// TODO: move code to factories during code cleanup
-router.post('/local-signup', function(req, res, next) {
+router.post('/signup', function(req, res, next) {
 
   var username  = req.body.username;
   var password  = req.body.password;
