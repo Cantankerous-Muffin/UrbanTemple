@@ -12,3 +12,8 @@ app/local_config.js
 
 # DS_Store
 .DS_Store
+
+# Ignore vendor files
+public/assets/js/vendor
+
+public/assets/css
