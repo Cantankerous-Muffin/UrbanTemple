@@ -3,11 +3,44 @@
   <head>
   <meta charset="utf-8">
   <title>Virtual Dojo</title>
-  <link href="./assets/css/bootstrap.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
   </head>
 
 <body>
 
+
+  <div id="app-container">
+    <div id="sidenav-region"></div>
+    <div id="main-region" class="container"></div>
+  </div>
+
+
+  <script type="text/template" id="auth-login">
+    <h1>Login</h1>
+    <div class="alert alert-error" style="display:none;">
+    </div>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" id="username" placeholder="Username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn" id="loginButton">Sign in</button>
+            </div>
+        </div>
+    </form>
+  </script>
+  
+<!-- 
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
      <div class="container">
@@ -19,14 +52,42 @@
    <div class="container">
     <p>Here is static content in the web page. You'll notice that it gets
       replaced by our app as soon as we start it.</p>
-   </div>
+   </div> -->
 
-  <script src="./assets/js/vendor/jquery.js"></script>
-  <script src="./assets/js/vendor/json2.js"></script>
-  <script src="./assets/js/vendor/underscore.js"></script>
-  <script src="./assets/js/vendor/backbone.js"></script>
-  <script src="./assets/js/vendor/backbone.marionette.js"></script>
-  
+
+    <!-- vendors -->
+    <script src="./assets/js/vendor/jquery.js"></script>
+    <script src="./assets/js/vendor/jquery-ui-1.10.3.js"></script>
+    <script src="./assets/js/vendor/json2.js"></script>
+    <script src="./assets/js/vendor/underscore.js"></script>
+    <script src="./assets/js/vendor/backbone.js"></script>
+    <script src="./assets/js/vendor/backbone.picky.js"></script>
+    <script src="./assets/js/vendor/backbone.syphon.js"></script>
+    <script src="./assets/js/vendor/backbone.localstorage.js"></script>
+    <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    <script src="./assets/js/vendor/spin.js"></script>
+    <script src="./assets/js/vendor/spin.jquery.js"></script>
+
+    <!-- main app & entities -->
+    <script src="./assets/js/app.js"></script>
+
+    <!-- main app & entities -->
+
+    <!--
+    <script src="./assets/js/apps/config/storage/localstorage.js"></script>
+    <script src="./assets/js/entities/common.js"></script>
+    <script src="./assets/js/entities/header.js"></script>
+    <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/common/views.js"></script>
+    -->
+
+    <!-- Auth -->
+    <script src="./assets/js/apps/Auth/auth_app.js"></script>
+    <script src="./assets/js/apps/Auth/login/login_view.js"></script>
+    <script src="./assets/js/apps/Auth/login/login_controller.js"></script>
+
+    <!-- Video -->
+
   <script type="text/javascript">
     VirtualDojo.start();
   </script>
