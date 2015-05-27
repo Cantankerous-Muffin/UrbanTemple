@@ -19,5 +19,6 @@ npm-debug.log
 # Ignore vendor files
 public/assets/js/vendor
 
+
 public/assets/css
 
