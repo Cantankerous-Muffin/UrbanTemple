@@ -26,7 +26,7 @@ function handleAuth(req, res, username, id) {
 router.post('/login', passport.authenticate('local', { failureRedirect: 'login' }), function(req, res) {
   var username = req.body.username;
   console.log('gets to login page');
-  new User({username: username})
+  new Student({username: username})
   .fetch()
   .then(function(model) {
     handleAuth(req, res, username, model.attributes.id);
@@ -45,22 +45,39 @@ router.get('/login', function(req, res, next) {
 
 // Local Auth Sign-up
 router.post('/signup', function(req, res, next) {
-
+  var typeOf = req.body.typeOf;
   var username  = req.body.username;
   var password  = req.body.password;
-
-  new Student({username:username})
-    .fetch()
-    .then(function(model){
-      if (model) {
-        return next(null);
-      } else {
-        new Student({username:username,password:password},{isNew:true}).save()
-	        .then(function(model){
-	          handleAuth(req, res, username, model.attributes.id);
-	        });
-        }
-    });
+  if (typeOf !== 'Instructor'){
+    // sign up student
+    new Student({username:username})
+      .fetch()
+      .then(function(model){
+        if (model) {
+          return next(null);
+        } else {
+          new Student({username:username,password:password},{isNew:true}).save()
+  	        .then(function(model){
+  	          handleAuth(req, res, username, model.attributes.id);
+  	        });
+          }
+      });
+  }
+  else {
+    // sign up instructor
+      new Instructor({username:username})
+        .fetch()
+        .then(function(model){
+          if (model) {
+            return next(null);
+          } else {
+            new Instructor({username:username,password:password},{isNew:true}).save()
+              .then(function(model){
+                handleAuth(req, res, username, model.attributes.id);
+              });
+            }
+        });
+  }
 });
 
 /**
