@@ -12,3 +12,5 @@ app/local_config.js
 
 # DS_Store
 .DS_Store
+
+npm-debug.log
