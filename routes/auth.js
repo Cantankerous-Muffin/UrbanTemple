@@ -3,6 +3,7 @@ var router = express.Router();
 var Student  = require('./../app/models/student');
 var Instructor  = require('./../app/models/instructor');
 var passport = require('passport');
+var path         = require('path');
 
 
 /**
@@ -22,7 +23,7 @@ function handleAuth(req, res, username, id) {
 
 
 // Local Auth Sign-in
-router.post('/login', passport.authenticate('local'), function(req, res) {
+router.post('/login', passport.authenticate('local', { failureRedirect: 'login' }), function(req, res) {
   var username = req.body.username;
   console.log('gets to login page');
   new User({username: username})
@@ -33,18 +34,28 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 });
 
 // Local Auth Sign-up
+router.get('/signup', function(req, res, next) {
+  res.sendFile(path.join(__dirname,'../public/signup.html'));
+});
+// Local Auth Sign-up
+router.get('/login', function(req, res, next) {
+  res.sendFile(path.join(__dirname,'../public/index.html'));
+});
+
+
+// Local Auth Sign-up
 router.post('/signup', function(req, res, next) {
 
   var username  = req.body.username;
   var password  = req.body.password;
 
-  new User({username:username})
+  new Student({username:username})
     .fetch()
     .then(function(model){
       if (model) {
         return next(null);
       } else {
-        new User({username:username,password:password},{isNew:true}).save()
+        new Student({username:username,password:password},{isNew:true}).save()
 	        .then(function(model){
 	          handleAuth(req, res, username, model.attributes.id);
 	        });
