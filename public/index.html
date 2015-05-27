@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Reverse Ed-Tech</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title>Virtual Dojo</title>
+  <link href="./assets/css/bootstrap.css" rel="stylesheet">
   </head>
-  <body>
-  <h1> Reverse Ed-tech </h1> 
-    <script src="app/auth/auth.js"></script>
-    <script src="app/app.js"></script>
-    <form>
-    Username:<br>
-    <input type="text" name="username">
-    <br>
-    Password:<br>
-    <input type="text" name="password">
-    <button type="submit">Sign In!</button>
-    </form>
-    <form>
-    Username:<br>
-    <input type="text" name="username">
-    <br>
-    Password:<br>
-    <input type="text" name="password">
-    <button type="submit">Sign Up!</button> 
-    </form>
-    </body>
-</html>
+
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+     <div class="container">
+      <span class="brand">Virtual Dojo</span>
+    </div>
+   </div>
+  </div>
+
+   <div class="container">
+    <p>Here is static content in the web page. You'll notice that it gets
+      replaced by our app as soon as we start it.</p>
+   </div>
+
+  <script src="./assets/js/vendor/jquery.js"></script>
+  <script src="./assets/js/vendor/json2.js"></script>
+  <script src="./assets/js/vendor/underscore.js"></script>
+  <script src="./assets/js/vendor/backbone.js"></script>
+  <script src="./assets/js/vendor/backbone.marionette.js"></script>
+  
+  <script type="text/javascript">
+    VirtualDojo.start();
+  </script>
+ 
+ </body>
+ </html>
