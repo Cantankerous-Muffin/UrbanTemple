@@ -46,7 +46,7 @@ db.knex.schema.hasTable('classes').then(function(exists) {
       classe.increments('id').primary();
       classe.string('title', 255);
       // instructor_id is a ForeignKey attached to instructor
-      classe.string('instructor_id', 10);
+      classe.integer('instructor_id');
       // student_id is a ForeignKey attached to student
       //classe.string('student_id', 10);
       classe.text('description');
@@ -63,11 +63,11 @@ db.knex.schema.hasTable('studentVideos').then(function(exists) {
     db.knex.schema.createTable('studentVideos', function (studentVideo) {
       studentVideo.increments('id').primary();
       // student_id is a ForeignKey attached to student
-      studentVideo.string('student_id', 255); 
+      studentVideo.integer('student_id'); 
       // instructor_id is a ForeignKey attached to instructor
-      studentVideo.string('instructor_id', 255); 
+      studentVideo.integer('instructor_id'); 
       // class_id is a ForeignKey attached to class
-      studentVideo.string('class_id', 255);
+      studentVideo.integer('class_id');
       studentVideo.string('videoURL',255);
       studentVideo.timestamps();
     }).then(function (table) {
@@ -80,9 +80,9 @@ db.knex.schema.hasTable('instrVideos').then(function(exists) {
     db.knex.schema.createTable('instrVideos', function (instrVideo) {
       instrVideo.increments('id').primary();
       // class_id is a ForeignKey attached to class
-      instrVideo.string('class_id', 255); 
+      instrVideo.integer('class_id'); 
       // instructor_id is a ForeignKey attached to instructor
-      instrVideo.string('instructor_id', 255);
+      instrVideo.integer('instructor_id');
       instrVideo.string('videoURL',255);
       instrVideo.timestamps();
     }).then(function (table) {
@@ -97,8 +97,8 @@ db.knex.schema.hasTable('classes_students').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('classes_students', function (class_student) {
       class_student.increments('id').primary();
-      class_student.integer('class_id').references('classes.id');
-      class_student.integer('student_id').references('students.id');
+      class_student.integer('class_id');
+      class_student.integer('student_id');
     }).then(function (table) {
       console.log('Created Table', table);
     });
