@@ -10,6 +10,7 @@ var session      = require('express-session');
 // Routes
 var routes       = require('./../routes/index');
 var users        = require('./../routes/users');
+var dashboard    = require('./../routes/dashboard');
 var Student        = require('../app/models/student');
 var Instructor        = require('../app/models/instructor');
 var auth         = require('./../routes/auth');
@@ -40,13 +41,8 @@ app.use(session({
 app.use('/', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
+app.use('/dashboard', dashboard);
 
-// Catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?
@@ -97,6 +93,12 @@ passport.use('local',new LocalStrategy(
 
   }));
 
+// Catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 // error handlers
 
 // development error handler
@@ -119,3 +121,9 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+
+
+
+
