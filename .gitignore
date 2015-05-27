@@ -16,4 +16,8 @@ app/local_config.js
 # Ignore vendor files
 public/assets/js/vendor
 
+public/assets/js/vendor2
+
 public/assets/css
+
+public/assets/css2
