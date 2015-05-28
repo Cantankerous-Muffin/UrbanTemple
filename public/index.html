@@ -1,29 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Reverse Ed-Tech LOGIN</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/styles/style.css" />
-    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title>Virtual Dojo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
   </head>
-  <body>
-  <h1> Reverse Ed-tech LOGIN </h1> 
-    <script src="/app/auth/auth.js"></script>
-    <script src="/app/app.js"></script>
-    <a href="/auth/signup"> SIGN UP </a>
 
-    <form action='/auth/login' method="POST">
-        Username:<br>
-        <input type="text" name="username">
-        <br>
-        Password:<br>
-        <input type="text" name="password">
-        <button type="submit">Sign In!</button>
+<body>
+
+
+  <div id="app-container">
+    <div id="sidenav-region"></div>
+    <div id="main-region" class="container"></div>
+  </div>
+
+
+  <script type="text/template" id="auth-login">
+    <h1>Login</h1>
+    <div class="alert alert-error" style="display:none;">
+    </div>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" id="username" placeholder="Username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn" id="loginButton">Sign in</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn" id="signupButton">New user? Sign up</button>
+            </div>
+        </div>
     </form>
+  </script>
 
-    </body>
-</html>
+    <script type="text/template" id="auth-signup">
+    <h1>Signup</h1>
+      <div class="alert alert-error" style="display:none;">
+      </div>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="username">Username</label>
+        <div class="controls">
+          <input type="text" id="username" placeholder="Username">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <input type="password" id="password" placeholder="Password">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn" id="signupButton">Sign up</button>
+          </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn" id="backButton">Back to Log in</button>
+        </div>
+      </div>
+    </form>
+  </script>
+  
+    <!-- vendors -->
+    <script src="./assets/js/vendor/jquery.js"></script>
+    <script src="./assets/js/vendor/jquery-ui-1.10.3.js"></script>
+    <script src="./assets/js/vendor/json2.js"></script>
+    <script src="./assets/js/vendor/underscore.js"></script>
+    <script src="./assets/js/vendor/backbone.js"></script>
+    <script src="./assets/js/vendor/backbone.picky.js"></script>
+    <script src="./assets/js/vendor/backbone.syphon.js"></script>
+    <script src="./assets/js/vendor/backbone.localstorage.js"></script>
+    <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    <script src="./assets/js/vendor/spin.js"></script>
+    <script src="./assets/js/vendor/spin.jquery.js"></script>
+
+    <!-- main app & entities -->
+    <script src="./assets/js/app.js"></script>
+
+    <!-- main app & entities -->
+
+    <!--
+    <script src="./assets/js/apps/config/storage/localstorage.js"></script>
+    <script src="./assets/js/entities/common.js"></script>
+    <script src="./assets/js/entities/header.js"></script>
+    <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/common/views.js"></script>
+    -->
+
+    <!-- Auth -->
+    <script src="./assets/js/apps/Auth/auth_app.js"></script>
+    <script src="./assets/js/apps/Auth/auth_controller.js"></script>
+    <script src="./assets/js/apps/Auth/login/login_view.js"></script>
+    <script src="./assets/js/apps/Auth/signup/signup_view.js"></script>
+
+    <!-- Video -->
+
+  <script type="text/javascript">
+    VirtualDojo.start();
+  </script>
+ 
+ </body>
+ </html>
