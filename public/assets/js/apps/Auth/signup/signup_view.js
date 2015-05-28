@@ -1,31 +1,26 @@
-VirtualDojo.module("AuthApp.Login", function(Login, VirtualDojo, Backbone, Marionette, $, _){
-  Login.view = Marionette.ItemView.extend({
+VirtualDojo.module("AuthApp.Signup", function(Signup, VirtualDojo, Backbone, Marionette, $, _){
+  Signup.view = Marionette.ItemView.extend({
     
-    template: "#auth-login", 
+    template: "#auth-signup", 
 
     ui: {
       inputUsername: "input#username",
       inputPassword: "input#password",
-      loginButton: "button#loginButton",
       signupButton: "button#signupButton"
     },
 
     events: {
-      "click @ui.loginButton": "login",
       "click @ui.signupButton": "signup"
+      // listen for click on signup 
     },
 
-    login: function(event) {
+    signup: function(event) {
       event.preventDefault();
       var username = this.ui.inputUsername.val();
       var password = this.ui.inputPassword.val();
       var authorized = this.onAuthorized;
       var unauthorized = this.onUnauthorized;
-      this.trigger('authenticate', { username, password, authorized, unauthorized })  
-    },
-    
-    signup: function(event) {
-       VirtualDojo.trigger("authenticate:signup");
+      this.trigger('authenticate:signup', { username, password, authorized, unauthorized })  
     },
 
     onAuthorized: function() {

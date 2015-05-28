@@ -27,14 +27,12 @@ VirtualDojo.on("before:start", function(){
 
 })
 
-
-
 VirtualDojo.on("start", function(){
 
   if(Backbone.history){
     Backbone.history.start(); 
     if(this.getCurrentRoute() === ""){
-  	console.log("history started")
+  		console.log("history started");
       VirtualDojo.trigger("authenticate:login");
     }
   }
