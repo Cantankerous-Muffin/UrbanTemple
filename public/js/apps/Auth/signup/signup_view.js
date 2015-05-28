@@ -23,7 +23,7 @@ define([
 
         backToLogin: function(event) {
           event.preventDefault();
-           VirtualDojo.trigger("authenticate:login");
+           VirtualDojo.trigger("auth:login:show");
         },
 
         signup: function(event) {
