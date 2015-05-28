@@ -17,7 +17,11 @@ app/local_config.js
 npm-debug.log
 
 # Ignore vendor files
-public/assets/js/vendor
+public/js/vendor2
+
+public/js/vendor
 
 
-public/assets/css
+public/css2
+
+public/css
