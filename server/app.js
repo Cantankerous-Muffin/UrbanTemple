@@ -41,6 +41,7 @@ app.use(session({
 app.use('/', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
+// middleware to make sure to block access to internal pages if user is not logged in.
 app.use(function(req,res,next){
   if (req.url === '/auth/login'){
     next();
@@ -122,7 +123,7 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     console.log('Error:',err.message);
     // res.end(err.message);
-    res.redirect('login');
+    res.redirect('/auth/login');
   });
 }
 else {
