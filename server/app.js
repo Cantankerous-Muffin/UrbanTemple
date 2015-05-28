@@ -41,8 +41,21 @@ app.use(session({
 app.use('/', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
+app.use(function(req,res,next){
+  if (req.url === '/auth/login'){
+    next();
+  }
+  else {
+    if (!req.session.user){
+      res.redirect('/auth/login');
+    }
+    else {
+      next();
+    }
+  }
+  
+});
 app.use('/dashboard', dashboard);
-
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?
@@ -105,6 +118,7 @@ passport.use('local',new LocalStrategy(
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+
     res.status(err.status || 500);
     console.log('Error:',err.message);
     // res.end(err.message);
