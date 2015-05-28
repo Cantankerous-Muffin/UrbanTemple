@@ -21,7 +21,7 @@ VirtualDojo.module("AuthApp.Login", function(Login, VirtualDojo, Backbone, Mario
       var password = this.ui.inputPassword.val();
       var authorized = this.onAuthorized;
       var unauthorized = this.onUnauthorized;
-      this.trigger('authenticate', { username, password, authorized, unauthorized })  
+      this.trigger('authenticate:login', { username, password, authorized, unauthorized })  
     },
     
     signup: function(event) {

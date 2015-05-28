@@ -33,6 +33,7 @@ VirtualDojo.on("start", function(){
     Backbone.history.start(); 
     if(this.getCurrentRoute() === ""){
   		console.log("history started");
+      // Backbone.history.navigate("login");
       VirtualDojo.trigger("authenticate:login");
     }
   }

@@ -1,22 +1,18 @@
 VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
-  AuthApp.Controller = Marionette.Controller.extend({
+  AuthApp.Controller = {
     
     renderLoginPage: function(){
-      console.log('renderLoginPage executed in auth_controller.js')
       AuthApp.LoginView = new AuthApp.Login.view();
-      console.log('instantiate new AuthApp.Login.view')
       VirtualDojo.regions.main.show(AuthApp.LoginView);
-      console.log('Show onto main region')
-      this.listenTo(AuthApp.LoginView, 'authenticate', function(data) {
-        console.log(data);
-      console.log('listenTo handler connected')
+      AuthApp.listenTo(AuthApp.LoginView, 'authenticate:login', function(data) {
+        AuthApp.Controller.authenticate(data.username, data.password, data.authorized, data.unauthorized)
       });
     },
 
     renderSignUpPage: function() {
       AuthApp.SignupView = new AuthApp.Signup.view();
       VirtualDojo.regions.main.show(AuthApp.SignupView);
-      // this.listenTo(AuthApp.LoginView, 'authenticate', function(data) {
+      // this.listenTo(AuthApp.SignupView, 'authenticate', function(data) {
       //   console.log(data);
       // });
     },
@@ -24,13 +20,9 @@ VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionett
     initialize: function() {
     },
 
-  // (options) ->
-  //   @region = options.region
-  //   @loginView = options.loginView
-  //     @authenticate data.username, data.password, data.authorized, data.unauthorized
-   
     authenticate: function (username, password, authorized, unauthorized ) {
-      // console.log(username, password, authorized, unauthorized)
+      console.log("happen?");
+      console.log(username, password, authorized, unauthorized);
 
   //   url = '/api/login'
   //   console.log('Loggin in... ')
@@ -49,16 +41,5 @@ VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionett
   //       else
   //         unauthorized()
     }
- 
-  // login: ->
-  //   view = new AuthenticationModule.LoginView()
-  //   @region.show(view)
- 
-  // logout: ->
-  //   $.get '/api/logout', =>
-  //     view = new LogoutView()
-  //     @region.show(view)
-
-    })
-
+  }
 });
