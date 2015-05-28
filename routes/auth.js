@@ -15,15 +15,15 @@ function handleAuth(req, res, username, id) {
     req.session.user = username;
     req.session.user_id = id.toString();
     console.log("SESSION!!! " + req.session.user + "ID!!! " + req.session.user_id);
-    // res.end();
-    res.redirect('/dashboard');
+    res.end();
+    // res.redirect('/dashboard');
   });
 };
 
 
 
 // Local Auth Sign-in
-router.post('/login', passport.authenticate('local', { failureRedirect: 'login' }), function(req, res) {
+router.post('/login', passport.authenticate('local'), function(req, res) {
   var username = req.body.username;
   console.log('gets to login page');
   new Student({username: username})
