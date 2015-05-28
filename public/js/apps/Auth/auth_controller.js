@@ -8,7 +8,7 @@ define([
     VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
       AuthApp.Controller = {
             
-        renderLoginPage: function(options){
+        showLoginPage: function(options){
           // options = {
           //   entryCallback: function()
           // }
@@ -21,7 +21,7 @@ define([
           });
         },
 
-        renderSignUpPage: function() {
+        showSignUpPage: function() {
           var signupView = new SignupView.view();
           VirtualDojo.regions.main.show(signupView);
           AuthApp.listenTo(signupView, 'authenticate:signup', function(data) {

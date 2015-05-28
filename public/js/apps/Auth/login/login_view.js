@@ -33,7 +33,7 @@ define([
           this.trigger('authenticate:login', { 
             username: username, 
             password: password, 
-            authorized: authorized, 
+            // authorized: authorized, 
             unauthorized: unauthorized 
           }); 
         },
@@ -43,11 +43,11 @@ define([
            VirtualDojo.trigger("authenticate:signup");
         },
 
-        onAuthorized: function() {
-          console.log("autentication success!");
-          // route user to /dashboard
-          // window.location.replace('#')
-        },
+        // onAuthorized: function() {
+        //   console.log("autentication success!");
+        //   // route user to /dashboard
+        //   // window.location.replace('#')
+        // },
 
         onUnauthorized: function() {
           console.log("autentication failed");
