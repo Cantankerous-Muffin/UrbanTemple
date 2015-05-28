@@ -6,12 +6,16 @@ VirtualDojo.module("AuthApp.Signup", function(Signup, VirtualDojo, Backbone, Mar
     ui: {
       inputUsername: "input#username",
       inputPassword: "input#password",
-      signupButton: "button#signupButton"
+      backButton: "button#backButton"
     },
 
     events: {
-      "click @ui.signupButton": "signup"
-      // listen for click on signup 
+      "click @ui.backButton": "backToLogin"
+    },
+
+    backToLogin: function(event) {
+      event.preventDefault();
+       VirtualDojo.trigger("authenticate:login");
     },
 
     signup: function(event) {
