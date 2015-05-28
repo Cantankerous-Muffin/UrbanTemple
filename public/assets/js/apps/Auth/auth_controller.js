@@ -1,16 +1,37 @@
 VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
   AuthApp.Controller = Marionette.Controller.extend({
+    
     renderLoginPage: function(){
-      AuthApp.Login.Controller.showLogin();
-    }
+      console.log('renderLoginPage executed in auth_controller.js')
+      AuthApp.LoginView = new AuthApp.Login.view();
+      console.log('instantiate new AuthApp.Login.view')
+      VirtualDojo.regions.main.show(AuthApp.LoginView);
+      console.log('Show onto main region')
+      this.listenTo(AuthApp.LoginView, 'authenticate', function(data) {
+        console.log(data);
+      console.log('listenTo handler connected')
+      });
+    },
 
-  // initialize: (options) ->
+    renderSignUpPage: function() {
+      AuthApp.SignupView = new AuthApp.Signup.view();
+      VirtualDojo.regions.main.show(AuthApp.SignupView);
+      // this.listenTo(AuthApp.LoginView, 'authenticate', function(data) {
+      //   console.log(data);
+      // });
+    },
+
+    initialize: function() {
+    },
+
+  // (options) ->
   //   @region = options.region
   //   @loginView = options.loginView
-  //   @listenTo @loginView, 'authenticate', (data) =>
   //     @authenticate data.username, data.password, data.authorized, data.unauthorized
- 
-  // authenticate: (username, password, authorized, unauthorized ) ->
+   
+    authenticate: function (username, password, authorized, unauthorized ) {
+      // console.log(username, password, authorized, unauthorized)
+
   //   url = '/api/login'
   //   console.log('Loggin in... ')
   //   formValues = {
@@ -27,7 +48,7 @@ VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionett
   //         authorized()
   //       else
   //         unauthorized()
-  //   }
+    }
  
   // login: ->
   //   view = new AuthenticationModule.LoginView()

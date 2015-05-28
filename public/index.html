@@ -37,22 +37,41 @@
                 <button type="submit" class="btn" id="loginButton">Sign in</button>
             </div>
         </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn" id="signupButton">New user? Sign up</button>
+            </div>
+        </div>
+    </form>
+  </script>
+
+    <script type="text/template" id="auth-signup">
+    <h1>Signup</h1>
+    <div class="alert alert-error" style="display:none;">
+    </div>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" id="username" placeholder="Username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn" id="signupButton">Sign up</button>
+            </div>
+        </div>
     </form>
   </script>
   
-<!-- 
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-     <div class="container">
-      <span class="brand">Virtual Dojo</span>
-    </div>
-   </div>
-  </div>
 
-   <div class="container">
-    <p>Here is static content in the web page. You'll notice that it gets
-      replaced by our app as soon as we start it.</p>
-   </div> -->
 
 
     <!-- vendors -->
@@ -85,7 +104,7 @@
     <script src="./assets/js/apps/Auth/auth_app.js"></script>
     <script src="./assets/js/apps/Auth/auth_controller.js"></script>
     <script src="./assets/js/apps/Auth/login/login_view.js"></script>
-    <script src="./assets/js/apps/Auth/login/login_controller.js"></script>
+    <script src="./assets/js/apps/Auth/signup/signup_view.js"></script>
 
     <!-- Video -->
 
