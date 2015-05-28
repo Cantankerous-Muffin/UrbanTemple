@@ -11,13 +11,19 @@ var InsVid = require('../app/models/instrVideos.js');
 
 
 var DBQuery = {
+
+
+  //////////////////
+  //Insert Queries//
+  //////////////////
    /**
    * Register a new student into the DB.
    * Will check if user already exists as Student or Instructor.
    * @username  {[Object]}  Contains info of user
+   * @callback  {[Function]}  Callback function invoked on success if given
    * @return    {[Boolean]} If successful
    */
-  newStudent: function (user) {
+  newStudent: function (user, callback) {
     //Make a DB query 
     //Check if username exists as student
     new Student({
@@ -38,21 +44,37 @@ var DBQuery = {
             }).save()
             .catch(function(err){
               console.log('Error in newStudent: ',err);
-              return false;
+              if(callback){
+                callback(false);
+              }else{
+                return false;
+              }
             })
-            .then(function(){
+            .then(function(data){
               console.log('Saved new student user to DB.');
-              return true;
+              if(callback){
+                callback(true);
+              }else{
+                return true;
+              }
             });
           }else{
             console.log('Instructor already used that username.');
-            return false;
+            if(callback){
+                callback(false);
+            }else{
+              return false;
+            }
           }
         });
         //add student user to DB
       }else{
         console.log('Student already used that username.');
-        return false;
+        if(callback){
+          callback(false);
+        }else{
+          return false;
+        }
       }
     });
   },
@@ -63,7 +85,7 @@ var DBQuery = {
    * @username  {[Object]}  Contains info of user
    * @return    {[Boolean]} If successful
    */
-  newInstructor: function (user){
+  newInstructor: function (user, callback){
     //Make a DB query 
     //Check if username exists as student
     new Student({
@@ -84,23 +106,39 @@ var DBQuery = {
             }).save()
             .catch(function(err){
               console.log('Error in newInstructor: ',err);
-              return false;
+              if(callback){
+                callback(false);
+              }else{
+                return false;
+              }
             })
-            .then(function(){
+            .then(function(data){
               console.log('Saved new Instructor user to DB.');
-              return true;
+              if(callback){
+                callback(true);
+              }else{
+                return true;
+              }
             });
           }else{
             //instructor exists with that username
             console.log('Instructor already used that username.');
-            return false;
+            if(callback){
+              callback(false);
+            }else{
+              return false;
+            }
           }
         });
         //add student user to DB
       }else{
         //account already exists
         console.log('Student already used that username.');
-        return false;
+        if(callback){
+          callback(false);
+        }else{
+          return false;
+        }
       }
     });
   },
@@ -204,6 +242,37 @@ var DBQuery = {
     });
   },
 
+  ///////////////
+  //Get Queries//
+  ///////////////
+  
+  /**
+   *  NOT WORKING!!
+   * Gets a single student's info from DB
+   * @param  {[String]} username [Student's username]
+   * @param  {[String]} callback [callback function (optional)]
+   * @return {[Object]}   [Student information, or false if not found]
+   */
+  getStudent: function(username, callback){
+    db.knex('students')
+    .where('username', username)
+    .select('*')
+    .catch(function(err){
+      console.log('Error: ',err);
+    })
+    .then(function(data){
+      if(data){
+        console.log('Chai exists: ', data);
+        if(callback){
+          callback(data[0]);
+        }else{
+          return data[0];
+        }
+      }else{
+        return false;
+      }
+    });
+  },
 
   /////////////////////
   //Special functions//
@@ -279,7 +348,82 @@ var DBQuery = {
     })
   },
 
+  /////////////////////
+  //Deletion Queries //
+  //USE WITH CAUTION!//
+  /////////////////////
+  
+  /**
+   * Removes a student from the Students table
+   * @param  {[String]}   username [Student's username.]
+   * @param  {Function} callback [Optional callback]
+   * @return {[Boolean]} [if no callback, will return true on successful del]
+   */
+  delStudent: function(username, callback){
+    db.knex('students')
+    .where('username', username)
+    .del()
+    .catch(function(err){
+      console.log('Error in delStudent: ',err);
+      return false;
+    })
+    .then(function(data){
+      console.log(username,' removed from Students table.');
+      if(callback){
+        callback(data);
+      }else{
+        return true;
+      }
+    });
+  },
 
+  /**
+   * [delInstructor description]
+   * @param  {[String]}   username [Instructor username]
+   * @param  {Function} callback [Callback]
+   * @return {[Boolean]}  [If no callback, will return boolean based on success]
+   */
+  delInstructor: function(username, callback){
+    db.knex('instructors')
+    .where('username', username)
+    .del()
+    .catch(function(err){
+      console.log('Error in delInstructor: ',err);
+      if(callback){
+        callback(false);
+      }else{
+        return false;
+      }
+    })
+    .then(function(data){
+      console.log(username,' removed from Instructor table.');
+      if(callback){
+        callback(true);
+      }else{
+        return true;
+      }
+    });
+  },
+  
+  /**
+   * Will delete all rows from a table is specified. 
+   * Will clear ALL tables if tableName is not given.
+   * @param  {[String]} tableName [Name of table to clear.]
+   */
+  clearTable: function(tableName){
+    if(tableName){
+      db.knex.raw('DELETE FROM ',tableName.toString(),';');
+      console.log('Cleared Table: ', tableName);
+    }else{
+      db.knex.raw('DELETE FROM "students";');
+      db.knex.raw('DELETE FROM "instructors";');
+      db.knex.raw('DELETE FROM "classes";');
+      db.knex.raw('DELETE FROM "studentVideos";');
+      db.knex.raw('DELETE FROM "instrVideos";');
+      db.knex.raw('DELETE FROM "classes_students";');
+      console.log('Cleared All Tables!');
+    }
+  },
 
 };
 
