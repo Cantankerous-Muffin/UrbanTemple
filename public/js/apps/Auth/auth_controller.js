@@ -25,7 +25,7 @@ define([
           var signupView = new SignupView.view();
           VirtualDojo.regions.main.show(signupView);
           AuthApp.listenTo(signupView, 'authenticate:signup', function(data) {
-            AuthApp.Controller.signup(data.username, data.password)
+            AuthApp.Controller.signup(data.username, data.password, data.whenDone)
           });
         },
 
@@ -33,7 +33,7 @@ define([
         },
 
         authenticate: function (username, password, authorized, unauthorized ) {
-          console.log(username, password, authorized, unauthorized);
+          // console.log(username, password, authorized, unauthorized);
           var ajaxData = {
             username: username,
             password: password
@@ -48,6 +48,9 @@ define([
 
           request.done(function(data) {
             console.log("[AJAX] login data", data);
+            // fake auth check
+            VirtualDojo.authed = true; 
+            console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
             authorized();
           });
 
@@ -57,7 +60,7 @@ define([
           });
         },
 
-        signup: function(username, password) {
+        signup: function(username, password, done) {
         var ajaxData = {
             username: username,
             password: password
@@ -72,13 +75,13 @@ define([
 
           request.done(function(data) {
             console.log("[AJAX] signup done data", data);
-            authorized();
+            done();
           });
 
-          request.fail(function(req, textStatus, err) {
-            console.log("[AJAX] signup failed", textStatus, err);
-            unauthorized();
-          });
+          // request.fail(function(req, textStatus, err) {
+          //   console.log("[AJAX] signup failed", textStatus, err);
+          //   unauthorized();
+          // });
         }
       }
     });

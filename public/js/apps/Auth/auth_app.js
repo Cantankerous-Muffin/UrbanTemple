@@ -23,12 +23,19 @@ define([
       };
 
       VirtualDojo.on("authenticate:init", function(entryCallback){
-    		// console.log("entryCallback", entryCallback);
+        console.log("authenticate initializing");
+        console.log("AuthCheck: on authenticate init", VirtualDojo.authed);
+        if (VirtualDojo.authed === true) {
+          entryCallback();
+        } else {
+    		  VirtualDojo.trigger("auth:login:show", entryCallback); 
+        }
+        
         // API CALL: check with server (with cookie), see if session is already auth-ed
         // if auth-ed then start real app (start backbone.history(in callback))
             // entryCallback();
-    		// else
-    		    VirtualDojo.trigger("auth:login:show", entryCallback);
+        // else
+
       });
 
       // listen for login

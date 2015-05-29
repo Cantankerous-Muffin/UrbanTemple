@@ -17,6 +17,9 @@ define([
       return Backbone.history.fragment
     };
 
+    // fake auth check
+    VirtualDojo.authed = false; 
+
     //Define regions before app starts
     VirtualDojo.on("before:start", function(){
       var RegionContainer = Marionette.LayoutView.extend({
@@ -30,19 +33,21 @@ define([
 
       VirtualDojo.regions = new RegionContainer();
 
-    })
+    });
 
     VirtualDojo.on("start", function(){
       var that = this;
 
       VirtualDojo.trigger("authenticate:init", function() {
+        console.log("AuthCheck: In entry callback", VirtualDojo.authed)
         // initialize history on start of the app 
         if(Backbone.history){
           Backbone.history.start(); 
           console.log("history started");
-        
+    
           if(that.getCurrentRoute() === ""){
-            // VirtualDojo.trigger("show:dashboard");
+            console.log("go to dashboard")
+            VirtualDojo.trigger("show:haha");
           }
         }
       });

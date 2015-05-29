@@ -44,7 +44,7 @@ require(
     "app",
     "apps/Auth/auth_app",
     "apps/Haha/haha_app",
-    "apps/Sidenav/Sidenav_app"
+    "apps/Sidenav/sidenav_app"
   ],
   function(VirtualDojo){
     VirtualDojo.start();
