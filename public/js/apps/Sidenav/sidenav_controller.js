@@ -15,4 +15,4 @@ define([
 
       return VirtualDojo.SidenavApp.Controller;
     }
-  )
+  );
