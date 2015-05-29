@@ -26,7 +26,7 @@ var Students = db.Model.extend({
     return this.hasMany('StudentVideos', 'student_id');
   },
   classes: function() {
-    return this.belongsToMany('Classes', 'classes_students', 'class_id', 'student_id');
+    return this.belongsToMany('Classes');
   },
   // Jimmy, you gotta debug this:
   instructor: function(){

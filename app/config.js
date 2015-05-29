@@ -44,9 +44,9 @@ db.knex.schema.hasTable('classes').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('classes', function (classe) {
       classe.increments('id').primary();
-      classe.string('title', 255);
+      classe.string('title', 255).unique();
       // instructor_id is a ForeignKey attached to instructor
-      classe.integer('instructor_id');
+      classe.integer('instructor_id').unsigned().references('instructors.id');
       // student_id is a ForeignKey attached to student
       //classe.string('student_id', 10);
       classe.text('description');
@@ -63,9 +63,9 @@ db.knex.schema.hasTable('studentVideos').then(function(exists) {
     db.knex.schema.createTable('studentVideos', function (studentVideo) {
       studentVideo.increments('id').primary();
       // student_id is a ForeignKey attached to student
-      studentVideo.integer('student_id'); 
+      studentVideo.integer('student_id').unsigned().references('students.id'); 
       // instructor_id is a ForeignKey attached to instructor
-      studentVideo.integer('instructor_id'); 
+      studentVideo.integer('instructor_id').unsigned().references('instructors.id'); 
       // class_id is a ForeignKey attached to class
       studentVideo.integer('class_id');
       studentVideo.string('videoURL',255);
@@ -80,9 +80,9 @@ db.knex.schema.hasTable('instrVideos').then(function(exists) {
     db.knex.schema.createTable('instrVideos', function (instrVideo) {
       instrVideo.increments('id').primary();
       // class_id is a ForeignKey attached to class
-      instrVideo.integer('class_id'); 
+      instrVideo.integer('class_id').unsigned().references('classes.id'); 
       // instructor_id is a ForeignKey attached to instructor
-      instrVideo.integer('instructor_id');
+      instrVideo.integer('instructor_id').unsigned().references('instructors.id');
       instrVideo.string('videoURL',255);
       instrVideo.timestamps();
     }).then(function (table) {
@@ -97,8 +97,8 @@ db.knex.schema.hasTable('classes_students').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('classes_students', function (class_student) {
       class_student.increments('id').primary();
-      class_student.integer('class_id');
-      class_student.integer('student_id');
+      class_student.integer('class_id').unsigned().references('classes.id');
+      class_student.integer('student_id').unsigned().references('students.id');
     }).then(function (table) {
       console.log('Created Table', table);
     });
