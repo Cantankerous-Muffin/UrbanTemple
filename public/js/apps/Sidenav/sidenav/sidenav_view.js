@@ -17,4 +17,4 @@ define([
     });
     return VirtualDojo.Sidenav.View;
   }
-;)
+);

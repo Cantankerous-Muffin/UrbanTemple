@@ -5,12 +5,11 @@ define([
   function(VirtualDojo, SidenavController) {
 
     VirtualDojo.module("SidenavApp", function(SidenavApp, VirtualDojo, Backbone, Marionette, $, _){
-      Sidenav.Router = Marionette.Approuter.extend({
+      SidenavApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
           "sidenav": "showSidenav"
         }
       })
-    });
 
     var API = {
       showSidenav: function() {
@@ -23,6 +22,9 @@ define([
         controller: API
       });
     });
+
+  });
+
 
     return VirtualDojo.SidenavApp;
   }
