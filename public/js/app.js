@@ -10,14 +10,10 @@ define([
       options || (options = {});
       Backbone.history.navigate(route, options);
     };
-
     //Helper function to get current route
     VirtualDojo.getCurrentRoute = function(){
       return Backbone.history.fragment
     };
-
-    // fake auth check
-    VirtualDojo.authed = false; 
 
     //Define regions before app starts
     VirtualDojo.on("before:start", function(){
@@ -30,13 +26,10 @@ define([
           main: "#main-region"
         }
       });
-
       VirtualDojo.regions = new RegionContainer();
-
     });
 
     VirtualDojo.on("start", function(){
-
       console.log("Virtualdojo application started")
       
       // initialize authentication 

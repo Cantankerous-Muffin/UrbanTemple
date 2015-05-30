@@ -39,8 +39,23 @@ app.use(session({
 
 // Routing
 app.use('/', routes);
+// app.use('/checkauth', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
+
+app.use(function(req,res,next){
+  if (req.url === '/checkauth') {
+    if(!req.session.user) {
+      console.log('session dont exist');
+      res.json({isAuthed: false});
+    } else {
+      res.json({isAuthed: true});
+      console.log('user is authorized');
+      // res.end('');
+    }
+  }
+});
+
 // middleware to make sure to block access to internal pages if user is not logged in.
 app.use(function(req,res,next){
   if (req.url === '/auth/login'){

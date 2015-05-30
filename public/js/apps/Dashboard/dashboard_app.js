@@ -3,8 +3,9 @@ define([
     "apps/Dashboard/dashboard_controller"
   ],
   function(VirtualDojo, DashController) {
-
     VirtualDojo.module("DashApp", function(DashApp, VirtualDojo, Backbone, Marionette, $, _){
+      // Dashboard Router 
+
       DashApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
           "dashboard": "showDash",
@@ -22,13 +23,13 @@ define([
         API.showDash();
       });
 
+
       DashApp.on("start", function(){
         new DashApp.Router({
-    	    controller: API
+          controller: API
         });
       });
-    });
-
+    })  
     return VirtualDojo.DashApp;
   }
 );

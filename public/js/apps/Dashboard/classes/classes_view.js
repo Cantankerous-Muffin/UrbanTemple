@@ -1,16 +1,17 @@
+// collection view
 define([
     "app",
-    "tpl!apps/Dashboard/profile/templates/profile_view.tpl"
+    "tpl!apps/Dashboard/classes/templates/classes_view.tpl"
   ],
-  function(VirtualDojo, profileTpl) {
+  function(VirtualDojo, classesTpl) {
     VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
-      View.Profile = Marionette.ItemView.extend({
-        
-        template: profileTpl,
+      View.Classes = Marionette.CompositeView.extend({
+
+        template: classesTpl,
         serializeData: function() {
           return {
-            yay: "Profile!!"
+            yay: "Classes!!"
           };
         }
       });

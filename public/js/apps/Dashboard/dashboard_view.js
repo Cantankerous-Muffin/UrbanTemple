@@ -1,0 +1,21 @@
+define([
+    "app",
+    "tpl!apps/Dashboard/templates/layout.tpl"
+  ],
+  function(VirtualDojo, layoutTpl) {
+    VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
+    
+    // Dashboard Layout View 
+
+      View.Layout = Marionette.LayoutView.extend({
+        template: layoutTpl,
+
+        regions: {
+          profileRegion: "#profile-region",
+          classRegion: "#class-region"
+        }
+      });
+    });
+    return VirtualDojo.DashApp.View;
+  }	
+);

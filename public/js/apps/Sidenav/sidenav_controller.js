@@ -8,6 +8,7 @@ define([
         SidenavApp.Controller = {
 
           showSidenav: function() {
+            // VirtualDojo.trigger("authenticate:init");
             VirtualDojo.regions.sidenav.show(new SidenavView.view());
           }
         }

@@ -44,6 +44,7 @@ define([
 
         whenDone: function() {
           console.log("[done] sign up");
+          VirtualDojo.trigger("authenticate:init");
         },
       });
     });

@@ -8,10 +8,7 @@ define([
     VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
       AuthApp.Controller = {
             
-        showLoginPage: function(options){
-          // options = {
-          //   entryCallback: function()
-          // }
+        showLoginPage: function(){
 
           var loginView = new LoginView.view();
           VirtualDojo.regions.main.show(loginView);
@@ -49,9 +46,10 @@ define([
           request.done(function(data) {
             console.log("[AJAX] login data", data);
             // fake auth check
-            VirtualDojo.authed = true; 
             console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
-            VirtualDojo.Utilities.entryCallback()
+            VirtualDojo.trigger("authenticate:init");
+
+            // VirtualDojo.Utilities.entryCallback()
           });
 
           request.fail(function(req, textStatus, err) {

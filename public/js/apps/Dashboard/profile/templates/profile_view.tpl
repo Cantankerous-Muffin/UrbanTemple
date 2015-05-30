@@ -1,1 +1,1 @@
-<h1>Dashboard!!<%= yay %></h1>
+<h1>Profile!!<%= yay %></h1>
