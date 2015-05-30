@@ -23,10 +23,6 @@ define([
         });
       });  
     });
-
-  });
-
-
     return VirtualDojo.SidenavApp;
   }
 );

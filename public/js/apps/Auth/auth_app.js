@@ -1,9 +1,9 @@
 define([
     "app",
-    "apps/Auth/auth_controller"
+    "apps/Auth/auth_controller",
+    "apps/utilities/utilities"
   ],
-  function(VirtualDojo, AuthController) {
-
+  function(VirtualDojo, AuthController, Utilities) {
     VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
       AuthApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
@@ -13,8 +13,8 @@ define([
       });
      
     	 var API = {
-        showLoginPage: function(options){
-        	AuthController.showLoginPage(options);
+        showLoginPage: function(){
+        	AuthController.showLoginPage();
         },
 
         showSignUpPage: function() {
@@ -22,26 +22,26 @@ define([
         }
       };
 
-      VirtualDojo.on("authenticate:init", function(entryCallback){
+      VirtualDojo.on("authenticate:init", function(){
+        
         console.log("authenticate initializing");
         console.log("AuthCheck: on authenticate init", VirtualDojo.authed);
-        if (VirtualDojo.authed === true) {
-          entryCallback();
-        } else {
-    		  VirtualDojo.trigger("auth:login:show", entryCallback); 
-        }
         
         // API CALL: check with server (with cookie), see if session is already auth-ed
-        // if auth-ed then start real app (start backbone.history(in callback))
-            // entryCallback();
-        // else
+        if (VirtualDojo.authed === true) {
+          // if auth-ed then start real app (start backbone.history(in callback))
+          VirtualDojo.Utilities.entryCallback();
+        } else {
+          // redirect to login
+          VirtualDojo.trigger("auth:login:show"); 
+        }
 
       });
 
       // listen for login
-      VirtualDojo.on("auth:login:show", function(entryCallback){
+      VirtualDojo.on("auth:login:show", function(){
     		// VirtualDojo.navigate("login");
-    		API.showLoginPage({entryCallback: entryCallback});
+    		API.showLoginPage();
       });
 
       // listen for signup 

@@ -54,9 +54,8 @@ app.use(function(req,res,next){
       next();
     }
   }
-  
 });
-app.use('/dashboard', dashboard);
+// app.use('/dashboard', dashboard);
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?

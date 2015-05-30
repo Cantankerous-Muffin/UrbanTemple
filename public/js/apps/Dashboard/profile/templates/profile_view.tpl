@@ -1,0 +1,1 @@
+<h1>Dashboard!!<%= yay %></h1>

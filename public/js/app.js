@@ -1,8 +1,7 @@
 define([
-    "marionette"
+    "marionette",
   ],
   function(Marionette) {
-    
     //Create new Marionette App
     var VirtualDojo = new Marionette.Application();
 
@@ -22,12 +21,13 @@ define([
 
     //Define regions before app starts
     VirtualDojo.on("before:start", function(){
+
       var RegionContainer = Marionette.LayoutView.extend({
         el: "#app-container",
 
         regions: {
           sidenav: "#sidenav-region",
-          main: "#main-region",
+          main: "#main-region"
         }
       });
 
@@ -36,21 +36,12 @@ define([
     });
 
     VirtualDojo.on("start", function(){
-      var that = this;
 
-      VirtualDojo.trigger("authenticate:init", function() {
-        console.log("AuthCheck: In entry callback", VirtualDojo.authed)
-        // initialize history on start of the app 
-        if(Backbone.history){
-          Backbone.history.start(); 
-          console.log("history started");
-    
-          if(that.getCurrentRoute() === ""){
-            console.log("go to dashboard")
-            VirtualDojo.trigger("show:haha");
-          }
-        }
-      });
+      console.log("Virtualdojo application started")
+      
+      // initialize authentication 
+      VirtualDojo.trigger("authenticate:init");
+
     });
 
     return VirtualDojo;

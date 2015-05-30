@@ -17,7 +17,7 @@ define([
           VirtualDojo.regions.main.show(loginView);
 
           AuthApp.listenTo(loginView, 'authenticate:login', function(data) {
-            AuthApp.Controller.authenticate(data.username, data.password, options.entryCallback, data.unauthorized);
+            AuthApp.Controller.authenticate(data.username, data.password, data.unauthorized);
           });
         },
 
@@ -32,7 +32,7 @@ define([
         initialize: function() {
         },
 
-        authenticate: function (username, password, authorized, unauthorized ) {
+        authenticate: function (username, password, unauthorized ) {
           // console.log(username, password, authorized, unauthorized);
           var ajaxData = {
             username: username,
@@ -51,7 +51,7 @@ define([
             // fake auth check
             VirtualDojo.authed = true; 
             console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
-            authorized();
+            VirtualDojo.Utilities.entryCallback()
           });
 
           request.fail(function(req, textStatus, err) {

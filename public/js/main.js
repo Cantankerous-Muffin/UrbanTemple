@@ -42,8 +42,9 @@ requirejs.config({
 require(
   [
     "app",
+    "apps/utilities/utilities",
     "apps/Auth/auth_app",
-    "apps/Haha/haha_app",
+    "apps/Dashboard/dashboard_app",
     "apps/Sidenav/sidenav_app"
   ],
   function(VirtualDojo){
