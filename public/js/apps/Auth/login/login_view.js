@@ -27,13 +27,11 @@ define([
           var password = this.ui.inputPassword.val();
           if (!username) return;
           if (!password) return;
-
-          var authorized = this.onAuthorized;
           var unauthorized = this.onUnauthorized;
+
           this.trigger('authenticate:login', { 
             username: username, 
             password: password, 
-            // authorized: authorized, 
             unauthorized: unauthorized 
           }); 
         },
@@ -43,16 +41,8 @@ define([
            VirtualDojo.trigger("authenticate:signup");
         },
 
-        // onAuthorized: function() {
-        //   console.log("autentication success!");
-        //   // route user to /dashboard
-        //   // window.location.replace('#')
-        // },
-
         onUnauthorized: function() {
           console.log("autentication failed");
-          // show error message 
-          // route back to login
         }
       });
     });

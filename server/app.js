@@ -39,8 +39,23 @@ app.use(session({
 
 // Routing
 app.use('/', routes);
+// app.use('/checkauth', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
+
+app.use(function(req,res,next){
+  if (req.url === '/checkauth') {
+    if(!req.session.user) {
+      console.log('session dont exist');
+      res.json({isAuthed: false});
+    } else {
+      res.json({isAuthed: true});
+      console.log('user is authorized');
+      // res.end('');
+    }
+  }
+});
+
 // middleware to make sure to block access to internal pages if user is not logged in.
 app.use(function(req,res,next){
   if (req.url === '/auth/login'){
@@ -54,9 +69,8 @@ app.use(function(req,res,next){
       next();
     }
   }
-  
 });
-app.use('/dashboard', dashboard);
+// app.use('/dashboard', dashboard);
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?

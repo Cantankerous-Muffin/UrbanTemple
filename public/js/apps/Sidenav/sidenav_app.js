@@ -9,23 +9,20 @@ define([
         appRoutes: {
           "sidenav": "showSidenav"
         }
-      })
-
-    var API = {
-      showSidenav: function() {
-        SidenavController.showSidenav();
-      }
-    };
-
-    SidenavApp.on("start", function(){
-      new SidenavApp.Router({
-        controller: API
       });
+
+      var API = {
+        showSidenav: function() {
+          SidenavController.showSidenav();
+        }
+      };
+
+      SidenavApp.on("start", function(){
+        new SidenavApp.Router({
+          controller: API
+        });
+      });  
     });
-
-  });
-
-
     return VirtualDojo.SidenavApp;
   }
 );

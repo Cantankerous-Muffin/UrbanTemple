@@ -8,16 +8,13 @@ define([
     VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
       AuthApp.Controller = {
             
-        showLoginPage: function(options){
-          // options = {
-          //   entryCallback: function()
-          // }
+        showLoginPage: function(){
 
           var loginView = new LoginView.view();
           VirtualDojo.regions.main.show(loginView);
 
           AuthApp.listenTo(loginView, 'authenticate:login', function(data) {
-            AuthApp.Controller.authenticate(data.username, data.password, options.entryCallback, data.unauthorized);
+            AuthApp.Controller.authenticate(data.username, data.password, data.unauthorized);
           });
         },
 
@@ -25,15 +22,15 @@ define([
           var signupView = new SignupView.view();
           VirtualDojo.regions.main.show(signupView);
           AuthApp.listenTo(signupView, 'authenticate:signup', function(data) {
-            AuthApp.Controller.signup(data.username, data.password)
+            AuthApp.Controller.signup(data.username, data.password, data.whenDone)
           });
         },
 
         initialize: function() {
         },
 
-        authenticate: function (username, password, authorized, unauthorized ) {
-          console.log(username, password, authorized, unauthorized);
+        authenticate: function (username, password, unauthorized ) {
+          // console.log(username, password, authorized, unauthorized);
           var ajaxData = {
             username: username,
             password: password
@@ -48,7 +45,11 @@ define([
 
           request.done(function(data) {
             console.log("[AJAX] login data", data);
-            authorized();
+            // fake auth check
+            console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
+            VirtualDojo.trigger("authenticate:init");
+
+            // VirtualDojo.Utilities.entryCallback()
           });
 
           request.fail(function(req, textStatus, err) {
@@ -57,7 +58,7 @@ define([
           });
         },
 
-        signup: function(username, password) {
+        signup: function(username, password, done) {
         var ajaxData = {
             username: username,
             password: password
@@ -72,13 +73,13 @@ define([
 
           request.done(function(data) {
             console.log("[AJAX] signup done data", data);
-            authorized();
+            done();
           });
 
-          request.fail(function(req, textStatus, err) {
-            console.log("[AJAX] signup failed", textStatus, err);
-            unauthorized();
-          });
+          // request.fail(function(req, textStatus, err) {
+          //   console.log("[AJAX] signup failed", textStatus, err);
+          //   unauthorized();
+          // });
         }
       }
     });
