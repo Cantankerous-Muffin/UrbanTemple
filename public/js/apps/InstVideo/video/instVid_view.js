@@ -1,6 +1,6 @@
 define([
     "app",
-    "tpl!apps/instVid/video/templates/video_view.tpl"
+    "tpl!apps/InstVideo/video/templates/video_view.tpl"
   ],
   function(VirtualDojo, InstVidViewTpl) {
     VirtualDojo.module("InstVid.View", function(InstVidView, VirtualDojo, Backbone, Marionette, $, _){

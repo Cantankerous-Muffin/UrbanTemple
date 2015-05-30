@@ -1,10 +1,12 @@
 define([
     "app",
-    "apps/instVid/instVid_controller.js"
+    "apps/InstVideo/instVid_controller"
   ],
   function(VirtualDojo, InstVidController) {
 
     VirtualDojo.module("InstVideo", function(InstVideo, VirtualDojo, Backbone, Marionette, $, _){
+      // var route = 'class/'+classNameOrID+'/instVid';
+
       InstVideo.Router = Marionette.AppRouter.extend({
         appRoutes: {
           "instVid": "showInstVid",
@@ -13,6 +15,7 @@ define([
      
        var API = {
         showInstVid: function(){
+          console.log('API showIntVid');
           InstVidController.showInstVid();
         }
       };

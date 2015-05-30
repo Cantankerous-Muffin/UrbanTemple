@@ -1,6 +1,6 @@
 define([
     "app",
-    "apps/instVid/video/instVid_view.js"
+    "apps/InstVideo/video/instVid_view"
   ],
   function(VirtualDojo, InstVidView) {
 
@@ -8,6 +8,7 @@ define([
       InstVid.Controller = {
             
         showInstVid: function(){
+          console.log('Showing InstVid!');
           VirtualDojo.regions.main.show(new InstVidView.view());
         }
       };
