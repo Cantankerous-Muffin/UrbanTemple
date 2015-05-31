@@ -10,13 +10,11 @@ define([
         if(Backbone.history){
           Backbone.history.start(); 
           console.log("history started");
-          VirtualDojo.trigger("show:dashboard");
           VirtualDojo.trigger("show:sidenav");
     
           if(VirtualDojo.getCurrentRoute() === ""){
             console.log("navigating to dashboard")
             VirtualDojo.trigger("show:dashboard");
-            VirtualDojo.trigger("show:sidenav")
           }
         }
 	    }

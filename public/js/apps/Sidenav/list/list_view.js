@@ -21,6 +21,7 @@ define([
         onRender: function(){
           if(this.model.selected) {
             this.$el.addClass("active");
+            //picky not working
           };
         }     
       });
