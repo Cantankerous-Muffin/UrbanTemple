@@ -26,10 +26,10 @@ define([
       });
       
       View.Menu = Marionette.CompositeView.extend({
+        className: "menu-container",
         template: listTpl,
-        className: "navbar navbar-inverse navbar-fixed-top",
         childView: View.Sidenav,
-        childViewContainer: "ul",
+        childViewContainer: "#menu-items",
         events: {
           "click a.brand": "brandClicked"
         },
