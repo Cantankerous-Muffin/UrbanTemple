@@ -25,8 +25,7 @@ define([
         }     
       });
       
-      console.log("View module View var", View)
-      View.Buttons = Marionette.CompositeView.extend({
+      View.Menu = Marionette.CompositeView.extend({
         template: listTpl,
         className: "navbar navbar-inverse navbar-fixed-top",
         childView: View.Sidenav,
