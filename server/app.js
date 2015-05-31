@@ -49,9 +49,10 @@ app.use(function(req,res,next){
       console.log('session dont exist');
       res.json({isAuthed: false});
     } else {
+      //make query
       res.json({isAuthed: true});
       console.log('user is authorized');
-      // res.end('');
+      // res.end();
     }
   }
 });

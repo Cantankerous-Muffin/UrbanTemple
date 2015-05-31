@@ -8,9 +8,11 @@ define([
       View.Profile = Marionette.ItemView.extend({
         
         template: profileTpl,
+        
         serializeData: function() {
           return {
-            yay: "Profile!!"
+            username: "Jimmy",
+            ranking: '9th Keup'
           };
         }
       });
