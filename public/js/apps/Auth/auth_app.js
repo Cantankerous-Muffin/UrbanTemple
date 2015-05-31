@@ -70,6 +70,7 @@ define([
       //listn for logout
       VirtualDojo.on("logout", function(){
         console.log('logout trigger detected: API.showLoginPage() executed')
+        VirtualDojo.regions.sidenav.empty();
         API.showLoginPage();
       })
 

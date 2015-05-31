@@ -35,6 +35,7 @@ define([
             if (Entities.sidenavbuttons === undefined) {
               initializeSidenavButtons();
             }
+            console.log(Entities.sidenavbuttons);
             return Entities.sidenavbuttons;
           }
         };

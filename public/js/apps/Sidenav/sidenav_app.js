@@ -11,7 +11,8 @@ define([
         }
       };
 
-      SidenavApp.on("start", function(){
+      VirtualDojo.on("show:sidenav", function(){
+        console.log('show:sidenav listener executed')
         API.listSidenav();
         });
       });
