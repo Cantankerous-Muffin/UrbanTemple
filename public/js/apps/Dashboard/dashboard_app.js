@@ -19,6 +19,7 @@ define([
       };
       
       VirtualDojo.on("show:dashboard", function(){
+        console.log('show:dashboard listener executed')
         VirtualDojo.navigate("dashboard");
         API.showDash();
       });

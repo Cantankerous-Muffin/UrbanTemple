@@ -12,7 +12,6 @@ define([
 
           var loginView = new LoginView.view();
           VirtualDojo.regions.main.show(loginView);
-
           AuthApp.listenTo(loginView, 'authenticate:login', function(data) {
             AuthApp.Controller.authenticate(data.username, data.password, data.unauthorized);
           });
