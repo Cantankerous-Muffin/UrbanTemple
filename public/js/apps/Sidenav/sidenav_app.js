@@ -1,28 +1,21 @@
 define([
     "app",
-    "apps/Sidenav/sidenav_controller"
+    "apps/Sidenav/list/list_controller"
   ], 
   function(VirtualDojo, SidenavController) {
 
     VirtualDojo.module("SidenavApp", function(SidenavApp, VirtualDojo, Backbone, Marionette, $, _){
-      SidenavApp.Router = Marionette.AppRouter.extend({
-        appRoutes: {
-          "sidenav": "showSidenav"
-        }
-      });
-
       var API = {
-        showSidenav: function() {
-          SidenavController.showSidenav();
+        listSidenav: function() {
+          SidenavController.listSidenav();
         }
       };
 
       SidenavApp.on("start", function(){
-        new SidenavApp.Router({
-          controller: API
+        API.listSidenav();
         });
-      });  
-    });
-    return VirtualDojo.SidenavApp;
-  }
-);
+      });
+      return VirtualDojo.SidenavApp;
+});
+
+
