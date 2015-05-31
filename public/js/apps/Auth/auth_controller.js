@@ -36,11 +36,11 @@ define([
             data: ajaxData
           });
 
-          request.done(function(data) {
-            console.log("[AJAX] login data", data);
+          request.done(function(userdata) {
+            console.log("[AJAX] login userdata", userdata);
             // fake auth check
             console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
-            VirtualDojo.trigger("authenticate:init");
+            VirtualDojo.trigger("authenticate:init", userdata);
 
             // VirtualDojo.Utilities.enterApplication()
           });

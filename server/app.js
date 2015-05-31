@@ -43,6 +43,7 @@ app.use('/', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
 
+// checking authentication (auth_app line 31)
 app.use(function(req,res,next){
   if (req.url === '/checkauth') {
     if(!req.session.user) {

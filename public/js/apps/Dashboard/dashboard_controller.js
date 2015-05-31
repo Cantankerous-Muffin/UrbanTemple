@@ -10,14 +10,14 @@ define([
       DashApp.Controller = {
             
         showDash: function() {
-          var foo = new DashView.Layout();
+          var dashLayoutView = new DashView.Layout();
 
-          foo.on("show", function(){
-            foo.profileRegion.show(new DashView.Profile());
-            foo.classRegion.show(new DashView.MyClasses());
+          dashLayoutView.on("show", function(){
+            dashLayoutView.profileRegion.show(new DashView.Profile());
+            dashLayoutView.classRegion.show(new DashView.MyClasses());
           });
 
-          VirtualDojo.regions.main.show(foo);
+          VirtualDojo.regions.main.show(dashLayoutView);
         }
       }
     });

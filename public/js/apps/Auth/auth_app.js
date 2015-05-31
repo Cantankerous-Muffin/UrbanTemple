@@ -34,8 +34,7 @@ define([
         }
       };
 
-      VirtualDojo.on("authenticate:init", function(){
-        
+      VirtualDojo.on("authenticate:init", function(userdata){
         console.log("authenticate initializing");
         //Make empty ajax GET
 

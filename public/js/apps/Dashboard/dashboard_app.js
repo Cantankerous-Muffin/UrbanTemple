@@ -18,8 +18,9 @@ define([
         }
       };
       
-      VirtualDojo.on("show:dashboard", function(){
-        console.log('show:dashboard listener executed')
+      VirtualDojo.on("show:dashboard", function(userdata){
+        console.log('show:dashboard listener executed');
+        console.log('wooooolalalalalal', userdata);
         VirtualDojo.navigate("dashboard");
         API.showDash();
       });
