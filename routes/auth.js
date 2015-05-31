@@ -24,8 +24,6 @@ function handleAuth(req, res, username, id) {
   });
 };
 
-
-
 // Local Auth Sign-in
 router.post('/login', passport.authenticate('local'), function(req, res) {
   var username = req.body.username;
