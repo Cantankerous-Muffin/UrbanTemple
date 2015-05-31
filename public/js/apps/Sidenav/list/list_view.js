@@ -21,16 +21,16 @@ define([
         onRender: function(){
           if(this.model.selected) {
             this.$el.addClass("active");
+            //picky not working
           };
         }     
       });
       
-      console.log("View module View var", View)
-      View.Buttons = Marionette.CompositeView.extend({
+      View.Menu = Marionette.CompositeView.extend({
+        className: "menu-container",
         template: listTpl,
-        className: "navbar navbar-inverse navbar-fixed-top",
         childView: View.Sidenav,
-        childViewContainer: "ul",
+        childViewContainer: "#menu-items",
         events: {
           "click a.brand": "brandClicked"
         },

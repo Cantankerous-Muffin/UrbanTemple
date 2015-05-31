@@ -60,8 +60,13 @@ define([
       //listn for logout
       VirtualDojo.on("logout", function(){
         console.log('logout trigger detected: API.showLoginPage() executed')
-        VirtualDojo.regions.sidenav.empty();
-        API.showLoginPage();
+        $.get("/auth/logout")
+            .success(function() {
+              console.log("logged out, reload")
+              window.location.reload();
+            });
+        // VirtualDojo.regions.sidenav.empty();
+        // API.showLoginPage();
       })
 
       AuthApp.on("start", function(){

@@ -1,8 +1,8 @@
-<div class="navbar-inner">
-  <div class="container">
-    <a class="brand" href="#sidenav">Urban Temple</a>
-    <div> <!-- class="nav-collapse collapse" -->
-      <ul class="nav"></ul>
-    </div>
-  </div>
+<div class="logo">
+<a class="brand" href="#sidenav">Urban Temple</a>
+</div>
+<div class="side-menu">
+  <ul id="menu-items" class="nav nav-pills nav-stacked">
+    
+  </ul>
 </div>

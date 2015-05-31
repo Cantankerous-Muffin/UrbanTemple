@@ -95,9 +95,9 @@ router.get('/logout', function(req, res, next) {
   console.log("Before destroy session... " + JSON.stringify(req.session));
   req.session.destroy(function() {
     console.log("Destroying express-session object for this session... " + req.session);
-    res.json({isAuthed: false});
+    res.redirect('/');
+    // res.json({isAuthed: false});
   });
-
 });
 
 module.exports = router;

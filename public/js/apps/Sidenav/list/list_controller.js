@@ -9,22 +9,22 @@ define([
           listSidenav: function() {
             require(["entities/sidenav"], function(){
               var links = VirtualDojo.request('sidenav:entities');
-              var buttons = new View.Buttons({collection: links});
+              var menu = new View.Menu({collection: links});
 
-              buttons.on("brand:clicked", function(){
+              menu.on("brand:clicked", function(){
                 //below triggers the main dashboard page to list and show.********NEED WORK ON
                 VirtualDojo.trigger("somechannelHereToShowTheMainDashbboardPage")
                 console.log('Trigger from list_controller.js - function to populate dashboard main page')
               });
 
-              buttons.on("childview:navigate", function(childView, model) {
+              menu.on("childview:navigate", function(childView, model) {
                 var trigger = model.get("navigationTrigger");
                 //will trigger: "dashboard:list", "trainingvids:list" or "logout"
                 VirtualDojo.trigger(trigger);
 
               })
 
-              VirtualDojo.regions.sidenav.show(buttons)
+              VirtualDojo.regions.sidenav.show(menu)
 
             });
           },
