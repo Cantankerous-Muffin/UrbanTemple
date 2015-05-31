@@ -25,8 +25,8 @@ define([
       VirtualDojo.on("authenticate:init", function(){
         
         console.log("authenticate initializing");
-        
         //Make empty ajax GET
+
 
         $.get('/checkauth')
         .success(function(data){
@@ -36,7 +36,7 @@ define([
             VirtualDojo.Utilities.entryCallback();
           } else {
             VirtualDojo.trigger("auth:login:show");
-          }//start history
+          }
         })
         .fail(function(xhr){
           console.log(xhr)
@@ -46,17 +46,7 @@ define([
             console.log('AJAX request to server failed: 404',xhr);
             // VirtualDojo.trigger("auth:login:show");//route to login 
           }
-
         })
-
-        // API CALL: check with server (with cookie), see if session is already auth-ed
-        // if (    ) {
-        //   // if auth-ed then start real app (start backbone.history(in callback))
-        //   VirtualDojo.Utilities.entryCallback();
-        // } else {
-        //   // redirect to login
-        //   VirtualDojo.trigger("auth:login:show"); 
-        // }
       });
 
       // listen for login

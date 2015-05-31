@@ -4,7 +4,7 @@ var Student  = require('./../app/models/student');
 var Instructor  = require('./../app/models/instructor');
 var passport = require('passport');
 var path         = require('path');
-
+var DBQuery = require('../utils/dbQueries.js')
 
 /**
  * handleAuth creates a session object, which we then store the username as a user
@@ -15,8 +15,12 @@ function handleAuth(req, res, username, id) {
     req.session.user = username;
     req.session.user_id = id.toString();
     console.log("SESSION!!! " + req.session.user + "ID!!! " + req.session.user_id);
-    res.end();
     // res.redirect('/dashboard');
+    DBQuery.getStudentUsing('username', username, function(data){
+      // console.log('Sending user profile data!\n', data);
+      res.json(data);
+      res.end();
+    });
   });
 };
 
@@ -30,6 +34,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
   .fetch()
   .then(function(model) {
     handleAuth(req, res, username, model.attributes.id);
+
   });
 });
 
