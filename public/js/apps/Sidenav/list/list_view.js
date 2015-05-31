@@ -4,7 +4,7 @@ define([
     "tpl!apps/sidenav/list/templates/list_item.tpl"
   ], function(VirtualDojo, listTpl, listItemTpl){
 
-    VirtualDojo.module("SidenavAppView", function(View, VirtualDojo, Backbone, Marionette, $, _){
+    VirtualDojo.module("SidenavApp.List.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
       View.Sidenav = Marionette.ItemView.extend({
         template: listItemTpl,
         tagName: "li",
@@ -24,11 +24,12 @@ define([
           };
         }     
       });
-
+      
+      console.log("View module View var", View)
       View.Buttons = Marionette.CompositeView.extend({
         template: listTpl,
         className: "navbar navbar-inverse navbar-fixed-top",
-        childView: View.Header,
+        childView: View.Sidenav,
         childViewContainer: "ul",
         events: {
           "click a.brand": "brandClicked"
@@ -40,7 +41,8 @@ define([
         }
       });
     });
+    console.log(VirtualDojo.SidenavApp)
 
-    return VirtualDojo.SidenavApp.List.View
+    return VirtualDojo.SidenavApp.List.View;
 
 })

@@ -67,6 +67,11 @@ define([
       VirtualDojo.on("authenticate:signup", function(){
     		API.showSignUpPage();
       });
+      //listn for logout
+      VirtualDojo.on("logout", function(){
+        console.log('logout trigger detected: API.showLoginPage() executed')
+        API.showLoginPage();
+      })
 
       AuthApp.on("start", function(){
         new AuthApp.Router({

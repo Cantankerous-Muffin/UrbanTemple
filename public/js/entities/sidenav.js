@@ -18,14 +18,14 @@ define([
 
           initialize: function() {
             var singleSelect = new Backbone.Picky.SingleSelect(this);
-            _.extend({this, singleSelect});
+            _.extend(this, singleSelect);
           }
         });
 
         var initializeSidenavButtons = function() {
           Entities.sidenavbuttons = new Entities.SidenavCollection([
               { name: "Home", url: "dashboard", navigationTrigger: "dashboard:list"},
-              { name: "Training Center", url: "trainingvids", navigationTrigger: "trainingvids:list"}
+              { name: "Training Center", url: "trainingvids", navigationTrigger: "trainingvids:list"},
               { name: "Logout", url: "logout", navigationTrigger: "logout"}
             ]);
         };
