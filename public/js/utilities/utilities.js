@@ -14,7 +14,7 @@ define([
     
           if(VirtualDojo.getCurrentRoute() === ""){
             console.log("navigating to dashboard")
-            VirtualDojo.trigger("show:dashboard", userdata);
+            VirtualDojo.trigger("show:dashboard");
           }
         }
 	    }

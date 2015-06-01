@@ -10,6 +10,15 @@ define([
       DashApp.Controller = {
             
         showDash: function() {
+          // ajax call to retrieve 
+          $.get('/dashboard/user', {username: UTConfig.username})
+            .done(function(data){
+              console.log(data);
+            })
+            .fail(function(){
+              console.log("retrieval of userdata failed")
+            });
+
           var dashLayoutView = new DashView.Layout();
 
           dashLayoutView.on("show", function(){

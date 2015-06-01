@@ -39,6 +39,8 @@ requirejs.config({
 
 // Initialize App
 
+UTConfig = {};
+
 require(
   [
     "app",

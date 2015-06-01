@@ -44,7 +44,11 @@ define([
           //means cookie is respected, authorized
           console.log('Successful AJAX request to server.', data)
           if (data.isAuthed) {
+            // store the username on global object
+            UTConfig.username = data.username;
+            
             VirtualDojo.Utilities.enterApplication();
+
           } else {
             VirtualDojo.trigger("auth:login:show");
           }

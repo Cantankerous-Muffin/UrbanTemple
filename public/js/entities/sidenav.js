@@ -35,7 +35,6 @@ define([
             if (Entities.sidenavItems === undefined) {
               initializeSidenavItems();
             }
-            console.log(Entities.sidenavItems);
             return Entities.sidenavItems;
           }
         };

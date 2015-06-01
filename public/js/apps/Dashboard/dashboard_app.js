@@ -14,13 +14,13 @@ define([
      
     	 var API = {
         showDash: function(){
+          // console.log("UTConfig.username is   ", UTConfig.username)
         	DashApp.Controller.showDash();
         }
       };
       
-      VirtualDojo.on("show:dashboard", function(userdata){
+      VirtualDojo.on("show:dashboard", function(){
         console.log('show:dashboard listener executed');
-        console.log('wooooolalalalalal', userdata);
         VirtualDojo.navigate("dashboard");
         API.showDash();
       });
