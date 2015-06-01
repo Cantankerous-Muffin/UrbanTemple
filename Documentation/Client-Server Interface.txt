@@ -1,117 +1,146 @@
+-------------GET---------------
 
-/auth/signup          //POST with Response
-Response: {
-  result: Boolean   
-  message: String
-}
+/user/<username>    
 
---------------------------------
-
-/user/<username>    //
-User = {
+return:
+User = { // Student or Instructor
+  isInstructor: BOOLEAN,
   username: STRING,
-  fullname: STRING
-  ranks: UserRank[] // [STUDENT]
+  fullname: STRING,
+  ranks: UserRank[]
 }
+
 UserRank = {
-  discipline: Discipline,
+  disciplineTitle: STRING,
   rankNum: INT,
   rankTitle: STRING,
   rankIcon: URL(STRING)
 }
 
---------------------------------
+-------------GET---------------
 
-/user/<username>/enrolled
+/user/<username>/enrolled  
+
+return:
 UserEnrolled = {
   disciplines: Discipline[]
 }
 
---------------------------------
+-------------GET---------------
 
-/user/<username>/progress
-UserProgress = Progress[]
+/user/<username>/progress     
 
---------------------------------
+return:
+DisciplineProgress[]
 
-/user/<username>/progress/<discipline_id>
-Progress = { 
+-------------GET---------------
+
+/user/<username>/progress/<discipline_id> 
+
+return:
+DisciplineProgress = { 
   discipline: Discipline,
-  currentClass: Class,
-  percentage: INT, // eg. 34 (%)
+  currentClassId: INT,
+  currentLevelNum: INT,
+  percentage: INT // eg. 34 (%)
 }
 
---------------------------------
+-------------GET---------------
 
-/user/<username>/feedbacks
+/user/<username>/feedbacks [AUTH: if user is an Instructor, need to match]
+
+return:
 UserFeedbacks = {
   username: STRING,
   feedbacks: Feedback[]
 }
 
---------------------------------
+-------------GET---------------
 
 /discipline
+
+return:
 Disciplines = {
   disciplines: Discipline[]
 }
 
---------------------------------
+-------------GET---------------
 
 /discipline/<discipline_id>
+
+return:
 Discipline = {
   disciplineId: INT,
   title: STRING,
   classes: Class[]
 }
 
---------------------------------
+-------------GET---------------
 
 /class/<class_id>
+
+return:
 Class = {
-  disciplineId: INT,
   classId: INT,
-  instructor: User,
+  disciplineId: INT,
+  instructorId: userId: INT,
   title: STRING,
-  description: STRING
+  description: STRING,
+  totalLevel: INT
 }
 
---------------------------------
+-------------GET---------------
+
+/class/<class_id>/level
+
+return: Level[]
 
 /class/<class_id>/level/<level_num>
+
+return:
 Level = {
   levelNum: INT,
   title: STRING,
   description: STRING,
   videoUrl: URL(STRING),
-  videoCheckNeeded: false,
+  feedbackNeeded: false,
   prev: <level_num>,  // or null
   next: <level_num>   // or null 
 }
 
---------------------------------
+-------------POST---------------
 
 /feedback/submit
-=> {
+
+request:
+{
   username: STRING,
-  videoUrl: URL(STRING),
-  classId: INT
+  classId: INT,
+  videoUrl: URL(STRING)
 }
-// [[BACKEND]] check enrollment, check duplicates
+
+return: Feedback
 
 
---------------------------------
+-------------GET---------------
 
-/feedback/<feedback_id>  [AUTH: Instructor, Creator]
+/feedback/<feedback_id>    [AUTH: Instructor, Creator (*only instructor and creator)]
+
+return:
 Feedback = {
+  feedbackId: INT,
   username: STRING,
   videoUrl: URL(STRING),
-  class: Class
+  class: Class,
+  approved: Boolean
 }
 
---------------------------------
+-------------POST---------------
 
-/feedback/<feedback_id>/update [AUTH: Instructor]
-=> {
+/feedback/<feedback_id>/update   [AUTH: Instructor (*only instructor can update)]
+request:
+{
   approve: Boolean // [AUTH: Instructor]
 }
+
+return: Feedback

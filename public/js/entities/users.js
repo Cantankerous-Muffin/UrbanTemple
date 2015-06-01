@@ -12,7 +12,23 @@ define(
             var data = {
               username: "ken",
               fullname: "Ken Kang",
-              ranks: []
+              // ranks: null,
+              ranks: [{
+                discipline: {
+                  disciplineId: 1,
+                  title: "Kendo",
+                  classes: [
+                    disciplineId: 1,
+                    classId: 5,
+                    instructor: User(Instructor),
+                    title: "Kendo 105: Head Strike",
+                    description: "learn the technique of head strike"
+                  ]
+                },
+                rankNum: 5,
+                rankTitle: "5th Keup",
+                rankIcon: ""
+              }]
             }; // mock result from server
 
             defer.resolve(data);

@@ -15,16 +15,23 @@ define(
         },
         initialize: function() {
           // instantiate Collections and Models from JSON
-          var ranks = this.get("ranks");
-          if (ranks) {
-            var rankCollection = new UserModels.UserRank();
-            ranks.forEach(function(userRank) {
-              rankCollection.add(
-                new UserModels.UserRanks(userRank)
-              );
-            });
+          if (!this.get("isInstructor")) { // student
+            var ranks = this.get("ranks");
+            if (ranks) {
+              var rankCollection = new UserModels.UserRanks();
+              ranks.forEach(function(userRank) {
+                rankCollection.add(
+                  new UserModels.UserRank(userRank)
+                );
+              });
 
-            this.set("ranks", rankCollection);
+              this.set("ranks", rankCollection);
+            }
+          } else {
+            var rank = this.get("rank");
+            if (rank) {
+              this.set("ranks", new UserModels.UserRank(rank));
+            }
           }
         }
       });
