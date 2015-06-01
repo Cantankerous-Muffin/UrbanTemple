@@ -12,17 +12,11 @@ define([
 
           var loginView = new LoginView.view();
           VirtualDojo.regions.main.show(loginView);
-          AuthApp.listenTo(loginView, 'authenticate:login', function(data) {
-            AuthApp.Controller.authenticate(data.username, data.password, data.unauthorized);
-          });
         },
 
         showSignUpPage: function() {
           var signupView = new SignupView.view();
           VirtualDojo.regions.main.show(signupView);
-          AuthApp.listenTo(signupView, 'authenticate:signup', function(data) {
-            AuthApp.Controller.signup(data.username, data.password, data.whenDone)
-          });
         },
 
         initialize: function() {
@@ -33,7 +27,7 @@ define([
           var ajaxData = {
             username: username,
             password: password
-          }
+          };
 
           var request = $.ajax({
             url: "/auth/login",
@@ -48,7 +42,7 @@ define([
             console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
             VirtualDojo.trigger("authenticate:init");
 
-            // VirtualDojo.Utilities.entryCallback()
+            // VirtualDojo.Utilities.enterApplication()
           });
 
           request.fail(function(req, textStatus, err) {
@@ -79,6 +73,15 @@ define([
           //   console.log("[AJAX] signup failed", textStatus, err);
           //   unauthorized();
           // });
+        },
+
+        logout: function() {
+          console.log('logout trigger detected: API.showLoginPage() executed')
+          $.get("/auth/logout")
+            .success(function() {
+              console.log("logged out, reload")
+              window.location.reload();
+            });
         }
       }
     });

@@ -8,17 +8,29 @@ define([
       AuthApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
           "login": "showLoginPage",
-          "signup": "showSignUpPage",
+          "signup": "showSignUpPage"
         }
       });
      
-    	 var API = {
+      var API = {
         showLoginPage: function(){
-        	AuthController.showLoginPage();
+          AuthController.showLoginPage();
         },
 
         showSignUpPage: function() {
-        	AuthController.showSignUpPage();
+          AuthController.showSignUpPage();
+        },
+
+        login: function(data) {
+          AuthController.authenticate(data.username, data.password, data.unauthorized);
+        },
+
+        signup: function(data) {
+          AuthController.signup(data.username, data.password, data.whenDone)
+        },
+
+        logout: function() {
+          AuthController.logout();
         }
       };
 
@@ -33,7 +45,7 @@ define([
           //means cookie is respected, authorized
           console.log('Successful AJAX request to server.', data)
           if (data.isAuthed) {
-            VirtualDojo.Utilities.entryCallback();
+            VirtualDojo.Utilities.enterApplication();
           } else {
             VirtualDojo.trigger("auth:login:show");
           }
@@ -49,25 +61,25 @@ define([
         })
       });
 
-      // listen for login
       VirtualDojo.on("auth:login:show", function(){
     		API.showLoginPage();
       });
-      // listen for signup 
-      VirtualDojo.on("authenticate:signup", function(){
-    		API.showSignUpPage();
+
+      VirtualDojo.on("auth:signup:show", function(){
+        API.showSignUpPage();
       });
-      //listn for logout
-      VirtualDojo.on("logout", function(){
-        console.log('logout trigger detected: API.showLoginPage() executed')
-        $.get("/auth/logout")
-            .success(function() {
-              console.log("logged out, reload")
-              window.location.reload();
-            });
-        // VirtualDojo.regions.sidenav.empty();
-        // API.showLoginPage();
-      })
+
+      VirtualDojo.on("authenticate:login", function(data) {
+        API.login(data);
+      });
+
+      VirtualDojo.on('authenticate:signup', function(data) {
+        API.signup(data);
+      });
+
+      VirtualDojo.on("authenticate:logout", function(){
+        API.logout();
+      });
 
       AuthApp.on("start", function(){
         new AuthApp.Router({

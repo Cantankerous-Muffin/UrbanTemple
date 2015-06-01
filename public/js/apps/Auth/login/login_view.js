@@ -17,11 +17,11 @@ define([
         },
 
         events: {
-          "click @ui.loginButton": "login",
+          "click @ui.loginButton": "onLoginButtonClick",
           "click @ui.signupButton": "onSignupButtonClick"
         },
 
-        login: function(event) {
+        onLoginButtonClick: function(event) {
           event.preventDefault();
           var username = this.ui.inputUsername.val();
           var password = this.ui.inputPassword.val();
@@ -29,7 +29,7 @@ define([
           if (!password) return;
           var unauthorized = this.onUnauthorized;
 
-          this.trigger('authenticate:login', { 
+          VirtualDojo.trigger('authenticate:login', {
             username: username, 
             password: password, 
             unauthorized: unauthorized 
@@ -38,7 +38,7 @@ define([
         
         onSignupButtonClick: function(event) {
           event.preventDefault();
-           VirtualDojo.trigger("authenticate:signup");
+           VirtualDojo.trigger("auth:signup:show");
         },
 
         onUnauthorized: function() {
@@ -53,4 +53,3 @@ define([
 
 
 
- 
