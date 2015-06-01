@@ -14,6 +14,7 @@ var dashboard    = require('./../routes/dashboard');
 var Student        = require('../app/models/student');
 var Instructor        = require('../app/models/instructor');
 var auth         = require('./../routes/auth');
+var student         = require('./../routes/student');
 
 // Authentication
 var LocalStrategy = require('passport-local').Strategy;
@@ -42,21 +43,22 @@ app.use('/', routes);
 // app.use('/checkauth', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
+app.use('/student', student);
 
 // checking authentication (auth_app line 31)
-app.use(function(req,res,next){
-  if (req.url === '/checkauth') {
-    if(!req.session.user) {
-      console.log('session dont exist');
-      res.json({isAuthed: false});
-    } else {
-      //make query
-      res.json({isAuthed: true, username: req.session.user});
-      console.log('user is authorized');
-      // res.end();
-    }
-  }
-});
+// app.use(function(req,res,next){
+//   if (req.url === '/checkauth') {
+//     if(!req.session.user) {
+//       console.log('session dont exist');
+//       res.json({isAuthed: false});
+//     } else {
+//       //make query
+//       res.json({isAuthed: true, username: req.session.user});
+//       console.log('user is authorized');
+//       // res.end();
+//     }
+//   }
+// });
 
 // middleware to make sure to block access to internal pages if user is not logged in.
 app.use(function(req,res,next){
