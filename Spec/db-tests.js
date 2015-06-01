@@ -21,21 +21,24 @@ describe('DB Testing:', function(){
   };
   //Make sure student 'Chai' does not exist
   before(function(done){
-    DBQuery.delStudent('Chai', function(data){
-      if(!data){
-        DBQuery.delInstructor('Chai', function(data){
-          done();
-        });
-      }else{
-        done();
+    DBQuery.delStudent(Chai.username, function(data){
+      if(data){
+        console.log('Removed Chai from Students');
       }
+      DBQuery.delInstructor(Chai.username, function(data){
+        if(data){
+          console.log('Removed Chai from Instructors');
+        }
+        done();
+      });
     });
   });
 
   it('should insert "Chai" as student user', function(done){
 
-    DBQuery.newStudent(Chai, function(success){
-      if(success){
+    DBQuery.newStudent(Chai, function(res){
+      if(res.result){
+        console.log('!!!!!!!!!!!!!!',res);
         DBQuery.getStudentUsing('username', Chai.username, function(data){
           expect(data.username).to.equal('Chai');
           expect(data.email).to.equal('chai@mail.com');
@@ -44,27 +47,13 @@ describe('DB Testing:', function(){
           done();
         });
       }
-      // db.knex('students')
-      // .where('username', 'Chai')
-      // .select('*')
-      // .catch(function(err){
-      //   console.log('Error: ',err);
-      // })
-      // .then(function(data){
-      //   expect(data[0].username).to.equal('Chai');
-      //   expect(data[0].email).to.equal('chai@mail.com');
-      //   expect(data[0].firstName).to.equal('Chai');
-      //   expect(data[0].lastName).to.equal('Mocha');
-
-      //   done();
-      // });
     });
   });
 
   it('should not be able to register as Instructor with "Chai" username', function(done){
     // this.timeout(4000);
     DBQuery.newInstructor(Chai, function(data){
-      expect(data).to.equal(false);
+      expect(data.result).to.equal(false);
       done();
     });
   });
@@ -91,7 +80,7 @@ describe('DB Testing:', function(){
     // this.timeout(4000);
     DBQuery.newInstructor(Chai, function(data){
       db.knex('instructors')
-      .where('username', 'Chai')
+      .where('username', Chai.username)
       .select('*')
       .catch(function(err){
         console.log('Error: ',err);
@@ -110,7 +99,7 @@ describe('DB Testing:', function(){
   it('should not be able to register as Student with "Chai" username', function(done){
     // this.timeout(4000);
     DBQuery.newStudent(Chai, function(data){
-      expect(data).to.equal(false);
+      expect(data.result).to.equal(false);
       done();
     });
   });

@@ -1,4 +1,13 @@
-/user/<username>
+
+/auth/signup          //POST with Response
+Response: {
+  result: Boolean   
+  message: String
+}
+
+--------------------------------
+
+/user/<username>    //
 User = {
   username: STRING,
   fullname: STRING
@@ -21,9 +30,7 @@ UserEnrolled = {
 --------------------------------
 
 /user/<username>/progress
-UserProgress = {
-  progresses: Progress[]
-}
+UserProgress = Progress[]
 
 --------------------------------
 
@@ -84,7 +91,7 @@ Level = {
 
 --------------------------------
 
-POST /feedback/submit
+/feedback/submit
 => {
   username: STRING,
   videoUrl: URL(STRING),
