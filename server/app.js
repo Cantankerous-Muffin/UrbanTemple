@@ -40,9 +40,10 @@ app.use(session({
 // Routing
 app.use('/', routes);
 // app.use('/checkauth', routes);
-// app.use('/users', users);
+app.use('/users', users);
 app.use('/auth', auth);
 
+// checking authentication (auth_app line 31)
 app.use(function(req,res,next){
   if (req.url === '/checkauth') {
     if(!req.session.user) {
@@ -50,7 +51,7 @@ app.use(function(req,res,next){
       res.json({isAuthed: false});
     } else {
       //make query
-      res.json({isAuthed: true});
+      res.json({isAuthed: true, username: req.session.user});
       console.log('user is authorized');
       // res.end();
     }
@@ -71,7 +72,7 @@ app.use(function(req,res,next){
     }
   }
 });
-// app.use('/dashboard', dashboard);
+
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?

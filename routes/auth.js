@@ -16,15 +16,9 @@ function handleAuth(req, res, username, id) {
     req.session.user_id = id.toString();
     console.log("SESSION!!! " + req.session.user + "ID!!! " + req.session.user_id);
     // res.redirect('/dashboard');
-    DBQuery.getStudentUsing('username', username, function(data){
-      // console.log('Sending user profile data!\n', data);
-      res.json(data);
-      res.end();
-    });
+    res.end();
   });
 };
-
-
 
 // Local Auth Sign-in
 router.post('/login', passport.authenticate('local'), function(req, res) {

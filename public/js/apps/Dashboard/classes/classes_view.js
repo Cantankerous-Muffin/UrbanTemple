@@ -6,11 +6,12 @@ define([
   function(VirtualDojo, classTpl) {
     VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
+      // single class item view
       View.Class = Marionette.ItemView.extend({
         template: classTpl,
         serializeData: function() {
           return {
-            yay: "Classes!!"
+            title: "Kendo101:Steps"
           };
         }
       });

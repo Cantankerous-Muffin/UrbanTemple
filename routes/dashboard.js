@@ -1,13 +1,15 @@
-// var express = require('express');
-// var router = express.Router();
-// var qs = require('querystring');
-// var request = require('request');
-// var path = require('path');
-// var passport     = require('passport');
+var express = require('express');
+var router = express.Router();
+var Student  = require('./../app/models/student');
+var Instructor  = require('./../app/models/instructor');
+var passport = require('passport');
+var path         = require('path');
+var DBQuery = require('../utils/dbQueries.js')
 
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-// 	res.sendFile(path.join(__dirname,'../public/dashboard.html'));
-// });
-
-// module.exports = router;
+router.get('dashboard/user', function(req, res) {
+  console.log("hohohohoho", req.username);
+	DBQuery.getStudentUsing('username', req.username, function(data){
+  	res.json(data);
+  	res.end();
+	});
+});
