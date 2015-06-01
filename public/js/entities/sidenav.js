@@ -22,28 +22,28 @@ define([
           }
         });
 
-        var initializeSidenavButtons = function() {
-          Entities.sidenavbuttons = new Entities.SidenavCollection([
+        var initializeSidenavItems = function() {
+          Entities.sidenavItems = new Entities.SidenavCollection([
               { name: "Home", url: "dashboard", navigationTrigger: "dashboard:list"},
               { name: "Training Center", url: "trainingvids", navigationTrigger: "trainingvids:list"},
-              { name: "Logout", url: "logout", navigationTrigger: "logout"}
+              { name: "Logout", url: "logout", navigationTrigger: "authenticate:logout"}
             ]);
         };
 
         var API = {
-          getButtons: function() {
-            if (Entities.sidenavbuttons === undefined) {
-              initializeSidenavButtons();
+          getItems: function() {
+            if (Entities.sidenavItems === undefined) {
+              initializeSidenavItems();
             }
-            console.log(Entities.sidenavbuttons);
-            return Entities.sidenavbuttons;
+            console.log(Entities.sidenavItems);
+            return Entities.sidenavItems;
           }
         };
 
-        VirtualDojo.reqres.setHandler("sidenav:entities", function(){
-          return API.getButtons();
+        VirtualDojo.reqres.setHandler("entities:sidenav:items", function(){
+          return API.getItems();
         });
       });
       
-      return;
+      return ;
     });

@@ -35,7 +35,7 @@ define([
 
           var whenDone = this.whenDone;
 
-          this.trigger('authenticate:signup', { 
+          VirtualDojo.trigger('authenticate:signup', {
             username: username, 
             password: password, 
             whenDone: whenDone

@@ -4,7 +4,7 @@ define([
 
   function(VirtualDojo) {
     VirtualDojo.module("Utilities", function(Utilities, VirtualDojo, Backbone, Marionette, $, _){
-      Utilities.entryCallback = function() {
+      Utilities.enterApplication = function() {
         console.log("AuthCheck: In entry callback", VirtualDojo.authed)
         // initialize history on start of the app 
         if(Backbone.history){

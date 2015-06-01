@@ -14,9 +14,10 @@ define([
       VirtualDojo.on("show:sidenav", function(){
         console.log('show:sidenav listener executed')
         API.listSidenav();
-        });
       });
-      return VirtualDojo.SidenavApp;
+    });
+
+    return VirtualDojo.SidenavApp;
 });
 
 

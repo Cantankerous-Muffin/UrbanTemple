@@ -8,7 +8,7 @@ define([
         List.Controller = {
           listSidenav: function() {
             require(["entities/sidenav"], function(){
-              var links = VirtualDojo.request('sidenav:entities');
+              var links = VirtualDojo.request('entities:sidenav:items');
               var menu = new View.Menu({collection: links});
 
               menu.on("brand:clicked", function(){
@@ -19,25 +19,25 @@ define([
 
               menu.on("childview:navigate", function(childView, model) {
                 var trigger = model.get("navigationTrigger");
-                //will trigger: "dashboard:list", "trainingvids:list" or "logout"
+
+                // see entities/sidenav for triggers
                 VirtualDojo.trigger(trigger);
 
-              })
+              });
 
               VirtualDojo.regions.sidenav.show(menu)
 
             });
           },
 
-          setActiveButton: function(buttonUrl) {
-            var links = VirtualDojo.request("button:entities");
-            var buttonToSelect = links.find(function(button){ return button.get("url") === headerUrl; });
-            buttonToSelect.select();
+          setActiveItem: function(itemUrl) {
+            var links = VirtualDojo.request("entities:sidenav:items");
+            var linkToSelect = links.find(function(item){ return item.get("url") === headerUrl; });
+            linkToSelect.select();
             links.trigger("reset");
           }
-
-
         }
-      })
+      });
     return VirtualDojo.SidenavApp.List.Controller;
-  })
+  }
+);
