@@ -40,7 +40,7 @@ app.use(session({
 // Routing
 app.use('/', routes);
 // app.use('/checkauth', routes);
-app.use('/users', users);
+// app.use('/users', users);
 app.use('/auth', auth);
 
 // checking authentication (auth_app line 31)
@@ -72,7 +72,6 @@ app.use(function(req,res,next){
     }
   }
 });
-
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?
