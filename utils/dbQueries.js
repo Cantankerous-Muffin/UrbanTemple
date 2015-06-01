@@ -21,53 +21,67 @@ var DBQuery = {
    * Will check if user already exists as Student or Instructor.
    * @username  {[Object]}  Contains info of user
    * @callback  {[Function]}  Callback function invoked on success if given
-   * @return    {[Boolean]} If successful
    */
   newStudent: function (user, callback) {
     //Make a DB query 
     //Check if username exists as student
-    new Student({
-      username: user.username
-    }).fetch()
-    .then(function(exists){
-      if(!exists){
+    db.knex('students')
+    .where('username', user.username)
+    .select('*')
+    .catch(function(err){
+      console.log(err);
+      if(callback){
+        callback({
+          result: false,
+          message: 'Sorry, internal server error.'
+        });
+      }
+    })
+    .then(function(exist){
+      if(!exist || exist.length===0){
         //Check if instructor uses that username
-        new Instructor({
-          username: user.username
-        }).fetch()
-        .then(function(exists){
-          if(!exists){
+        db.knex('instructors')
+        .where('username', user.username)
+        .select('*')
+        .then(function(exist){
+          if(!exist || exist.length===0){
             new Student(user)
             .save()
             .catch(function(err){
               console.log('Error in newStudent: ',err);
               if(callback){
-                callback(false);
+                callback({
+                  result: false,
+                  message: 'Sorry, internal server error.'
+                });
               }
-              return false;
             })
             .then(function(data){
               console.log('Saved new student user to DB.');
               if(callback){
-                callback(true);
+                callback({
+                  result: true,
+                });
               }
-              return true;
             });
           }else{
-            console.log('Instructor already used that username.');
+            // console.log('Instructor already used that username.');
             if(callback){
-                callback(false);
+                callback({
+                  result: false,
+                  message: 'Instructor already used that username.'
+                });
             }
-            return false;
           }
         });
-        //add student user to DB
       }else{
-        console.log('Student already used that username.');
+        // console.log('Student already used that username.');
         if(callback){
-          callback(false);
+          callback({
+            result: false,
+            message: 'Student already used that username.'
+          });
         }
-        return false;
       }
     });
   },
@@ -76,53 +90,66 @@ var DBQuery = {
    * Register a new Instructor into the DB.
    * Will check if username already exists as Student or Instructor.
    * @username  {[Object]}  Contains info of user
-   * @return    {[Boolean]} If successful
+   * @callback  {[Function]} Callback function
    */
   newInstructor: function (user, callback){
-    //Make a DB query 
-    //Check if username exists as student
-    new Student({
-      username: user.username
-    }).fetch().then(function(exists){
-      if(!exists){
+    db.knex('instructors')
+    .where('username', user.username)
+    .select('*')
+    .catch(function(err){
+      console.log(err);
+      if(callback){
+        callback({
+          result: false,
+          message: 'Sorry, internal server error.'
+        });
+      }
+    })
+    .then(function(exist){
+      if(!exist || exist.length===0){
         //Check if instructor uses that username
-        new Instructor({
-          username: user.username
-        }).fetch().then(function(exists){
-          if(!exists){
+        db.knex('students')
+        .where('username', user.username)
+        .select('*')
+        .then(function(exist){
+          if(!exist || exist.length===0){
             new Instructor(user)
             .save()
             .catch(function(err){
               console.log('Error in newInstructor: ',err);
               if(callback){
-                callback(false);
+                callback({
+                  result: false,
+                  message: 'Sorry, internal server error.'
+                });
               }
-              return false;
             })
             .then(function(data){
               console.log('Saved new Instructor user to DB.');
               if(callback){
-                callback(true);
+                callback({
+                  result: true,
+                });
               }
-              return true;
             });
           }else{
-            //instructor exists with that username
-            console.log('Instructor already used that username.');
+            // console.log('Instructor already used that username.');
             if(callback){
-              callback(false);
+                callback({
+                  result: false,
+                  message: 'Student already used that username.'
+                });
             }
-            return false;
           }
         });
-        //add student user to DB
       }else{
-        //account already exists
-        console.log('Student already used that username.');
+        // console.log('Student already used that username.');
         if(callback){
-          callback(false);
+          callback({
+            result: false,
+            message: 'Instructor already used that username.'
+          });
         }
-        return false;
       }
     });
   },
@@ -130,9 +157,10 @@ var DBQuery = {
   /**
    * Create a new class. WIll check if class title already exists.
    * @classInfo  {[Object]} Object with new class info
-   * @return {[Boolean]}  if successful
+   * @callback {[Function]}  Callback function
    */
   newClass: function(classInfo, callback){
+
     //check if class title already exists
     new Class({
       title: classInfo.title,
@@ -143,24 +171,29 @@ var DBQuery = {
         .catch(function(err){
           console.log('Error in newClass: ', err);
           if(callback){
-            callback(false);
+            callback({
+              result: false,
+              message: 'Internal server error.'
+            });
           }
-          return false;
         })
         .then(function(){
           console.log('Added new class to DB.');
           if(callback){
-            callback(true);
+            callback({
+              result: true
+            });
           }
-          return true;
         });
       }else{
         //class of that title already exists
-        console.log('Class of that title already exist.');
+        // console.log('Class of that title already exist.');
         if(callback){
-          callback(false);
+          callback({
+            result: false,
+            message: 'Class of that title already exist.'
+          });
         }
-        return false;
       }
     });
   },
@@ -169,9 +202,9 @@ var DBQuery = {
    * When student submits a video. Only one can exist at a time per student.
    * If student have submitted video to a class before, will overwrite that URL.
    * @vidInfo  {[Object]}
-   * @return {[Boolean]} if successful
+   * @callback {[Function]} 
    */
-  submitVid: function(vidInfo){
+  submitVid: function(vidInfo, callback){
     //check if a video under the students id already exists
     new StudentVid({
       student_id: vidInfo.student_id,
@@ -183,20 +216,28 @@ var DBQuery = {
         .catch(function(err){
           console.log('Error in submitVid: ', err);
           if(callback){
-            callback(false);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
           }
-          return false;
         })
         .then(function(){
           console.log('Saved new student video.');
           if(callback){
-            callback(true);
+            callback({
+              result: true
+            });
           }
-          return true;
         });
       }else{
         exists.save( { videoURL: vidInfo.videoURL }, {patch: true} );
-        console.log('Updated previous video URL');
+        if(callback){
+          callback({
+            result: true,
+            message: 'Overwrite previous URL'
+          });
+        }
       }
     });
   },
@@ -218,22 +259,38 @@ var DBQuery = {
         .save()
         .catch(function(err){
           console.log('Error in SubmitInsVid: ', err);
-          return false;
+          if(callback){
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          }
         })
         .then(function(){
           console.log('Created new instructor video for class id: ', vidInfo.class_id);
-          return true;
+          if(callback){
+            callback({
+              result: true,
+              message: ''
+            });
+          }
         });
       }else{
-        console.log('Video already exists for this class.');
-        return false;
+        // console.log('Video already exists for this class.');
+        if(callback){
+          callback({
+            result: false,
+            message: 'Video already exists for this class.'
+          });
+        }
       }
     });
   },
 
-  ///////////////
+
+  //============================================================================//
   //Get Queries//
-  ///////////////
+  //============================================================================//
   
   /**
    * Gets a single student's info from DB
@@ -457,6 +514,28 @@ var DBQuery = {
     });
   },
 
+  /**
+   * Get's info of all classes a student is in.
+   * @param  {[String]}   using    [Unique info to search with.]
+   * @param  {[String]}   info     [The actual info]
+   * @param  {Function} callback [Callback function]
+   * @return {[type]} [Will return [] of {}, or false on error.]
+   */
+  getClassesOfStudent: function(using, info, callback){
+    db.knex('classes')
+    .join('classes_students', 'classes_students.class_id', '=', 'classes.id')
+    .join('students', 'students.id', '=', 'classes_students.student_id')
+    .select('classes.*')
+    .where('students.'+using, info)
+    .catch(function(err){
+      console.log('Error in getClassesOfStudent: ', err);
+      return false;
+    })
+    .then(function(data){
+
+    });
+  },
+
 
 
   /////////////////////
@@ -573,14 +652,18 @@ var DBQuery = {
     .del()
     .catch(function(err){
       console.log('Error in delStudent: ',err);
-      return false;
+      if(callback){
+        callback(false);
+      }
     })
     .then(function(data){
-      console.log(username,' removed from Students table.');
-      if(callback){
-        callback(data);
+      if(data!==0){
+        // console.log(data,' removed from Instructor table.');
+        if(callback){
+          callback(data);
+        }
       }else{
-        return true;
+        callback(false);
       }
     });
   },
@@ -599,16 +682,16 @@ var DBQuery = {
       console.log('Error in delInstructor: ',err);
       if(callback){
         callback(false);
-      }else{
-        return false;
       }
     })
     .then(function(data){
-      console.log(username,' removed from Instructor table.');
-      if(callback){
-        callback(true);
+      if(data!==0){
+        // console.log(data,' removed from Instructor table.');
+        if(callback){
+          callback(data);
+        }
       }else{
-        return true;
+        callback(false);
       }
     });
   },
