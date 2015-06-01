@@ -3,9 +3,10 @@
 ////////////////////////////////////////
 
 var db = require('../app/config');
+var Class = require('../app/models/classes.js');
+var Discipline = require('../app/models/classes.js');
 var Student = require('../app/models/student.js');
 var Instructor = require('../app/models/instructor.js');
-var Class = require('../app/models/classes.js');
 var StudentVid = require('../app/models/studentVideos.js');
 var InsVid = require('../app/models/instrVideos.js');
 

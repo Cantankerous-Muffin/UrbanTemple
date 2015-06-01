@@ -18,7 +18,6 @@ db.knex.schema.hasTable('students').then(function(exists) {
       student.string('email', 100).unique();//.notNullable();
       student.string('firstName', 100);//.notNullable();
       student.string('lastName', 100);//.notNullable();
-      student.
       student.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
