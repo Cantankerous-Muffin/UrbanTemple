@@ -1,132 +1,110 @@
-Client/Server EndPoints
+/user/<username>
+User = {
+  username: STRING,
+  fullname: STRING
+  ranks: UserRank[] // [STUDENT]
+}
+UserRank = {
+  discipline: Discipline,
+  rankNum: INT,
+  rankTitle: STRING,
+  rankIcon: URL(STRING)
+}
 
------------------------------------------------------
-Login
------------------------------------------------------
-Client: Post
-  Data Type: JSON Object
-  Data: {
-    *key: String,
-    username: String,
-    password: String,
-  }
+--------------------------------
 
-Server: Response
-  Data Type: JSON Object
-  Data: Status Code
-  Redirect: Dashboard or Login
------------------------------------------------------
+/user/<username>/enrolled
+UserEnrolled = {
+  disciplines: Discipline[]
+}
 
------------------------------------------------------
-SignUp
------------------------------------------------------
-Client: Post
-  Data Type: JSON Object
-  Data: {
-    *key: String,
-    username: String,
-    password: String,
-    isStudent: Boolean,
-  }
+--------------------------------
 
-Server: Response
-  Data Type: JSON Object
-  Data: Status Code
-  Redirect: Dashboard or SignUp
------------------------------------------------------
+/user/<username>/progress
+UserProgress = {
+  progresses: Progress[]
+}
 
------------------------------------------------------
-Dashboard
------------------------------------------------------
-Client: GET
-  Data Type: JSON Object
-  
-Server: Response
-  Data Type: JSON Object
-  Data: {
-    *key: String,
-    profile: {
-      username: String,
-      //other profile data
-    },
-    classes: {
-      category1: {
-        className: {
-          instructor: String,
-          rank: Number,
-          progress: Number,
-          feedback: Boolean
-        }
-      }
-    }
-      //Example
-    classes:{
-      'Kendo': {
-        'Steps': {
-          instructor: 'Ken',
-          rank: 1,
-          progress: 2,
-          feedback: true
-        },
-        'Strike': {
-          instructor: 'Ken',
-          rank: 1,
-          progress: 1,
-          feedback: false
-        }
-      },
-      'QiGong': {
-        'QiGong Basics Part 1': {
-          instructor: 'Pranav',
-          rank: 1,
-          
-        }
-      }
-    }
-  }
------------------------------------------------------
+--------------------------------
 
------------------------------------------------------
-Dashboard ~ Instructor
------------------------------------------------------
-Client: GET
-  Data Type: JSON Object
-  
-Server: Response
-  Data Type: JSON Object
-  Data: {
-    profile: {
-      username: String,
-      //Other profile data
-    },
-    classes:[
-      {
-        className: String,
-        
-      }
-    ],
-    activities: [
-      {
-        student: {
-          name: String,
-        }
-      },
-    ]
-  }
+/user/<username>/progress/<discipline_id>
+Progress = { 
+  discipline: Discipline,
+  currentClass: Class,
+  percentage: INT, // eg. 34 (%)
+}
+
+--------------------------------
+
+/user/<username>/feedbacks
+UserFeedbacks = {
+  username: STRING,
+  feedbacks: Feedback[]
+}
+
+--------------------------------
+
+/discipline
+Disciplines = {
+  disciplines: Discipline[]
+}
+
+--------------------------------
+
+/discipline/<discipline_id>
+Discipline = {
+  disciplineId: INT,
+  title: STRING,
+  classes: Class[]
+}
+
+--------------------------------
+
+/class/<class_id>
+Class = {
+  disciplineId: INT,
+  classId: INT,
+  instructor: User,
+  title: STRING,
+  description: STRING
+}
+
+--------------------------------
+
+/class/<class_id>/level/<level_num>
+Level = {
+  levelNum: INT,
+  title: STRING,
+  description: STRING,
+  videoUrl: URL(STRING),
+  videoCheckNeeded: false,
+  prev: <level_num>,  // or null
+  next: <level_num>   // or null 
+}
+
+--------------------------------
+
+POST /feedback/submit
+=> {
+  username: STRING,
+  videoUrl: URL(STRING),
+  classId: INT
+}
+// [[BACKEND]] check enrollment, check duplicates
 
 
+--------------------------------
 
+/feedback/<feedback_id>  [AUTH: Instructor, Creator]
+Feedback = {
+  username: STRING,
+  videoUrl: URL(STRING),
+  class: Class
+}
 
+--------------------------------
 
-
-  This is a test
-
-
-
-
-
-
-
-
-
-
+/feedback/<feedback_id>/update [AUTH: Instructor]
+=> {
+  approve: Boolean // [AUTH: Instructor]
+}
