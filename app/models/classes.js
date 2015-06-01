@@ -6,8 +6,20 @@ var Classes = db.Model.extend({
   initialize: function(){
   },
 
-  discipline: function(){
+  disciplines: function(){
+    return this.belongsTo('Disciplines');
+  },
 
+  instructors: function(){
+    return this.belongsTo('Instructors');
+  },
+
+  levels: function(){
+    return this.hasMany('Levels', 'class_id');
+  },
+
+  feedbacks: function(){
+    return this.hasMany('Feedbacks', 'class_id');
   }
   
   // studentVideos: function() {

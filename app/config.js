@@ -18,6 +18,7 @@ db.knex.schema.hasTable('students').then(function(exists) {
       student.string('email', 100).unique();//.notNullable();
       student.string('firstName', 100);//.notNullable();
       student.string('lastName', 100);//.notNullable();
+      student.
       student.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -45,7 +46,12 @@ db.knex.schema.hasTable('disciplines').then(function(exists){
   if(!exists){
     db.knex.schema.createTable('disciplines', function(table){
       table.increments('id').primary(); 
-      table.string('name', 100).unique().notNullable();
+      table.string('title', 100).unique().notNullable();
+      //Rank
+      table.integer('rankNum', 100).unsigned();//.notNullable();
+      table.string('rankTitle', 100);//.notNullable();
+      table.string('rankIcon', 200);//.notNullable();
+
     });
   }
 });
@@ -54,10 +60,13 @@ db.knex.schema.hasTable('classes').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('classes', function (table) {
       table.increments('id').primary();
-      table.string('name', 255).unique().notNullable();
+      table.string('title', 255).unique().notNullable();
       table.text('description');
       table.string('image',255);
       table.timestamps();
+      //Progress
+      table.integer('currentLevelNum').unsigned();
+
       //Relations
       // instructor_id is a ForeignKey attached to instructor
       table.integer('instructor_id').unsigned().references('instructors.id');
@@ -74,6 +83,7 @@ db.knex.schema.hasTable('feedback').then(function(exists) {
     db.knex.schema.createTable('feedback', function (table) {
       table.increments('id').primary();
       table.string('videoURL',255);
+      table.boolean('approved').defaultTo(false);
       table.timestamps();
       
       //relations
@@ -82,7 +92,7 @@ db.knex.schema.hasTable('feedback').then(function(exists) {
       // instructor_id is a ForeignKey attached to instructor
       table.integer('instructor_id').unsigned().references('instructors.id'); 
       // class_id is a ForeignKey attached to class
-      table.integer('class_id');
+      table.integer('class_id').unsigned().references('classes.id');
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -92,7 +102,10 @@ db.knex.schema.hasTable('levels').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('levels', function (table) {
       table.increments('id').primary();
+      table.string('title',255).unique();
+      table.text('description');
       table.string('videoURL',255);
+      table.boolean('feedbackNeeded').defaultTo(false);
       table.timestamps();
 
       //relations
@@ -111,7 +124,7 @@ db.knex.schema.hasTable('instrKeys').then(function(exists) {
       table.string('key',255);
       table.boolean('used').defaultTo(false);
       table.timestamps();
-      
+
     }).then(function (table) {
       console.log('Created Table', table);
     });
