@@ -8,7 +8,7 @@ define([
         List.Controller = {
           listSidenav: function() {
             require(["entities/sidenav"], function(){
-              var links = VirtualDojo.request('sidenav:entities');
+              var links = VirtualDojo.request('entities:sidenav:items');
               var menu = new View.Menu({collection: links});
 
               menu.on("brand:clicked", function(){
