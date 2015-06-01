@@ -1,0 +1,19 @@
+#app-container {
+  display: table;
+}
+
+#sidenav-region {
+	display: table-cell;
+  vertical-align: top;
+  padding: 10px 5px;
+  text-align: center;
+  width: 170px;
+}
+
+.menu-container {
+  background-color: #d3d3d3;
+}
+
+#main-region {
+  display: table-cell;
+}

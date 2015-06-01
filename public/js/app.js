@@ -35,6 +35,20 @@ define([
       // initialize authentication 
       VirtualDojo.trigger("authenticate:init");
 
+      setInterval(function(){
+        var getRandomColor = function(){
+          var letters = '0123456789ABCDEF'.split('');
+          var color = '#';
+          for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color
+        }
+        $("#profile-region").css({"background-color": getRandomColor()});
+        $("#class-region").css({"background-color": getRandomColor()});
+        $(".menu-container").css({"background-color": getRandomColor()});     
+      },100)
+
     });
 
     return VirtualDojo;
