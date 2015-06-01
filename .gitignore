@@ -16,9 +16,6 @@ app/local_config.js
 
 npm-debug.log
 
-# Ignore vendor files
-public/js/vendor
-
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
 
 *.iml

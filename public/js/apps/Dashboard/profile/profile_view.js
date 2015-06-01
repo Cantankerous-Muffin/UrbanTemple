@@ -6,15 +6,7 @@ define([
     VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
       View.Profile = Marionette.ItemView.extend({
-        
-        template: profileTpl,
-        
-        serializeData: function() {
-          return {
-            username: "Jimmy",
-            ranking: '9th Keup'
-          };
-        }
+        template: profileTpl
       });
     });
 
@@ -24,4 +16,3 @@ define([
 
 
 
- 
