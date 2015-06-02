@@ -2,9 +2,13 @@ var expect = require('chai').expect;
 
 
 var db = require('../app/config');
-var Students = require('../app/models/student.js');
-var Instructors = require('../app/models/instructor.js');
-var Classes = require('../app/models/classes.js');
+var Class = require('../app/models/classes.js');
+var Feedback = require('../app/models/feedbacks.js');
+var Instructor = require('../app/models/instructor.js');
+var Level = require('../app/models/levels.js');
+var Progress = require('../app/models/progress.js');
+var Rank = require('../app/models/ranks.js');
+var Student = require('../app/models/student.js');
 var DBQuery = require('../utils/dbQueries.js');
 
 
@@ -52,7 +56,7 @@ describe('DB Testing:', function(){
 
   it('should not be able to register as Instructor with "Chai" username', function(done){
     // this.timeout(4000);
-    DBQuery.newInstructor(Chai, function(data){
+    DBQuery.newInstructor(Chai, '', function(data){
       expect(data.result).to.equal(false);
       done();
     });
@@ -78,7 +82,7 @@ describe('DB Testing:', function(){
 
   it('should insert "Chai" as instructor', function(done){
     // this.timeout(4000);
-    DBQuery.newInstructor(Chai, function(data){
+    DBQuery.newInstructor(Chai, '', function(data){
       db.knex('instructors')
       .where('username', Chai.username)
       .select('*')

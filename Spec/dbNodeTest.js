@@ -1,26 +1,36 @@
 var db = require('../app/config');
-var Students = require('../app/models/student.js');
-var Instructors = require('../app/models/instructor.js');
-var Classes = require('../app/models/classes.js');
+var Class = require('../app/models/classes.js');
+var Feedback = require('../app/models/feedbacks.js');
+var Instructor = require('../app/models/instructor.js');
+var Level = require('../app/models/levels.js');
+var Progress = require('../app/models/progress.js');
+var Rank = require('../app/models/ranks.js');
+var Student = require('../app/models/student.js');
 var DBQuery = require('../utils/dbQueries.js');
 
+var stu = {
+  username: 'Yen',
+  password: 'Yen',
+};
+var stu2 = {
+  username: 'Lin',
+  password: 'Lin',
+};
+var stu3 = {
+  username: 'Pamela',
+  password: 'Pamela',
+};
+var stu4 = {
+  username: 'Jason',
+  password: 'Jason',
+};
 
-// DBQuery.studentToClass('Yim', 'Karate');
-DBQuery.getStudentsUnderInstUsing('username', 'Ken', function(data){
-  console.log(data);
-});
-DBQuery.getInstOfStudentUsing('username', 'tim', function(data){
-  console.log('Teachers for student: \n',data);
-});
+// DBQuery.newInstructor(stu);
+// DBQuery.newInstructor(stu2);
+// DBQuery.newInstructor(stu3);
+// DBQuery.newInstructor(stu4);
 
-db.knex('classes_students')
-.select('*')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('classes_students');
-  console.log(data);
-  console.log('-------------------------');
-});
+
 db.knex('students')
 .select('id','username')
 .then(function(data){
@@ -29,20 +39,6 @@ db.knex('students')
   console.log(data);
   console.log('-------------------------');
 });
-// //Get classes of a single student
-// db.knex('students')
-// .join('classes_students', 'students.id', '=', 'classes_students.student_id')
-// .join('classes', 'classes_students.class_id', '=', 'classes.id')
-// .select('classes_students.id','students.username', 'classes.title')
-// .where({
-//   'classes.id': 1
-// })
-// .then(function(data){
-//   console.log('-------------------------');
-//   console.log('Student in class:');
-//   console.log(data);
-//   console.log('-------------------------');
-// });
 db.knex('instructors')
 .select('id','username')
 .then(function(data){
@@ -59,6 +55,36 @@ db.knex('classes')
   console.log(data);
   console.log('-------------------------');
 });
-
-
+db.knex('ranks')
+.select('*')
+.then(function(data){
+  console.log('-------------------------');
+  console.log('disciplines');
+  console.log(data);
+  console.log('-------------------------');
+});
+db.knex('feedback')
+.select('*')
+.then(function(data){
+  console.log('-------------------------');
+  console.log('feedback');
+  console.log(data);
+  console.log('-------------------------');
+});
+db.knex('levels')
+.select('id','title')
+.then(function(data){
+  console.log('-------------------------');
+  console.log('levels');
+  console.log(data);
+  console.log('-------------------------');
+});
+db.knex('progress')
+.select('*')
+.then(function(data){
+  console.log('-------------------------');
+  console.log('disciplines');
+  console.log(data);
+  console.log('-------------------------');
+});
 
