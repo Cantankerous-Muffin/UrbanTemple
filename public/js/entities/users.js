@@ -10,24 +10,15 @@ define(
 
           setTimeout(function(){
             var data = {
+              isInstructor: false,
               username: "ken",
               fullname: "Ken Kang",
               // ranks: null,
               ranks: [{
-                discipline: {
-                  disciplineId: 1,
-                  title: "Kendo",
-                  classes: [
-                    disciplineId: 1,
-                    classId: 5,
-                    instructor: User(Instructor),
-                    title: "Kendo 105: Head Strike",
-                    description: "learn the technique of head strike"
-                  ]
-                },
-                rankNum: 5,
-                rankTitle: "5th Keup",
-                rankIcon: ""
+              disciplineTitle: "Kendo",
+              rankNum: 5,
+              rankTitle: "Beginner",
+              rankIcon: null,
               }]
             }; // mock result from server
 
