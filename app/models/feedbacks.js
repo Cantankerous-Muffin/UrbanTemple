@@ -21,3 +21,4 @@ var Feedbacks = db.Model.extend({
 
 
 module.exports = db.model('Feedbacks', Feedbacks);
+

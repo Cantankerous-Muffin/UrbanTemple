@@ -17,3 +17,5 @@ var Ranks = db.Model.extend({
 
 
 module.exports = db.model('Ranks', Ranks);
+
+

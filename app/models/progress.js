@@ -18,3 +18,5 @@ var Progress = db.Model.extend({
 
 
 module.exports = db.model('Progress', Progress);
+
+
