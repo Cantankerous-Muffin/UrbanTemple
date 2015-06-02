@@ -15,7 +15,7 @@ var Student        = require('../app/models/student');
 var Instructor        = require('../app/models/instructor');
 var auth         = require('./../routes/auth');
 var student         = require('./../routes/student');
-
+var api         = require('./../routes/api');
 // Authentication
 var LocalStrategy = require('passport-local').Strategy;
 

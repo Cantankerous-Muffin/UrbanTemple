@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var studentRoute = require('student');
+var studentRoute = require('./student');
 
 router.use('/student', studentRoute);
+
+module.exports = router;
