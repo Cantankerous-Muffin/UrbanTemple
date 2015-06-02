@@ -10,13 +10,29 @@ define(
 
           setTimeout(function(){
             var data = {
-              username: "ken",
-              fullname: "Ken Kang",
-              ranks: []
+              isInstructor: false,
+              firstname: "Ken",
+              lastname: "Kang",
+              // ranks: null,
+              ranks: 
+              [
+              {
+                disciplineTitle: "Kendo",
+                rankNum: 5,
+                rankTitle: "Beginner",
+                rankIcon: null,
+              },              
+              {
+                disciplineTitle: "Qigong",
+                rankNum: 10,
+                rankTitle: "Advanced",
+                rankIcon: null,
+              }
+              ]
             }; // mock result from server
 
             defer.resolve(data);
-          }, 1200);
+          }, 600);
 
           return defer.promise();
 

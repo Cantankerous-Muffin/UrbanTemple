@@ -10,6 +10,8 @@ var Level = require('../app/models/levels.js');
 var Progress = require('../app/models/progress.js');
 var Rank = require('../app/models/ranks.js');
 var Student = require('../app/models/student.js');
+// var StudentVid = require('../app/models/studentVideos.js');
+// var InsVid = require('../app/models/instrVideos.js');
 
 
 var DBQuery = {
