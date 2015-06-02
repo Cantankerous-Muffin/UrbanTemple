@@ -52,7 +52,7 @@ describe('DB Testing:', function(){
 
   it('should not be able to register as Instructor with "Chai" username', function(done){
     // this.timeout(4000);
-    DBQuery.newInstructor(Chai, function(data){
+    DBQuery.newInstructor(Chai, '', function(data){
       expect(data.result).to.equal(false);
       done();
     });
@@ -78,7 +78,7 @@ describe('DB Testing:', function(){
 
   it('should insert "Chai" as instructor', function(done){
     // this.timeout(4000);
-    DBQuery.newInstructor(Chai, function(data){
+    DBQuery.newInstructor(Chai, '', function(data){
       db.knex('instructors')
       .where('username', Chai.username)
       .select('*')

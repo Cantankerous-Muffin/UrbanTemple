@@ -4,11 +4,11 @@
 
 var db = require('../app/config');
 var Class = require('../app/models/classes.js');
-var Discipline = require('../app/models/classes.js');
-var Student = require('../app/models/student.js');
+var Discipline = require('../app/models/discipline.js');
+var Feedback = require('../app/models/feedbacks.js');
 var Instructor = require('../app/models/instructor.js');
-var StudentVid = require('../app/models/studentVideos.js');
-var InsVid = require('../app/models/instrVideos.js');
+var Level = require('../app/models/levels.js');
+var Student = require('../app/models/student.js');
 
 
 var DBQuery = {
@@ -93,7 +93,7 @@ var DBQuery = {
    * @username  {[Object]}  Contains info of user
    * @callback  {[Function]} Callback function
    */
-  newInstructor: function (user, callback){
+  newInstructor: function (user, key, callback){
     db.knex('instructors')
     .where('username', user.username)
     .select('*')
@@ -114,25 +114,48 @@ var DBQuery = {
         .select('*')
         .then(function(exist){
           if(!exist || exist.length===0){
-            new Instructor(user)
-            .save()
-            .catch(function(err){
-              console.log('Error in newInstructor: ',err);
-              if(callback){
-                callback({
-                  result: false,
-                  message: 'Sorry, internal server error.'
-                });
-              }
-            })
-            .then(function(data){
-              console.log('Saved new Instructor user to DB.');
-              if(callback){
-                callback({
-                  result: true,
-                });
-              }
-            });
+            // db.knex('keys')
+            // .where('key', key)
+            // .then(function(exist){
+            //   if(!exits || exist.length===0){
+            //     if(callback){
+            //       callback({
+            //         result: false,
+            //         message: 'Key does not exist. Make sure Key is proper.'
+            //       });
+            //     }
+            //   }else{
+            //     if(exist.used){
+            //       if(callback){
+            //         callback({
+            //           result: false,
+            //           message: 'That key has been used.'
+            //         });
+            //       }
+            //     }else{
+                  new Instructor(user)
+                  .save()
+                  .catch(function(err){
+                    console.log('Error in newInstructor: ',err);
+                    if(callback){
+                      callback({
+                        result: false,
+                        message: 'Sorry, internal server error.'
+                      });
+                    }
+                  })
+                  .then(function(data){
+                    console.log('Saved new Instructor user to DB.');
+                    // exist.save( { used: true }, {patch: true} );
+                    if(callback){
+                      callback({
+                        result: true,
+                      });
+                    }
+                  });
+            //     }
+            //   }
+            // });
           }else{
             // console.log('Instructor already used that username.');
             if(callback){
@@ -199,23 +222,54 @@ var DBQuery = {
     });
   },
 
+  newDiscipline: function(infoObject, callback){
+    new Discipline({
+      title: infoObject.title
+    }).fetch()
+    .then(function(exist){
+      if(!exist){
+        new Discipline(infoObject)
+        .save()
+        .then(function(data){
+          if(callback){
+            callback({
+              result: true
+            });
+          }
+        });
+      }else{ 
+        if(callback){
+          callback({
+            result: false,
+            message: 'Discipline of that title already used.'
+          });
+        }
+      }
+    });
+  },
+
   /**
    * When student submits a video. Only one can exist at a time per student.
    * If student have submitted video to a class before, will overwrite that URL.
    * @vidInfo  {[Object]}
    * @callback {[Function]} 
    */
-  submitVid: function(vidInfo, callback){
+  submitFeedback: function(infoObject, callback){
     //check if a video under the students id already exists
-    new StudentVid({
-      student_id: vidInfo.student_id,
-      class_id: vidInfo.class_id
-    }).fetch().then(function(exists){
-      if(!exists){
-        new StudentVid(vidInfo)
+    db.knex('feedback')
+    .where({
+      videoURL: infoObject.videoURL,
+      student_id: infoObject.student_id,
+      instructor_id: infoObject.instructor_id,
+      class_id: infoObject.class_id
+    })
+    .select('*')
+    .then(function(exist){
+      if(!exist || exist.length===0){
+        new Feedback(infoObject)
         .save()
         .catch(function(err){
-          console.log('Error in submitVid: ', err);
+          console.log(err);
           if(callback){
             callback({
               result: false,
@@ -223,8 +277,7 @@ var DBQuery = {
             });
           }
         })
-        .then(function(){
-          console.log('Saved new student video.');
+        .then(function(data){
           if(callback){
             callback({
               result: true
@@ -232,13 +285,14 @@ var DBQuery = {
           }
         });
       }else{
-        exists.save( { videoURL: vidInfo.videoURL }, {patch: true} );
-        if(callback){
-          callback({
-            result: true,
-            message: 'Overwrite previous URL'
-          });
-        }
+        exist.save( infoObject, {patch: true} )
+        .then(function(data){
+          if(callback){
+            callback({
+              result:true,
+            });
+          }
+        });
       }
     });
   },
@@ -249,39 +303,36 @@ var DBQuery = {
    * @vidInfo  {[Object]} Information on the new video.
    * @return {[Boolean]}  If successful
    */
-  submitInsVid: function (vidInfo){
-    new InsVid({
-      class_id: vidInfo.class_id,
-      instructor_id: vidInfo.instructor_id,
-      videoURL: vidInfo.videoURL,
-    }).fetch().then(function(exists){
-      if(!exists){
-        new InsVid(vidInfo)
+  newLevel: function (infoObject, callback){
+    new Level({
+      class_id: infoObject.class_id,
+      title: infoObject.title,
+    }).fetch()
+    .then(function(exist){
+      if(!exist){
+        new Level(infoObject)
         .save()
         .catch(function(err){
-          console.log('Error in SubmitInsVid: ', err);
+          console.log(err);
           if(callback){
             callback({
               result: false,
-              message: 'Internal Server Error.'
+              message: 'Internal Server Error'
             });
           }
         })
-        .then(function(){
-          console.log('Created new instructor video for class id: ', vidInfo.class_id);
+        .then(function(data){
           if(callback){
             callback({
-              result: true,
-              message: ''
+              result: true
             });
           }
         });
       }else{
-        // console.log('Video already exists for this class.');
         if(callback){
           callback({
             result: false,
-            message: 'Video already exists for this class.'
+            message: 'Title already used.'
           });
         }
       }
