@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
 	// DBQuery.getStudentUsing('username', req.username, function(data){
 	//   	res.json(data);
 	// });
-	res.end('get to feedback of student without any parameters '+ req.get('host') + req.originalUrl);
+	res.end('get to level of student in class '+ req.get('host') + req.originalUrl);
 });
 
 module.exports = router;
