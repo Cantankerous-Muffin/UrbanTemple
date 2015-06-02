@@ -40,10 +40,10 @@ app.use(session({
 
 // Routing
 app.use('/', routes);
+app.use('/api', api);
 // app.use('/checkauth', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
-app.use('/student', student);
 
 // checking authentication (auth_app line 31)
 // app.use(function(req,res,next){
