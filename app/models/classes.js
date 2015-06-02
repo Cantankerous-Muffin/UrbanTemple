@@ -6,8 +6,12 @@ var Classes = db.Model.extend({
   initialize: function(){
   },
 
-  disciplines: function(){
-    return this.belongsTo('Disciplines');
+  students: function(){
+    return this.belongsToMany('Students');
+  },
+
+  progress: function(){
+    return this.hasMany('Progress', 'class_id');
   },
 
   instructors: function(){
@@ -21,19 +25,6 @@ var Classes = db.Model.extend({
   feedbacks: function(){
     return this.hasMany('Feedbacks', 'class_id');
   }
-  
-  // studentVideos: function() {
-  //   return this.hasMany('StudentVideos', 'class_id');
-  // },
-  // student: function() {
-  //   return this.belongsToMany(Students);
-  // },
-  // instructor: function() {
-  //   return this.hasOne('Instructors');
-  // },
-  // instructorVideos: function() {
-  //   return this.hasMany('InstrVideos','class_id');
-  // }
 });
 
 

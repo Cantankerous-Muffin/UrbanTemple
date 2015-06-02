@@ -41,39 +41,21 @@ db.knex.schema.hasTable('instructors').then(function(exists) {
   }
 });
 
-db.knex.schema.hasTable('disciplines').then(function(exists){
+db.knex.schema.hasTable('ranks').then(function(exists){
   if(!exists){
-    db.knex.schema.createTable('disciplines', function(table){
+    db.knex.schema.createTable('ranks', function(table){
       table.increments('id').primary(); 
-      table.string('title', 100).unique().notNullable();
-      //Rank
-      table.integer('rankNum', 100).unsigned();//.notNullable();
-      table.string('rankTitle', 100);//.notNullable();
-      table.string('rankIcon', 200);//.notNullable();
+      table.string('title', 100);
+      table.integer('num').unsigned();//.notNullable();
+      table.string('icon', 200);//.notNullable();
 
-    });
-  }
-});
-
-db.knex.schema.hasTable('classes').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('classes', function (table) {
-      table.increments('id').primary();
-      table.string('title', 255).unique().notNullable();
-      table.text('description');
-      table.string('image',255);
-      table.timestamps();
-      //Progress
-      table.integer('currentLevelNum').unsigned();
-
-      //Relations
-      // instructor_id is a ForeignKey attached to instructor
+      //relations
+      table.integer('student_id').unsigned().references('students.id');
       table.integer('instructor_id').unsigned().references('instructors.id');
-      // discipline_id is a ForeignKey attached to disciplines
-      table.integer('discipline_id').unsigned().references('disciplines.id');
+
     }).then(function (table) {
       console.log('Created Table', table);
-    });
+    }); 
   }
 });
 
@@ -97,6 +79,43 @@ db.knex.schema.hasTable('feedback').then(function(exists) {
     });
   }
 });
+
+db.knex.schema.hasTable('classes').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('classes', function (table) {
+      table.increments('id').primary();
+      table.string('title', 255).unique().notNullable();
+      table.text('description');
+      table.string('image',255);
+      table.timestamps();
+
+      //Relations
+      // instructor_id is a ForeignKey attached to instructor
+      table.integer('instructor_id').unsigned().references('instructors.id');
+      
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
+db.knex.schema.hasTable('progress').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('progress', function (table) {
+      table.increments('id').primary();
+      table.integer('level');
+
+      //Relations
+      table.integer('student_id').unsigned().references('students.id');
+      table.integer('class_id').unsigned().references('classes.id');
+
+      
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
 db.knex.schema.hasTable('levels').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('levels', function (table) {
@@ -132,29 +151,14 @@ db.knex.schema.hasTable('instrKeys').then(function(exists) {
 
 //Joing Tables
 //Disciplines to Students
-db.knex.schema.hasTable('disciplines_students').then(function(exists) {
+db.knex.schema.hasTable('classes_students').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('disciplines_students', function (table) {
+    db.knex.schema.createTable('classes_students', function (table) {
       table.increments('id').primary();
 
       //relations
-      table.integer('discipline_id').unsigned().references('disciplines.id');
+      table.integer('class_id').unsigned().references('classes.id');
       table.integer('student_id').unsigned().references('students.id');
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
-
-//Disciplines to Instructors
-db.knex.schema.hasTable('disciplines_instructors').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('disciplines_instructors', function (table) {
-      table.increments('id').primary();
-
-      //relations
-      table.integer('discipline_id').unsigned().references('disciplines.id');
-      table.integer('instructor_id').unsigned().references('instructors.id');
     }).then(function (table) {
       console.log('Created Table', table);
     });

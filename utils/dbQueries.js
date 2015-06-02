@@ -4,10 +4,11 @@
 
 var db = require('../app/config');
 var Class = require('../app/models/classes.js');
-var Discipline = require('../app/models/discipline.js');
 var Feedback = require('../app/models/feedbacks.js');
 var Instructor = require('../app/models/instructor.js');
 var Level = require('../app/models/levels.js');
+var Progress = require('../app/models/progress.js');
+var Rank = require('../app/models/ranks.js');
 var Student = require('../app/models/student.js');
 
 
@@ -188,6 +189,7 @@ var DBQuery = {
     //check if class title already exists
     new Class({
       title: classInfo.title,
+      discipline: classInfo.discipline
     }).fetch().then(function(exists){
       if(!exists){
         new Class(classInfo)
@@ -362,16 +364,45 @@ var DBQuery = {
       if(!data || data.length===0){
         console.log('Student does not exist');
         if(callback){ callback(false); }
-        return false;
       }else if(data.length>1){
         console.log('Warning: More then one student found.');
         if(callback){ callback(data); }
-        return data[0];
       }else{
         if(callback){ callback(data[0]); }
-        return data[0];
       }
     });
+  },
+
+  getUserRankUsing: function(using, info, isInstructor, callback){
+    if(!isInstructor){
+      db.knex('disciplines')
+      .join('disciplines_students', 'disciplines.id', '=', 'disciplines_students.discipline_id')
+      .join('students', 'disciplines_students.student_id', '=', 'students.id')
+      .where('students.'+using, info)
+      .select('disciplines.*', 'students.username', 'students.firstName', 'students.lastName')
+      .catch(function(err){
+        console.log(err);
+      })
+      .then(function(data){
+        if(callback){
+          callback(data);
+        }
+      });
+    }else{
+      db.knex('disciplines')
+      .join('disciplines_instructors', 'disciplines.id', '=', 'disciplines_instructors.discipline_id')
+      .join('instructors', 'disciplines_instructors.instructor_id', '=', 'isntructors.id')
+      .where('instructors.'+using, info)
+      .select('disciplines.*', 'instructors.username', 'instructors.firstName', 'instructors.lastName')
+      .catch(function(err){
+        console.log(err);
+      })
+      .then(function(data){
+        if(callback){
+          callback(data);
+        }
+      });
+    }
   },
 
   /**
@@ -514,7 +545,6 @@ var DBQuery = {
     })
     .then(function(exists){
       if(!exists || exists.length===0){
-        console.log('No students found.');
         return false;
       }else{
         db.knex('instructors')
@@ -549,7 +579,6 @@ var DBQuery = {
     })
     .then(function(exists){
       if(!exists || exists.length===0){
-        console.log('No teachers found.');
         return false;
       }else{
         db.knex('students')
@@ -601,7 +630,7 @@ var DBQuery = {
    * @classID  {[String]}   Class ID
    * @return {[Boolean]}    If successful
    */
-  studentToClass: function(studentUser, classTitle, callback){
+  studentToClass: function(studentID, classID, callback){
     
     //check if studentID and classID are valid
     var student = new Student({username: studentUser});
@@ -614,7 +643,6 @@ var DBQuery = {
         if(callback){
           callback(false);
         }
-        return false;
       }else{
         checkClass();
       }
@@ -624,7 +652,6 @@ var DBQuery = {
       if(callback){
         callback(false);
       }
-      return false;
     });
 
 
@@ -636,7 +663,6 @@ var DBQuery = {
           if(callback){
             callback(false);
           }
-          return false;
         }else{
           asignStudent();
         }
@@ -646,7 +672,6 @@ var DBQuery = {
         if(callback){
           callback(false);
         }
-        return false;
       });
     };
 
@@ -667,13 +692,11 @@ var DBQuery = {
           if(callback){
             callback(true);
           }
-          return true;
         }else{
           console.log('That student is already in that class.');
           if(callback){
             callback(false);
           }
-          return false;
         }
       })
       .catch(function(err){
@@ -681,7 +704,6 @@ var DBQuery = {
         if(callback){
           callback(false);
         }
-        return false;
       });
     };
   },
