@@ -1,7 +1,3 @@
-<div id="profile-region">
-	
-</div>
-
-<div id="class-region">
-	<h2>My Classes</h2>
-</div>
+<div id="profile-region"></div>
+<hr>
+<div id="progress-region"></div>

@@ -39,9 +39,10 @@ DisciplineProgress[]
 
 return:
 DisciplineProgress = { 
-  discipline: Discipline,
+  discipline: Discipline,  
   currentClassId: INT,
   currentLevelNum: INT,
+  currentLevel: Level, // **CHANGE
   percentage: INT // eg. 34 (%)
 }
 
@@ -94,6 +95,7 @@ Class = {
 /class/<class_id>/level
 
 return: Level[]
+
 
 /class/<class_id>/level/<level_num>
 

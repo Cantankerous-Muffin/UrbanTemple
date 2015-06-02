@@ -12,7 +12,7 @@ define([
 
         regions: {
           profileRegion: "#profile-region",
-          classRegion: "#class-region"
+          progressRegion: "#progress-region"
         }
       });
     });
