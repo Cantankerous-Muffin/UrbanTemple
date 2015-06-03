@@ -16,9 +16,6 @@ define([
             console.log("navigating to dashboard")
             VirtualDojo.trigger("show:dashboard");
           }
-          if(VirtualDojo.getCurrentRoute() === "training") {
-            VirtualDojo.trigger("show:training");
-          }
         }
 	    }
     });	

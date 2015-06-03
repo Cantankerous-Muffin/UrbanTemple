@@ -10,7 +10,7 @@ User = { // Student or Instructor
   isInstructor: BOOLEAN,
   username: STRING,
   fullname: STRING,
-  ranks: UserRank[] // array of UserRank objects defined in line 16
+  ranks: UserRank[] // array of UserRank objects 
 }
 
 UserRank = {
@@ -28,15 +28,19 @@ UserRank = {
 /user/<username>/progress     
 
 return:
-DisciplineProgress[] // array of DisciplineProgress objects defined in line 33
+DisciplineProgress[] // array of DisciplineProgress objects 
 
 DisciplineProgress = { 
   discipline: Discipline{},  
-  currentClassId: INT,
+  currentClassNum: INT,
   currentLevelNum: INT,
   currentLevel: Level{},
   percentage: INT // eg. 34 (%)
 }
+
+>> discipline, class, level routes should check session user's progress, to see if
+   the resource is accessible for it, if not should return 403 Forbidden
+<<
 
 -------------GET---------------
 ///////////////////////////////
@@ -46,13 +50,18 @@ DisciplineProgress = {
 /discipline   
 
 return:
-Discipline[]  // array of Discipline objects defined in line 51
+Discipline[]  // array of Discipline objects
 
+/discipline/<discipline_id>
+
+return:
 Discipline = {
   disciplineId: INT,
   title: STRING,
+  description: STRING, 
   disciplineLogo: STRING (URL),
-  classes: Class[]
+  classes: Class[],
+  totalClass: INT
 }
 
 -------------GET---------------
@@ -60,29 +69,40 @@ Discipline = {
 //        Page: Class        //
 ///////////////////////////////
 
-/class/<class_id>
+/discipline/<discipline_id>/class
+
+return:
+Class[]
+
+/discipline/<discipline_id>/class/<class_num>
 
 return:
 Class = {
-  classId: INT,
+  classNum: INT,
   disciplineId: INT,
   instructorId: INT,
+  instructorName: STRING, 
+  instructorRank: INT,
+  instructorRankTitle: STRING,
   title: STRING,
   description: STRING,
   classImage: STRING (URL),
   totalLevel: INT  //how many levels there are in this particular class
 }
 
-/class/<class_id>/level
 
-return: Level[]  // array of Level objects defined in line 87
 
 -------------GET---------------
 ///////////////////////////////
 //        Page: Level        //
 ///////////////////////////////
 
-/class/<class_id>/level/<level_num>
+/discipline/<discipline_id>/class/<class_num>/level
+
+return: Level[]  // array of Level objects 
+
+
+/discipline/<discipline_id>/class/<class_num>/level/<level_num>
 
 return:
 Level = {
@@ -91,8 +111,8 @@ Level = {
   description: STRING,
   videoUrl: URL(STRING),
   feedbackNeeded: false,
-  prev: <level_num>,  // or null
-  next: <level_num>   // or null 
+  prev: Boolean,
+  next: Boolean
 }
 
 
@@ -104,7 +124,7 @@ Level = {
 /user/<username>/feedbacks    [AUTH: if user is an Instructor, need to match]
 
 return:
-UserFeedbacks = Feedback[]  // array of Feedback objects defined in line 117
+UserFeedbacks = Feedback[]  // array of Feedback objects
 
 
 -------------GET---------------
@@ -143,6 +163,8 @@ return: Feedback
 //////////////////////////////////////
 //    Page: Feedback (instructor)   //
 //////////////////////////////////////
+
+>> if approved, should also update user progress, (and RANK!!) <<
 
 /feedback/<feedback_id>/update   [AUTH: Instructor (*only instructor can update)]
 request:

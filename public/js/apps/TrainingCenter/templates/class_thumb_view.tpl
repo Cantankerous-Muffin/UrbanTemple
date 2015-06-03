@@ -1,1 +1,5 @@
-<h3><%= title %></h3>
+<div class="foo">
+	<h5><%= title %></h5>
+	<img src=" <%= classImage %> ">
+	<div><%= description %></div>
+</div>

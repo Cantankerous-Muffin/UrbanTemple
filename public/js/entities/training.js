@@ -21,6 +21,7 @@ define(
                               instructorId: 1,
                               title: "Kendo 101: Philsophy",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -29,6 +30,7 @@ define(
                               instructorId: 2,
                               title: "Kendo 102: Grip & Steps & Middle Stance ",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -37,6 +39,7 @@ define(
                               instructorId: 3,
                               title: "Kendo 103: Strikes - Basic",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -45,6 +48,7 @@ define(
                               instructorId: 4,
                               title: "Kendo 104: Strikes - Intermediate",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -53,6 +57,7 @@ define(
                               instructorId: 5,
                               title: "Kendo 105: Strikes - Advanced",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -61,6 +66,7 @@ define(
                               instructorId: 6,
                               title: "Kendo 106: Sparring",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             }
                           ]
@@ -76,6 +82,7 @@ define(
                               instructorId: 1,
                               title: "Qigong 101: Philsophy",
                               description: "This class covers the basics of Qigong",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -84,6 +91,7 @@ define(
                               instructorId: 2,
                               title: "Qigong 102: Grip & Steps & Middle Stance ",
                               description: "This class covers the basics of Qigong",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -92,6 +100,7 @@ define(
                               instructorId: 3,
                               title: "Qigong 103: Strikes - Basic",
                               description: "This class covers the basics of Qigong",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -100,6 +109,7 @@ define(
                               instructorId: 4,
                               title: "Qigong 104: Strikes - Intermediate",
                               description: "This class covers the basics of Qigong",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -108,6 +118,7 @@ define(
                               instructorId: 5,
                               title: "Qigong 105: Strikes - Advanced",
                               description: "This class covers the basics of Qigong",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             },
                             {
@@ -116,6 +127,7 @@ define(
                               instructorId: 6,
                               title: "Kendo 106: Sparring",
                               description: "This class covers the basics of Kendo",
+                              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
                               totalLevel: 5
                             }
                           ]

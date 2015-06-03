@@ -11,6 +11,8 @@ define(
         default: {
           disciplineId: null,
           title: "",
+          description: "",
+          disciplineLogo: "",
           classes: null
         },
         initialize: function() {

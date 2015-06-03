@@ -18,7 +18,6 @@ define([
               .done(function(data){
                 var disciplines = data;
                 if (disciplines) {
-
                   // instantiate disciplineCollection and models 
                   var disciplineCollection = new DisciplineModels.Disciplines();
                   disciplines.forEach(function(discipline) {
@@ -26,9 +25,9 @@ define([
                   });
                 }
                 
-                var kendoModel = disciplineCollection.models[0]
-                var qigongModel = disciplineCollection.models[1]
-                
+                var kendoModel = disciplineCollection.models[0];
+                var qigongModel = disciplineCollection.models[1];
+
                 trainingLayoutView.kendoRegion.show(new TrainingView.ClassList({
                   model: kendoModel,
                   collection: kendoModel.get("classes"),

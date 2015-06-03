@@ -1,4 +1,4 @@
 <h2><%= title %></h2>
-<p><%= description %></p>
+<h4><%= description %></h4>
 
 <div class="training-container"></div>
