@@ -9,6 +9,17 @@ define([
       // single class item view
       View.Progress = Marionette.ItemView.extend({
         template: progressViewTpl,
+        events: {
+          "click div": "clickVideo"
+        },
+
+        clickVideo: function(e){
+          e.preventDefault();
+          this.trigger("show:video", this.model)
+          console.log('show:video triggered');
+        },
+
+
         serializeData: function() {
           var model = this.model;
 
