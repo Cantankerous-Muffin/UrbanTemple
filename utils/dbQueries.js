@@ -465,8 +465,12 @@ var DBQuery = {
     newProgress = new Progress({
       student_id: studentID,
       class_id: classID,
+      levelNum: 1,
     });
-    newProgress.fetch()
+    new Progress({
+      student_id: studentID,
+      class_id: classID,
+    }).fetch()
     .catch(function(err){
       console.log(err);
       if(callback){
