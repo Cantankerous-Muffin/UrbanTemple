@@ -9,7 +9,7 @@ var session      = require('express-session');
 
 // Routes
 var routes       = require('./../routes/index');
-var users        = require('./../routes/users');
+var users        = require('./../routes/user');
 var dashboard    = require('./../routes/dashboard');
 var Student        = require('../app/models/student');
 var Instructor        = require('../app/models/instructor');

@@ -14,16 +14,6 @@ router.use('/:username/enrolled', enrolledRoute);
 router.use('/:username/progress', progressRoute);
 router.use('/:username/feedback', feedbackRoute);
 
-router.get('/', function(req, res) {
-  // query 'students' table with username and return first and last name, and all ranks for all classes
-  // req.url contains username
-
-	// DBQuery.getStudentUsing('username', req.username, function(data){
-	//   	res.json(data);
-	// });
-	res.end('Get to student without any other parameters '+ req.get('host') + req.originalUrl);
-});
-
 router.get('/:username', function(req, res) {
   // query 'students' table with username and return first and last name, and all ranks for all classes
   // req.url contains username

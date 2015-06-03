@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-var studentRoute = require('./student');
+var userRoute = require('./user');
 var classRoute = require('./class');
 var feedbackRoute = require('./feedbackPOST');
 
-router.use('/student', studentRoute);
+router.use('/user', userRoute);
 router.use('/class', classRoute);
 router.use('/feedback', feedbackRoute);
 
