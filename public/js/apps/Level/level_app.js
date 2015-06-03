@@ -25,14 +25,10 @@ define([
       });
 
       LevelApp.on("start", function(){
-        console.log('LevelApp starting:', LevelApp)
-        console.log("VD", VirtualDojo)
         new LevelApp.Router({
           controller: API
         });
       });
-
-
 
     });
     return VirtualDojo.LevelApp 
