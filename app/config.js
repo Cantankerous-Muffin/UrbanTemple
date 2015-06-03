@@ -48,6 +48,7 @@ db.knex.schema.hasTable('ranks').then(function(exists){
       table.string('title', 100);
       table.integer('num').unsigned();//.notNullable();
       table.string('icon', 200);//.notNullable();
+      table.string('discipline', 100);
 
       //relations
       table.integer('student_id').unsigned().references('students.id');
@@ -87,6 +88,7 @@ db.knex.schema.hasTable('classes').then(function(exists) {
       table.string('title', 255).unique().notNullable();
       table.text('description');
       table.string('image',255);
+      table.string('discipline', 100);
       table.timestamps();
 
       //Relations
