@@ -4,14 +4,13 @@
 
 var db = require('../app/config');
 var Class = require('../app/models/classes.js');
+var Discipline = require('../app/models/disciplines.js');
 var Feedback = require('../app/models/feedbacks.js');
 var Instructor = require('../app/models/instructor.js');
 var Level = require('../app/models/levels.js');
 var Progress = require('../app/models/progress.js');
 var Rank = require('../app/models/ranks.js');
 var Student = require('../app/models/student.js');
-// var StudentVid = require('../app/models/studentVideos.js');
-// var InsVid = require('../app/models/instrVideos.js');
 
 
 var DBQuery = {
@@ -181,19 +180,118 @@ var DBQuery = {
     });
   },
 
-  setRank: function(userID, discipline, rankInfo, isInstructor){
+  setRank: function(userID, discipline, rankInfo, isInstructor, callback){
     if(!isInstructor){
       db.knex('students')
-      .join('ranks', 'students.id', '=', 'ranks.stuent_id')
+      .join('ranks', 'students.id', '=', 'ranks.student_id')
+      .join('disciplines', 'ranks.discipline_id', '=', 'disciplines.id')
       .where({
         'students.id': userID,
-        'ranks.discipline': discipline
+        'disciplines.title': discipline
       })
-      .then(function(){
+      .then(function(exist){
+        if(!exist || exist.length===0){
+          new Rank({
+            'student_id': userID,
+            'discipline_id': discipline,
+            rankTitle: rankInfo.rankTitle,
+            rankNum: rankInfo.rankNum,
+            rankIcon: rankInfo.rankIcon,
+          }).save()
+          .catch(function(err){
+            console.log(err);
+            if(callback){
+              callback({
+                result: false,
+                message: 'Internal Server Error.'
+              });
+            }
+          })
+          .then(function(){
+            if(callback){
+              callback({
+                result: true,
+              });
+            }
+          });
+        }else{
+          exist.save(rankInfo, {patch: true})
+          .catch(function(err){
+            console.log(err);
+            if(callback){
+              callback({
+                result: false,
+                message: 'Internal Server Error.'
+              });
+            }
+          })
+          .then(function(){
+            if(callback){
+              callback({
+                result: true,
+              });
+            }
+          });
+
+        }
+
+      });
+    }else{
+      db.knex('instructors')
+      .join('ranks', 'instructors.id', '=', 'ranks.instructor_id')
+      .join('disciplines', 'ranks.discipline_id', '=', 'disciplines.id')
+      .where({
+        'instructors.id': userID,
+        'disciplines.title': discipline
+      })
+      .then(function(exist){
+        if(!exist || exist.length===0){
+          new Rank({
+            'instructor_id': userID,
+            'discipline_id': discipline,
+            rankTitle: rankInfo.rankTitle,
+            rankNum: rankInfo.rankNum,
+            rankIcon: rankInfo.rankIcon,
+          }).save()
+          .catch(function(err){
+            console.log(err);
+            if(callback){
+              callback({
+                result: false,
+                message: 'Internal Server Error.'
+              });
+            }
+          })
+          .then(function(){
+            if(callback){
+              callback({
+                result: true,
+              });
+            }
+          });
+        }else{
+          exist.save(rankInfo, {patch: true})
+          .catch(function(err){
+            console.log(err);
+            if(callback){
+              callback({
+                result: false,
+                message: 'Internal Server Error.'
+              });
+            }
+          })
+          .then(function(){
+            if(callback){
+              callback({
+                result: true,
+              });
+            }
+          });
+
+        }
 
       });
     }
-
   },
 
   /**

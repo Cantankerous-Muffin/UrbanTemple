@@ -14,6 +14,10 @@ var Progress = db.Model.extend({
     return this.belongsTo('Classes');
   },
 
+  levels: function(){
+    return this.belongsTo('Levels');
+  }
+
 });
 
 

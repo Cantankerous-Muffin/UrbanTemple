@@ -26,10 +26,7 @@ var Instructors = db.Model.extend({
   rank: function(){
     return this.hasMany('Ranks', 'instructor_id');
   },
-
-  disciplines: function() {
-    return this.belongsToMany('Disciplines');
-  },
+  
   feedbacks: function() {
     return this.hasMany('Feedbacks', 'instructor_id');
   },

@@ -13,6 +13,11 @@ var Ranks = db.Model.extend({
   instructors: function(){
     return this.belongsTo('instructors');
   },
+
+  disciplines: function(){
+    return this.belongsTo('Disciplines');
+  }
+
 });
 
 
