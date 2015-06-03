@@ -6,7 +6,7 @@ define([
 
     VirtualDojo.module("LevelApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
-      ////
+      
 
     })
     return VirtualDojo.LevelApp.View;
