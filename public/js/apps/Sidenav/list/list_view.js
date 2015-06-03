@@ -1,7 +1,7 @@
 define([
     "app",
-    "tpl!apps/sidenav/list/templates/list.tpl",
-    "tpl!apps/sidenav/list/templates/list_item.tpl"
+    "tpl!apps/Sidenav/list/templates/list.tpl",
+    "tpl!apps/Sidenav/list/templates/list_item.tpl"
   ], function(VirtualDojo, listTpl, listItemTpl){
 
     VirtualDojo.module("SidenavApp.List.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
