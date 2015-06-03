@@ -48,7 +48,8 @@ require(
     "apps/Dashboard/dashboard_app",
     "apps/Sidenav/sidenav_app",
     "apps/TrainingCenter/trainingCenter_app",
-    "apps/Class/class_app"
+    "apps/Class/class_app",
+    "apps/Level/level_app"
   ],
   function(VirtualDojo){
     VirtualDojo.start();

@@ -1,7 +1,7 @@
 define([
     "app",
     "entities/models/level_models",
-    "apps/Level/video/level_view"
+    "apps/Level/level_view"
   ], 
   function(VirtualDojo, LevelModels, LevelView){
     VirtualDojo.module("LevelApp", function(LevelApp, VirtualDojo, Backbone, Marionette, $, _){
