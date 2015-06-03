@@ -31,10 +31,10 @@ return:
 DisciplineProgress[] // array of DisciplineProgress objects defined in line 33
 
 DisciplineProgress = { 
-  discipline: Discipline,  
+  discipline: Discipline{},  
   currentClassId: INT,
   currentLevelNum: INT,
-  currentLevel: Level,
+  currentLevel: Level{},
   percentage: INT // eg. 34 (%)
 }
 
@@ -104,10 +104,8 @@ Level = {
 /user/<username>/feedbacks    [AUTH: if user is an Instructor, need to match]
 
 return:
-UserFeedbacks = {
-  username: STRING,
-  feedbacks: Feedback[]  // array of Feedback objects defined in line 117
-}
+UserFeedbacks = Feedback[]  // array of Feedback objects defined in line 117
+
 
 -------------GET---------------
 
@@ -116,9 +114,10 @@ UserFeedbacks = {
 return:
 Feedback = {
   feedbackId: INT,
-  username: STRING,
+  studentUsername: STRING,
+  instrUsername: STRING,
   videoUrl: URL(STRING),
-  comment: STRING,
+  comment: String,
   class: Class,
   approved: Boolean
 }

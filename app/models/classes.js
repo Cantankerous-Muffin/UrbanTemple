@@ -24,7 +24,11 @@ var Classes = db.Model.extend({
 
   feedbacks: function(){
     return this.hasMany('Feedbacks', 'class_id');
-  }
+  },
+
+  disciplines: function(){
+    return this.belongsTo('Disciplines');
+  },
 });
 
 

@@ -1,11 +1,14 @@
 var db = require('../app/config');
 var Class = require('../app/models/classes.js');
+var Discipline = require('../app/models/disciplines.js');
 var Feedback = require('../app/models/feedbacks.js');
 var Instructor = require('../app/models/instructor.js');
 var Level = require('../app/models/levels.js');
 var Progress = require('../app/models/progress.js');
 var Rank = require('../app/models/ranks.js');
 var Student = require('../app/models/student.js');
+
+
 var DBQuery = require('../utils/dbQueries.js');
 
 var stu = {

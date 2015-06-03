@@ -29,12 +29,14 @@ var Students = db.Model.extend({
     return this.hasMany('Feedbacks', 'student_id');
   },
   instructors: function(){
-    return this.belongsToMany('Instructors').through('Disciplines');
+    return this.belongsToMany('Instructors').through('Classes');
   },
-
   progress: function(){
     return this.hasMany('Progress', 'student_id');
   },
+  classes: function(){
+    return this.belongsToMany('Classes');
+  }
 
 });
 
