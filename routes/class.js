@@ -8,7 +8,7 @@ var path         = require('path');
 var DBQuery = require('../utils/dbQueries.js')
 
 var levelRoute = require('./level')
-router.use('/:classname/level/:levelNum', levelRoute);
+router.use('/:classname/level/', levelRoute);
 router.get('/:classname', function(req, res) {
   // query 'students' table with username and return first and last name, and all ranks for all classes
   // req.url contains username
