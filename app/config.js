@@ -46,6 +46,7 @@ db.knex.schema.hasTable('disciplines').then(function(exists){
     db.knex.schema.createTable('disciplines', function(table){
       table.increments('id').primary(); 
       table.string('title', 100);
+      table.text('description');
       table.string('disLogo', 200);
 
     }).then(function (table) {
