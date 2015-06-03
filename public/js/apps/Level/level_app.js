@@ -18,7 +18,7 @@ define([
         }
       };
 
-      VirtualDojo.on("itemview:show:video", function(){
+      VirtualDojo.on("show:video", function(){
         console.log('Show:video executed from level_app');
 
         API.showLevel();
