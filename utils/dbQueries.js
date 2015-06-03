@@ -426,6 +426,81 @@ var DBQuery = {
     });
   },
 
+  newDiscipline: function(discipline, callback){
+    new Discipline({
+      title: discipline.title
+    }).fetch()
+    .then(function(exist){
+      if(!exist){
+        new Discipline(discipline)
+        .save()
+        .catch(function(err){
+          console.log(err);
+          if(callback){
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          }
+        })
+        .then(function(){
+          if(callback){
+            callback({
+              result:true
+            });
+          }
+        });
+      }else{
+        if(callback){
+          callback({
+            result: false,
+            message: 'That discipline of that title already exists.'
+          });
+        }
+      }
+    });
+  },
+
+  setProgress: function(studentID, classID, levelNum, callback){
+    newProgress = new Progress({
+      student_id: studentID,
+      class_id: classID,
+    });
+    newProgress.fetch()
+    .catch(function(err){
+      console.log(err);
+      if(callback){
+        callback({
+          result: false,
+          message: 'Internal Server Error.'
+        });
+      }
+    })
+    .then(function(exist){
+      if(!exist || exist.length===0){
+        newProgress.save()
+        .catch(function(err){
+          console.log(err);
+          if(callback){
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          }
+        })
+        .then(function(){
+          if(callback){
+            callback({
+              result:true
+            });
+          }
+        });
+      }else{
+        exist.save({levelNum: levelNum}, {patch: true});
+      }
+    });
+  },
+
 
   //============================================================================//
                                   //Get Queries//
@@ -715,7 +790,7 @@ var DBQuery = {
    * @classID  {[String]}   Class ID
    * @return {[Boolean]}    If successful
    */
-  studentToClass: function(studentID, classID, callback){
+  studentToClass: function(studentUser, classTitle, callback){
     
     //check if studentID and classID are valid
     var student = new Student({username: studentUser});
@@ -724,9 +799,12 @@ var DBQuery = {
     student.fetch()
     .then(function(exists){
       if(!exists || exists.length===0){
-        console.log('studentToClass: Invalid studentUser');
+        // console.log('studentToClass: Invalid studentUser');
         if(callback){
-          callback(false);
+          callback({
+            result: false,
+            message: 'Invalid studentUser'
+          });
         }
       }else{
         checkClass();
@@ -735,10 +813,12 @@ var DBQuery = {
     .catch(function(err){
       console.log('Error in studentToClass: ', err);
       if(callback){
-        callback(false);
+        callback({
+          result: false,
+          message: 'Internal Server Error'
+        });
       }
     });
-
 
     var checkClass = function(){
       classs.fetch()
@@ -746,7 +826,10 @@ var DBQuery = {
         if(!exists || exists.length===0){
           console.log('studentToClass: Invalid classTitle');
           if(callback){
-            callback(false);
+            callback({
+              result: false,
+              message: 'Invalid classTitle'
+            });
           }
         }else{
           asignStudent();
@@ -755,7 +838,10 @@ var DBQuery = {
       .catch(function(err){
         console.log(err);
         if(callback){
-          callback(false);
+          callback({
+            result: false,
+            message: 'Internal Server Error'
+          });
         }
       });
     };
@@ -772,22 +858,30 @@ var DBQuery = {
       .select('classes_students.id')
       .then(function(exist){
         if(!exist || exist.length===0){
-          console.log('Succesfully added student to class.');
+          // console.log('Succesfully added student to class.');
           student.classes().attach(classs);
           if(callback){
-            callback(true);
+            callback({
+              result: true
+            });
           }
         }else{
-          console.log('That student is already in that class.');
+          // console.log('That student is already in that class.');
           if(callback){
-            callback(false);
+            callback({
+              result: false,
+              message: 'That student is already in that class.'
+            });
           }
         }
       })
       .catch(function(err){
         console.log('Error in studentToClass: '+err);
         if(callback){
-          callback(false);
+          callback({
+            result: false,
+            message: 'Internal Server Error'
+          });
         }
       });
     };
