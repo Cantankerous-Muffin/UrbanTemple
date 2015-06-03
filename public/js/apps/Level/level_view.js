@@ -15,11 +15,14 @@ define([
         },
 
         serializeData: function() {
-          var model = this.model
             //bind model properties to data object properties here
           return {
             //return data object here
-            helloworld: "helloworld"
+            title: this.model.get("title"),
+            videoUrl: this.model.get("videoUrl"),
+            description: this.model.get("description"),
+            next: this.model.get("next"),
+            prev: this.model.get("prev")
           }
         }
 

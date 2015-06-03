@@ -3,15 +3,29 @@ define([
     "entities/models/level_models",
     "apps/Level/level_view"
   ], 
-  function(VirtualDojo, LevelModels, LevelView){
+  function(VirtualDojo, LevelModel, LevelView){
     VirtualDojo.module("LevelApp", function(LevelApp, VirtualDojo, Backbone, Marionette, $, _){
 
       LevelApp.Controller = {
         
         showLevel: function(params){
-          var LevelMainView = new LevelView.Video(params);
-          console.log('showLevel in controller executed');
-          VirtualDojo.regions.main.show(LevelMainView);
+          var LevelMainView = null
+          
+          require(["entities/class"],function(){
+            var fetchClass = VirtualDojo.request("entities:classes:get", params)
+              fetchClass
+                .done(function(data){
+                  if (data) {
+                    var videoModel = new LevelModel.Level(data);
+                  }
+
+                  LevelMainView = new LevelView.Video({model: videoModel});
+                  console.log(LevelMainView)
+                  VirtualDojo.regions.main.show(LevelMainView);
+                });
+
+            
+          })
         }
       };
 
