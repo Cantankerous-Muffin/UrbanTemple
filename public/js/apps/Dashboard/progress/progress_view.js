@@ -9,6 +9,28 @@ define([
       // single class item view
       View.Progress = Marionette.ItemView.extend({
         template: progressViewTpl,
+        events: {
+          "click div": "clickVideo"
+        },
+
+        clickVideo: function(e){
+          e.preventDefault();
+          var model = this.model;
+          console.log(model.attributes)  
+          var disciplineId = model.get('discipline').attributes.disciplineId;
+          var classId = model.get('currentClassId');
+          var levelId = model.get('currentLevelNum');
+
+
+
+          VirtualDojo.trigger("show:video", {
+            'disciplineId': disciplineId,
+            'classId': classId,
+            'levelId': levelId
+          })
+        },
+
+
         serializeData: function() {
           var model = this.model;
 
