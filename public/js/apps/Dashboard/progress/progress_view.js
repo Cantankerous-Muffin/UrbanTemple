@@ -15,7 +15,19 @@ define([
 
         clickVideo: function(e){
           e.preventDefault();
-          this.trigger("show:video", this.model)
+          var model = this.model;
+          console.log(model.attributes)  
+          var disciplineId = model.get('discipline').attributes.disciplineId;
+          var classId = model.get('currentClassId');
+          var levelId = model.get('currentLevelNum');
+
+
+
+          VirtualDojo.trigger("show:video", {
+            'disciplineId': disciplineId,
+            'classId': classId,
+            'levelId': levelId
+          })
           console.log('show:video triggered');
         },
 

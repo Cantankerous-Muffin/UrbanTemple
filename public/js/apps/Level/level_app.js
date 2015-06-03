@@ -14,19 +14,19 @@ define([
 
       var API = {
         showLevel: function(){
+          console.log('API.showLevel() executed', LevelController.showLevel);
           LevelController.showLevel();
         }
       };
 
-      VirtualDojo.on("show:video", function(){
+      VirtualDojo.on("show:video", function(params){
         console.log('Show:video executed from level_app');
+        console.log(params)
 
         API.showLevel();
       });
 
       LevelApp.on("start", function(){
-        console.log('LevelApp starting:', LevelApp)
-        console.log("VD", VirtualDojo)
         new LevelApp.Router({
           controller: API
         });
