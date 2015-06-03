@@ -232,9 +232,7 @@ var DBQuery = {
               });
             }
           });
-
         }
-
       });
     }else{
       db.knex('instructors')
@@ -287,9 +285,7 @@ var DBQuery = {
               });
             }
           });
-
         }
-
       });
     }
   },
