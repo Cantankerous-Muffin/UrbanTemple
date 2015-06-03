@@ -1,4 +1,7 @@
 -------------GET---------------
+///////////////////////////////
+// Page: Dashboard (profile)//
+///////////////////////////////
 
 /user/<username>    
 
@@ -7,7 +10,7 @@ User = { // Student or Instructor
   isInstructor: BOOLEAN,
   username: STRING,
   fullname: STRING,
-  ranks: UserRank[]
+  ranks: UserRank[] // array of UserRank objects defined in line 16
 }
 
 UserRank = {
@@ -18,65 +21,44 @@ UserRank = {
 }
 
 -------------GET---------------
-
-/user/<username>/enrolled  
-
-return:
-UserEnrolled = {
-  disciplines: Discipline[]
-}
-
--------------GET---------------
+///////////////////////////////
+// Page: Dashboard (progress)//
+///////////////////////////////
 
 /user/<username>/progress     
 
 return:
-DisciplineProgress[]
+DisciplineProgress[] // array of DisciplineProgress objects defined in line 33
 
--------------GET---------------
-
-/user/<username>/progress/<discipline_id> 
-
-return:
 DisciplineProgress = { 
   discipline: Discipline,  
   currentClassId: INT,
   currentLevelNum: INT,
-  currentLevel: Level, // **CHANGE
+  currentLevel: Level,
   percentage: INT // eg. 34 (%)
 }
 
 -------------GET---------------
+///////////////////////////////
+//   Page: Training Center   //
+///////////////////////////////
 
-/user/<username>/feedbacks [AUTH: if user is an Instructor, need to match]
-
-return:
-UserFeedbacks = {
-  username: STRING,
-  feedbacks: Feedback[]
-}
-
--------------GET---------------
-
-/discipline
+/discipline   
 
 return:
-Disciplines = {
-  disciplines: Discipline[]
-}
+Discipline[]  // array of Discipline objects defined in line 51
 
--------------GET---------------
-
-/discipline/<discipline_id>
-
-return:
 Discipline = {
   disciplineId: INT,
   title: STRING,
+  disciplineLogo: STRING (URL),
   classes: Class[]
 }
 
 -------------GET---------------
+///////////////////////////////
+//        Page: Class        //
+///////////////////////////////
 
 /class/<class_id>
 
@@ -84,18 +66,21 @@ return:
 Class = {
   classId: INT,
   disciplineId: INT,
-  instructorId: userId: INT,
+  instructorId: INT,
   title: STRING,
   description: STRING,
-  totalLevel: INT
+  classImage: STRING (URL),
+  totalLevel: INT  //how many levels there are in this particular class
 }
-
--------------GET---------------
 
 /class/<class_id>/level
 
-return: Level[]
+return: Level[]  // array of Level objects defined in line 87
 
+-------------GET---------------
+///////////////////////////////
+//        Page: Level        //
+///////////////////////////////
 
 /class/<class_id>/level/<level_num>
 
@@ -110,7 +95,38 @@ Level = {
   next: <level_num>   // or null 
 }
 
+
+-------------GET---------------
+////////////////////////////////
+// Page: Feedback & Dashboard //
+////////////////////////////////
+
+/user/<username>/feedbacks    [AUTH: if user is an Instructor, need to match]
+
+return:
+UserFeedbacks = {
+  username: STRING,
+  feedbacks: Feedback[]  // array of Feedback objects defined in line 117
+}
+
+-------------GET---------------
+
+/feedback/<feedback_id>    [AUTH: Instructor, Creator (*only instructor and creator)]
+
+return:
+Feedback = {
+  feedbackId: INT,
+  username: STRING,
+  videoUrl: URL(STRING),
+  comment: STRING,
+  class: Class,
+  approved: Boolean
+}
+
 -------------POST---------------
+////////////////////////////////
+//      Page: Level (last)    //
+////////////////////////////////
 
 /feedback/submit
 
@@ -124,25 +140,17 @@ request:
 return: Feedback
 
 
--------------GET---------------
-
-/feedback/<feedback_id>    [AUTH: Instructor, Creator (*only instructor and creator)]
-
-return:
-Feedback = {
-  feedbackId: INT,
-  username: STRING,
-  videoUrl: URL(STRING),
-  class: Class,
-  approved: Boolean
-}
-
--------------POST---------------
+-------------PUT---------------
+//////////////////////////////////////
+//    Page: Feedback (instructor)   //
+//////////////////////////////////////
 
 /feedback/<feedback_id>/update   [AUTH: Instructor (*only instructor can update)]
 request:
 {
-  approve: Boolean // [AUTH: Instructor]
+  approved: Boolean // [AUTH: Instructor]
+  comment: STRING
 }
 
 return: Feedback
+
