@@ -22,7 +22,6 @@ define([
       VirtualDojo.on("show:video", function(params){
         console.log('Show:video executed from level_app');
         console.log(params)
-
         API.showLevel();
       });
 
@@ -31,8 +30,6 @@ define([
           controller: API
         });
       });
-
-
 
     });
     return VirtualDojo.LevelApp 

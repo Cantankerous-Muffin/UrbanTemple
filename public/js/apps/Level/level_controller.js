@@ -13,8 +13,7 @@ define([
           console.log('showLevel in controller executed');
           VirtualDojo.regions.main.show(LevelMainView);
         }
-
-      }
+      };
 
     });
     return VirtualDojo.LevelApp.Controller

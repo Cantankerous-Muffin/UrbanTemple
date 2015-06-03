@@ -27,8 +27,8 @@ define([
             'disciplineId': disciplineId,
             'classId': classId,
             'levelId': levelId
-          })
           console.log('show:video triggered');
+          })
         },
 
 
