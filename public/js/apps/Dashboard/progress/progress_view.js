@@ -15,7 +15,7 @@ define([
 
         clickVideo: function(e){
           e.preventDefault();
-          this.trigger("testing", this.model)
+          this.trigger("show:video", this.model)
           console.log('show:video triggered');
         },
 
