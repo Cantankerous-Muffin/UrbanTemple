@@ -8,8 +8,8 @@ define([
 
       LevelApp.Controller = {
         
-        showLevel: function(){
-          var LevelMainView = new LevelView.Video();
+        showLevel: function(params){
+          var LevelMainView = new LevelView.Video(params);
           console.log('showLevel in controller executed');
           VirtualDojo.regions.main.show(LevelMainView);
         }
