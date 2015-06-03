@@ -10,7 +10,7 @@ define([
         if(Backbone.history){
           Backbone.history.start(); 
           console.log("history started");
-          VirtualDojo.trigger("show:sidenav");
+          VirtualDojo.trigger("show:sidenav", {test: 'test'});
     
           if(VirtualDojo.getCurrentRoute() === ""){
             console.log("navigating to dashboard")
