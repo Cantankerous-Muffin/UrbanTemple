@@ -295,44 +295,58 @@ var DBQuery = {
    * @classInfo  {[Object]} Object with new class info
    * @callback {[Function]}  Callback function
    */
-  newClass: function(classInfo, callback){
+  newClass: function(classInfo, discipline, instructor, callback){
 
-    //check if class title already exists
-    new Class({
-      title: classInfo.title,
-      discipline: classInfo.discipline
-    }).fetch().then(function(exists){
-      if(!exists){
-        new Class(classInfo)
-        .save()
-        .catch(function(err){
-          console.log('Error in newClass: ', err);
-          if(callback){
-            callback({
-              result: false,
-              message: 'Internal server error.'
-            });
-          }
-        })
-        .then(function(){
-          console.log('Added new class to DB.');
-          if(callback){
-            callback({
-              result: true
-            });
-          }
-        });
+    //Check if discipline exists
+    var getInst = this.getInstructorUsing;
+    this.getDiscipline(discipline, function(data){
+      if(!data){
+        console.log('Something went wrong.');
       }else{
-        //class of that title already exists
-        // console.log('Class of that title already exist.');
-        if(callback){
-          callback({
-            result: false,
-            message: 'Class of that title already exist.'
-          });
-        }
+        console.log(data);
+        this.getInstructorUsing('username', instructor, function(result){
+          console.log(result);
+        });
       }
     });
+    //check if class title already exists
+
+    // new Class({
+    //   title: classInfo.title,
+    //   discipline_id: classInfo.discipline_id
+    // }).fetch().then(function(exists){
+    //   if(!exists){
+    //     new Class(classInfo)
+    //     .save()
+    //     .catch(function(err){
+    //       console.log('Error in newClass: ', err);
+    //       if(callback){
+    //         callback({
+    //           result: false,
+    //           message: 'Internal server error.'
+    //         });
+    //       }
+    //     })
+    //     .then(function(){
+    //       console.log('Added new class to DB.');
+    //       if(callback){
+    //         callback({
+    //           result: true
+    //         });
+    //       }
+    //     });
+    //   }else{
+    //     //class of that title already exists
+    //     // console.log('Class of that title already exist.');
+    //     if(callback){
+    //       console.log('Class already exist');
+    //       callback({
+    //         result: false,
+    //         message: 'Class of that title already exist.'
+    //       });
+    //     }
+    //   }
+    // });
   },
 
   /**
@@ -409,11 +423,20 @@ var DBQuery = {
           }
         })
         .then(function(data){
-          if(callback){
-            callback({
-              result: true
+          //Update level count for that class
+          new Class({
+            id: class_id
+          }).fetch()
+          .then(function(data){
+            data.save({levelNum: data.levelNum+1}, {patch: true})
+            .then(function(){
+              if(callback){
+                callback({
+                  result: true
+                });
+              }
             });
-          }
+          });
         });
       }else{
         if(callback){
@@ -510,6 +533,22 @@ var DBQuery = {
                                   //Get Queries//
   //============================================================================//
   
+  getDiscipline: function(discipline, callback){
+    new Discipline({
+      title: discipline
+    }).fetch({
+      columns: 'title',
+      columns: 'description',
+    })
+    .then(function(exist){
+      if(exist){
+       callback(exist.attributes);
+      }else{
+        console.log('Discipline does not exist.');
+      }
+    });
+  },
+
   /**
    * Gets a single student's info from DB
    * @param  {[String]} using [Property to search]
