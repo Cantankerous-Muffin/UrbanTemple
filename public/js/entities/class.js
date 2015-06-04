@@ -6,34 +6,37 @@ define(
     VirtualDojo.module("Entities.Classes", function(Classes, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getClasses: function (params) {
-
-          // var url = "/discipline/" + params.disciplineId + "/class/" + params.classNum;
-          // console.log("urltestsetts", url);
-          
           var defer = $.Deferred();
 
           setTimeout(function(){
             var data = 
             {
-              levelNum: 3,
-              title: "Advanced Sword Grip",
-              description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.",
-              videoUrl: "https://www.youtube.com/embed/erRk8mBgF0A",
-              feedbackNeeded: false,
-              prev: true,
-              next: true
+              classNum: 1,
+              disciplineId: 1,
+              instructorId: 1,
+              instructorName: "Pranav",
+              instructorRank: 5,
+              instructorRankTitle: "Master",
+              title: "Philosophy of Sword Fighting",
+              description: "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", 
+              classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
+              totalLevel: 5
             };
-           // mock result from server - Route: /discipline/<discipline_id>/class/<class_num>/level/<level_num>
+
+// /discipline/<discipline_id>/class/<class_num>/level/<level_num>
+
+
+
+           // mock result from server
 
             defer.resolve(data);
-          }, 200);
+          }, 600);
 
           return defer.promise();
 
           //var ajax = Ajax.perform({
           //  type: "GET",
-          //  url: '/discipline/ + params.disciplineID + /class/ + params.classNum
-              // eg. /discipline/1/class/1
+          //  url: '/discipline,
           //  callback: function (data) {
           //    return data;
           //  }
