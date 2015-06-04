@@ -30,6 +30,13 @@ define([
       View.Level = Marionette.ItemView.extend({
         className: "level",
         template: levelViewTpl,
+        events: {
+          'click div': 'clickLevel'
+        },
+        clickLevel: function(e){
+          e.preventDefault();
+          console.log('individual level clikced')
+        },
         initialize: function() {
         }
       });
