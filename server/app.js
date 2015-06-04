@@ -9,12 +9,13 @@ var session      = require('express-session');
 
 // Routes
 var routes       = require('./../routes/index');
-var users        = require('./../routes/users');
+var users        = require('./../routes/user');
 var dashboard    = require('./../routes/dashboard');
 var Student        = require('../app/models/student');
 var Instructor        = require('../app/models/instructor');
 var auth         = require('./../routes/auth');
-
+var student         = require('./../routes/student');
+var api         = require('./../routes/api');
 // Authentication
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -39,39 +40,40 @@ app.use(session({
 
 // Routing
 app.use('/', routes);
+app.use('/api', api);
 // app.use('/checkauth', routes);
 // app.use('/users', users);
 app.use('/auth', auth);
 
 // checking authentication (auth_app line 31)
-app.use(function(req,res,next){
-  if (req.url === '/checkauth') {
-    if(!req.session.user) {
-      console.log('session dont exist');
-      res.json({isAuthed: false});
-    } else {
-      //make query
-      res.json({isAuthed: true, username: req.session.user});
-      console.log('user is authorized');
-      // res.end();
-    }
-  }
-});
+// app.use(function(req,res,next){
+//   if (req.url === '/checkauth') {
+//     if(!req.session.user) {
+//       console.log('session dont exist');
+//       res.json({isAuthed: false});
+//     } else {
+//       //make query
+//       res.json({isAuthed: true, username: req.session.user});
+//       console.log('user is authorized');
+//       // res.end();
+//     }
+//   }
+// });
 
 // middleware to make sure to block access to internal pages if user is not logged in.
-app.use(function(req,res,next){
-  if (req.url === '/auth/login'){
-    next();
-  }
-  else {
-    if (!req.session.user){
-      res.redirect('/auth/login');
-    }
-    else {
-      next();
-    }
-  }
-});
+// app.use(function(req,res,next){
+//   if (req.url === '/auth/login'){
+//     next();
+//   }
+//   else {
+//     if (!req.session.user){
+//       res.redirect('/auth/login');
+//     }
+//     else {
+//       next();
+//     }
+//   }
+// });
 
 // Passport will serialize and deserialize user instances to and from the session.
 // Not using these right now, maybe later?
@@ -91,14 +93,8 @@ passport.use('local',new LocalStrategy(
     new Student({ username: username })
       .fetch()
       .then(function(user) {
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (user.comparePassword(password,function(x){
-        if (x === true){
-          return done(null, user);
-        } else {
-          // we look for whether user is an instructor instead:
+        if (!user) {
+          // check for user in instructor
           new Instructor({ username: username })
             .fetch()
             .then(function(user) {
@@ -111,13 +107,18 @@ passport.use('local',new LocalStrategy(
               } else {
                 return done(null, false, { message: 'Incorrect password.' });
               }
-            })){
-            }
+            })){}
           });
-          // return done(null, false, { message: 'Incorrect password.' });
+        } else {
+          // user is a student
+          if (user.comparePassword(password,function(x){
+            if (x === true){
+              return done(null, user);
+            } else {
+              return done(null, false, { message: 'Incorrect password.' });
+            }
+          })){}
         }
-      })){
-      }
     });
 
   }));

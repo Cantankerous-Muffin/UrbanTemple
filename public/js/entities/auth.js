@@ -5,17 +5,17 @@ define(
   ], function(VirtualDojo, Ajax) {
     VirtualDojo.module("Entities.Auth", function(Auth, ExaApp, Backbone, Marionette, $, _) {
       var API = {
-        checkAuth: function () {
-          var ajax = Ajax.perform({
-            type: "GET",
-            url: "/checkauth",
-            callback: function (data) {
-              return data;
-            }
-          });
+        // checkAuth: function () {
+        //   var ajax = Ajax.perform({
+        //     type: "GET",
+        //     url: "/checkauth",
+        //     callback: function (data) {
+        //       return data;
+        //     }
+        //   });
 
-          return ajax.promise();
-        }
+        //   return ajax.promise();
+        // }
       };
 
       VirtualDojo.reqres.setHandler("entities:auth:checkAuth", function () {

@@ -38,22 +38,22 @@ define([
       VirtualDojo.on("authenticate:init", function(userdata){
         console.log("authenticate initializing");
         //Make empty ajax GET
-        require(["entities/auth"], function() {
-          var checkAuth = VirtualDojo.request("entities:auth:checkAuth");
-          checkAuth
-            .done(function(data){
-              //means cookie is respected, authorized
-              console.log('Successful AJAX request to server.', data)
-              if (data.isAuthed) {
-                // store the username on global object
-                UTConfig.username = data.username;
+        // require(["entities/auth"], function() {
+        //   var checkAuth = VirtualDojo.request("entities:auth:checkAuth");
+        //   checkAuth
+        //     .done(function(data){
+        //       //means cookie is respected, authorized
+        //       console.log('Successful AJAX request to server.', data)
+        //       if (data.isAuthed) {
+        //         // store the username on global object
+        //         UTConfig.username = data.username;
 
-                VirtualDojo.Utilities.enterApplication();
+        //         VirtualDojo.Utilities.enterApplication();
 
-              } else {
-                VirtualDojo.trigger("auth:login:show");
-              }
-            })
+        //       } else {
+        //         VirtualDojo.trigger("auth:login:show");
+        //       }
+        //     })
         }); // end of require block
       });
 
