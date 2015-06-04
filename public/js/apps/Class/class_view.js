@@ -35,7 +35,19 @@ define([
         },
         clickLevel: function(e){
           e.preventDefault();
-          console.log('individual level clikced')
+          var urlFragment = VirtualDojo.getCurrentRoute().split("/");
+          var model = this.model;
+
+          var disciplineId = urlFragment[1];
+          var classId = urlFragment[3];
+          var levelId = model.get("levelNum");
+
+          VirtualDojo.trigger("show:video", {
+            'disciplineId': disciplineId,
+            'classId': classId,
+            'levelId': levelId
+          })
+
         },
         initialize: function() {
         }
