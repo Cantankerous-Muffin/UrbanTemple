@@ -32,13 +32,13 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 });
 
 // Local Auth Sign-up
-router.get('/signup', function(req, res, next) {
-  res.sendFile(path.join(__dirname,'../public/signup.html'));
-});
-// Local Auth Sign-up
-router.get('/login', function(req, res, next) {
-  res.sendFile(path.join(__dirname,'../public/index.html'));
-});
+// router.get('/signup', function(req, res, next) {
+//   res.sendFile(path.join(__dirname,'../public/signup.html'));
+// });
+// // Local Auth Sign-up
+// router.get('/login', function(req, res, next) {
+//   res.sendFile(path.join(__dirname,'../public/index.html'));
+// });
 
 
 // Local Auth Sign-up
