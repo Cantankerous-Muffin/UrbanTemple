@@ -3,19 +3,37 @@
 //        Page: Login        //
 ///////////////////////////////
 
+/auth/login
 
--------------POST---------------
+request: {
+  username: STRING, 
+  password: INT
+}
+
+-------------GET---------------
 ///////////////////////////////
 //        Page: Logout       //
 ///////////////////////////////
 
+/auth/logout
+
+// destroy session 
 
 -------------POST---------------
 ///////////////////////////////
 //       Page: Signup        //
 ///////////////////////////////
 
+/auth/signup
 
+request: {
+  username: STRING,
+  password: INT,
+  firstname: STRING,
+  lastname: STRING,
+  isInstructor: BOOLEAN,
+  PermissionKey: INT  // only for instructors 
+}
 
 
 -------------GET---------------
@@ -27,7 +45,9 @@
 
 return:
 //if session not found
-{isAuthed: false}
+{
+  isAuthed: false
+}
 
 //if session is validated
 {
