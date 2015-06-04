@@ -16,30 +16,27 @@ define([
         clickVideo: function(e){
           e.preventDefault();
           var model = this.model;
-          console.log(model.attributes)  
           var disciplineId = model.get('discipline').attributes.disciplineId;
-          var classId = model.get('currentClassId');
-          var levelId = model.get('currentLevelNum');
-
+          var classNum = model.get('currentClassNum');
+          var levelNum = model.get('currentLevelNum');
 
 
           VirtualDojo.trigger("show:video", {
             'disciplineId': disciplineId,
-            'classId': classId,
-            'levelId': levelId
+            'classNum': classNum,
+            'levelNum': levelNum
           })
         },
 
 
         serializeData: function() {
           var model = this.model;
-
           // discipline
           var discipline = model.get("discipline");
           var disciplineTitle = discipline.get("title");
 
           // class
-          var currentClassId = model.getCurrentClassId();
+          var currentClassId = model.get("CurrentClassId");
           var classes = discipline.get("classes");
           var currentClass = classes.findById(currentClassId);
           var currentClassTitle = currentClass.get("title");

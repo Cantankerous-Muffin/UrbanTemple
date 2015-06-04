@@ -12,16 +12,22 @@ define([
         }
       });
 
+      LevelApp.generateClassUrl = function(disciplineId, classNum, levelNum) {
+        var url = "discipline/" + disciplineId + "/class/" + classNum + /level/ + levelNum;
+        console.log("url xxxxxxx", url);
+        return url;
+      }
+
       var API = {
         showLevel: function(params){
-          console.log('API.showLevel() executed', LevelController.showLevel);
           LevelController.showLevel(params);
         }
       };
 
       VirtualDojo.on("show:video", function(params){
         console.log('Show:video executed from level_app');
-        console.log(params)
+        // console.log("ssssssss," params);
+        VirtualDojo.navigate(LevelApp.generateClassUrl(params.disciplineId, params.classNum, params.levelNum));
         API.showLevel(params);
       });
 

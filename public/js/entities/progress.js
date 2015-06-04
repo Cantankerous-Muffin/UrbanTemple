@@ -16,7 +16,7 @@ define(
                   title: "Kendo",
                   classes: [
                     {
-                      classId: 1,
+                      classNum: 1,
                       disciplineId: 1,
                       instructorId: 5,
                       title: "Kendo 101",
@@ -25,7 +25,7 @@ define(
                     }
                   ]
                 },  
-                currentClassId: 1,
+                currentClassNum: 1,
                 currentLevelNum: 2,
                 currentLevel: {
                   levelNum: 2,
@@ -44,7 +44,7 @@ define(
                   title: "QiGong",
                   classes: [
                     {
-                      classId: 1,
+                      classNum: 1,
                       disciplineId: 2,
                       instructorId: 9,
                       title: "QiGong 101",
@@ -53,7 +53,7 @@ define(
                     }
                   ]
                 },  
-                currentClassId: 1,
+                currentClassNum: 1,
                 currentLevelNum: 3,
                 currentLevel: {
                   levelNum: 3,
