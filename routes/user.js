@@ -17,7 +17,7 @@ router.get('/:username', function(req, res) {
 	// we need to check if the user is a student or an instructor.
 		// if user is a student, direct to student route.
 		// else direct to instructor route.
-
+	// db.knex.raw
 	if (req.url.slice(1)){
 		res.end('get to student without any parameters '+ req.get('host') + req.originalUrl);
 	} else {
