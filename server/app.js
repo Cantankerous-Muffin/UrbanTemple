@@ -93,14 +93,8 @@ passport.use('local',new LocalStrategy(
     new Student({ username: username })
       .fetch()
       .then(function(user) {
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (user.comparePassword(password,function(x){
-        if (x === true){
-          return done(null, user);
-        } else {
-          // we look for whether user is an instructor instead:
+        if (!user) {
+          // check for user in instructor
           new Instructor({ username: username })
             .fetch()
             .then(function(user) {
@@ -113,13 +107,18 @@ passport.use('local',new LocalStrategy(
               } else {
                 return done(null, false, { message: 'Incorrect password.' });
               }
-            })){
-            }
+            })){}
           });
-          // return done(null, false, { message: 'Incorrect password.' });
+        } else {
+          // user is a student
+          if (user.comparePassword(password,function(x){
+            if (x === true){
+              return done(null, user);
+            } else {
+              return done(null, false, { message: 'Incorrect password.' });
+            }
+          })){}
         }
-      })){
-      }
     });
 
   }));

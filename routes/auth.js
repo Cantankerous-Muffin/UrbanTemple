@@ -24,11 +24,22 @@ function handleAuth(req, res, username, id) {
 router.post('/login', passport.authenticate('local'), function(req, res) {
   var username = req.body.username;
   console.log('gets to login page');
-  new Student({username: username})
-  .fetch()
-  .then(function(model) {
-    handleAuth(req, res, username, model.attributes.id);
-  });
+  // need to check if user is a student or an instructor by doing a db query.
+  new Instructor({username: username})
+    .fetch()
+    .then(function(model){
+      if (!model){
+        // login is not an instructor
+        new Student({username: username})
+        .fetch()
+        .then(function(model) {
+          handleAuth(req, res, username, model.attributes.id);
+        });
+      } else {
+        // login is an instructor
+         handleAuth(req, res, username, model.attributes.id);
+      }
+    })
 });
 
 // Local Auth Sign-up
@@ -112,7 +123,7 @@ router.get('/logout', function(req, res, next) {
 
   console.log("Before destroy session... " + JSON.stringify(req.session));
   req.session.destroy(function() {
-    console.log("Destroying express-session object for this session... " + req.session);
+    console.log("Destroying express-session object for this session... ");
     res.redirect('/');
     // res.json({isAuthed: false});
   });
