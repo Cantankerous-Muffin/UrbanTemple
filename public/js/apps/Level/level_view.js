@@ -9,6 +9,27 @@ define([
       View.Video = Marionette.ItemView.extend({
         template: LevelViewTpl,
 
+        events: {
+          'click .submitvideo' : 'submitVideo',
+          'click .prev' : 'prevLevel',
+          'click .next' : 'nextLevel'
+        },
+
+        submitVideo: function(e) {
+          e.preventDefault();
+          console.log('submitVideo clicked');
+        },
+
+        prevLevel: function(e) {
+          e.preventDefault();
+          console.log('prev button clicked');
+        },
+
+        nextLevel: function(e) {
+          e.preventDefault(e);
+          console.log('next button clicked');
+        },
+
         navigate: function(e){
           e.preventDefault();
           this.trigger("navigate", this.model)
