@@ -16,7 +16,8 @@ define(
                           description: "woolalamuchachapapaya",
                           videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
                           feedbackNeeded: false,
-                          next: true 
+                          prev: false,
+                          next: true
                         },
                         {
                           levelNum: 2,
@@ -25,7 +26,7 @@ define(
                           videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
                           feedbackNeeded: false,
                           prev: true,
-                          next: false, 
+                          next: true, 
                         },
                         {
                           levelNum: 3,
@@ -33,8 +34,8 @@ define(
                           description: "woolalamuchachapapaya",
                           videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
                           feedbackNeeded: false,
-                          prev: false,
-                          next: false 
+                          prev: true,
+                          next: true 
                         },
                         {
                           levelNum: 4,
@@ -42,8 +43,8 @@ define(
                           description: "woolalamuchachapapaya",
                           videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
                           feedbackNeeded: false,
-                          prev: false,
-                          next: false 
+                          prev: true,
+                          next: true 
                         },
                         {
                           levelNum: 5,
@@ -51,7 +52,8 @@ define(
                           description: "woolalamuchachapapaya",
                           videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
                           feedbackNeeded: true,
-                          prev: false
+                          prev: true,
+                          next: false
                         },
                       ];
 
@@ -85,7 +87,7 @@ define(
               videoUrl: 'https://www.youtube.com/embed/NCQpzHPYRUc',
               feedbackNeeded: false,
               prev: true,
-              next: true
+              next: false
             }
 
             defer.resolve(data);
