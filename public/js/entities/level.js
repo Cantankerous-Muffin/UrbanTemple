@@ -87,7 +87,7 @@ define(
               videoUrl: 'https://www.youtube.com/embed/NCQpzHPYRUc',
               feedbackNeeded: false,
               prev: true,
-              next: false
+              next: true
             }
 
             defer.resolve(data);
