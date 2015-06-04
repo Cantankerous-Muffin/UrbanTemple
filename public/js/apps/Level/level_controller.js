@@ -11,8 +11,8 @@ define([
         showLevel: function(params){
           var LevelMainView = null
           
-          require(["entities/class"],function(){
-            var fetchClass = VirtualDojo.request("entities:classes:get", params)
+          require(["entities/level"],function(){
+            var fetchClass = VirtualDojo.request("entities:level:get", params)
               fetchClass
                 .done(function(data){
                   if (data) {

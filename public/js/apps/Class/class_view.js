@@ -30,6 +30,25 @@ define([
       View.Level = Marionette.ItemView.extend({
         className: "level",
         template: levelViewTpl,
+        events: {
+          'click div': 'clickLevel'
+        },
+        clickLevel: function(e){
+          e.preventDefault();
+          var urlFragment = VirtualDojo.getCurrentRoute().split("/");
+          var model = this.model;
+
+          var disciplineId = urlFragment[1];
+          var classId = urlFragment[3];
+          var levelId = model.get("levelNum");
+
+          VirtualDojo.trigger("show:video", {
+            'disciplineId': disciplineId,
+            'classId': classId,
+            'levelId': levelId
+          })
+
+        },
         initialize: function() {
         }
       });
