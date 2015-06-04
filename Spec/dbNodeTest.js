@@ -66,11 +66,9 @@ var clas = {
   classNum: 1,
   description: 'Learn to Stand.',
   image: 'classImageURL',
-  instructor_id: 2,
-  discipline_id: 1
 };
 var clas2 = {
-  title: 'Grip',
+  title: 'Grips',
   classNum: 1,
   description: 'Learn to Hold.',
   image: 'classImageURL'
@@ -80,24 +78,51 @@ var clas3 = {
   classNum: 1,
   description: 'First step to flying.',
   image: 'classImageURL',
-  instructor_username: 'Gandalf',
-  discipline_title: 'Flying'
 };
 var clas4 = {
   title: 'Steps',
   classNum: 2,
   description: 'Learn to Walk.',
   image: 'classImageURL',
-  instructor_username: 'Key',
-  discipline_title: 'Kendo'
 };
 var clas5 = {
-  title: 'Strike',
-  classNum: 2,
-  description: 'Learn to Swing.',
+  title: 'Three asasdfasdfdf Strike',
+  classNum: 3,
+  description: 'Learn to asdf after Three steps.',
   image: 'classImageURL',
-  instructor_username: 'Morgan',
-  discipline_title: 'Tonfa'
+};
+
+var levl = {
+  title: 'Steps - 1',
+  description: 'The first step.',
+  videoURL: 'www.wat',
+  levelNum: 1,
+  feedbackNeeded: false,
+  class_id: 4,
+};
+var levl2 = {
+  title: 'Steps - 2',
+  description: 'The second step.',
+  videoURL: 'www.wat',
+  levelNum: 2,
+  feedbackNeeded: false,
+  class_id: 4,
+};
+var levl3 = {
+  title: 'Steps - 3',
+  description: 'The third step.',
+  videoURL: 'www.wat',
+  levelNum: 3,
+  feedbackNeeded: true,
+  class_id: 4,
+};
+var levl4 = {
+  title: 'Strike - 1',
+  description: 'The first strike.',
+  videoURL: 'www.wat',
+  levelNum: 1,
+  feedbackNeeded: false,
+  class_id: 2,
 };
 
 // DBQuery.newStudent(stu);
@@ -114,11 +139,32 @@ var clas5 = {
 // DBQuery.newDiscipline(dis2);
 // DBQuery.newDiscipline(dis3);
 
-// DBQuery.newClass(clas);
-DBQuery.newClass(clas2, 'Tonfa', 'Quan');
-// DBQuery.newClass(clas3);
-// DBQuery.newClass(clas4);
-// DBQuery.newClass(clas5);
+// DBQuery.newClass(clas, 'Kendo', 'Key');
+// DBQuery.newClass(clas2, 'Tonfa', 'Quan');
+// DBQuery.newClass(clas3, 'Flying', 'Gandalf');
+// DBQuery.newClass(clas4, 'Kendo', 'Key');
+// DBQuery.newClass(clas5, 'Kendo', 'Gandalf');
+
+// DBQuery.newLevel(levl, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
+// DBQuery.newLevel(levl2, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
+// DBQuery.newLevel(levl3, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
+// DBQuery.newLevel(levl4, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
 
 
 db.knex('students')
@@ -139,7 +185,8 @@ db.knex('instructors')
 });
 db.knex('classes')
 .join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
-.select('classes.id','classes.title as Class', 'disciplines.title as Discipline')
+// .select('classes.*')
+.select('classes.id','classes.title as Class', 'classes.levelCount', 'disciplines.title as Discipline')
 .then(function(data){
   console.log('-------------------------');
   console.log('classes');
@@ -163,7 +210,7 @@ db.knex('feedback')
   console.log('-------------------------');
 });
 db.knex('levels')
-.select('id','title', 'description')
+.select('id','title', 'description', 'class_id as classID')
 .then(function(data){
   console.log('-------------------------');
   console.log('levels');

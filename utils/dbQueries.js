@@ -15,6 +15,19 @@ var Student = require('../app/models/student.js');
 
 var DBQuery = {
 
+//Checklist:
+  //Insert queries:
+    // Student
+    // Instructor
+    // Classes
+    // Rank *
+    // Feedback *
+    // Level 
+    // Discipline
+    // Progress *
+  //Get Queries
+    //
+  
 
   /*===============================================================*/
                             /*Insert Queries*/
@@ -299,54 +312,74 @@ var DBQuery = {
 
     //Check if discipline exists
     var getInst = this.getInstructorUsing;
-    this.getDiscipline(discipline, function(data){
-      if(!data){
+
+    this.getDiscipline(discipline, function(disc){
+      if(!disc){
         console.log('Something went wrong.');
       }else{
-        console.log(data);
-        this.getInstructorUsing('username', instructor, function(result){
-          console.log(result);
+        getInst('username', instructor, function(instr){
+          if(instr){
+            new Class({
+              discipline_id: disc.id,
+              classNum: classInfo.classNum,
+            }).fetch().then(function(exists){
+              if(!exists){
+                new Class({
+                  title: classInfo.title
+                }).fetch()
+                .then(function(used){
+                  if(!used){
+                    new Class({
+                      title: classInfo.title,
+                      classNum: classInfo.classNum,
+                      description: classInfo.description,
+                      image: classInfo.image,
+                      instructor_id: instr.id,
+                      discipline_id: disc.id,
+                    })
+                    .save()
+                    .catch(function(err){
+                      console.log('Error in newClass: ', err);
+                      if(callback){
+                        callback({
+                          result: false,
+                          message: 'Internal server error.'
+                        });
+                      }
+                    })
+                    .then(function(){
+                      console.log('Added new class to DB.');
+                      if(callback){
+                        callback({
+                          result: true
+                        });
+                      }
+                    });
+                  }else{
+                    console.log('Title already used.');
+                    callback({
+                      result: false,
+                      message: 'Title already used.'
+                    });
+                  }
+                });
+              }else{
+                console.log('Class Number already exist');
+                //class of that title already exists
+                // console.log('Class of that title already exist.');
+                if(callback){
+                  callback({
+                    result: false,
+                    message: 'Class of that number already exists.'
+                  });
+                }
+              }
+            });
+          }
         });
       }
     });
     //check if class title already exists
-
-    // new Class({
-    //   title: classInfo.title,
-    //   discipline_id: classInfo.discipline_id
-    // }).fetch().then(function(exists){
-    //   if(!exists){
-    //     new Class(classInfo)
-    //     .save()
-    //     .catch(function(err){
-    //       console.log('Error in newClass: ', err);
-    //       if(callback){
-    //         callback({
-    //           result: false,
-    //           message: 'Internal server error.'
-    //         });
-    //       }
-    //     })
-    //     .then(function(){
-    //       console.log('Added new class to DB.');
-    //       if(callback){
-    //         callback({
-    //           result: true
-    //         });
-    //       }
-    //     });
-    //   }else{
-    //     //class of that title already exists
-    //     // console.log('Class of that title already exist.');
-    //     if(callback){
-    //       console.log('Class already exist');
-    //       callback({
-    //         result: false,
-    //         message: 'Class of that title already exist.'
-    //       });
-    //     }
-    //   }
-    // });
   },
 
   /**
@@ -405,48 +438,69 @@ var DBQuery = {
    * @return {[Boolean]}  If successful
    */
   newLevel: function (infoObject, callback){
-    new Level({
-      class_id: infoObject.class_id,
-      title: infoObject.title,
-    }).fetch()
-    .then(function(exist){
-      if(!exist){
-        new Level(infoObject)
-        .save()
-        .catch(function(err){
-          console.log(err);
+    if(infoObject.class_id){
+      new Level({
+        class_id: infoObject.class_id,
+        levelNum: infoObject.levelNum,
+      }).fetch()
+      .then(function(exist){
+        if(!exist){
+          new Level({
+            title: infoObject.title
+          }).fetch()
+          .then(function(used){
+            if(!used){
+              new Level(infoObject)
+              .save()
+              .catch(function(err){
+                console.log(err);
+                if(callback){
+                  callback({
+                    result: false,
+                    message: 'Internal Server Error'
+                  });
+                }
+              })
+              .then(function(data){
+                //Update level count for that class
+                new Class({
+                  id: infoObject.class_id
+                }).fetch()
+                .then(function(data){
+                  data.save({levelCount: data.get('levelCount')+1}, {patch: true})
+                  .then(function(){
+                    if(callback){
+                      callback({
+                        result: true
+                      });
+                    }
+                  });
+                });
+              });
+            }else{
+              console.log('Level title already used.');
+            }
+          });
+        }else{
+          console.log('Title number already used.');
           if(callback){
             callback({
               result: false,
-              message: 'Internal Server Error'
+              message: 'Title number already used.'
             });
           }
-        })
-        .then(function(data){
-          //Update level count for that class
-          new Class({
-            id: class_id
-          }).fetch()
-          .then(function(data){
-            data.save({levelNum: data.levelNum+1}, {patch: true})
-            .then(function(){
-              if(callback){
-                callback({
-                  result: true
-                });
-              }
-            });
-          });
-        });
-      }else{
-        if(callback){
-          callback({
-            result: false,
-            message: 'Title already used.'
-          });
         }
+      });
+    }else{
+      console.log('Internal Server Error: No class ID given.');
+      if(callback){
+        callback({
+          result: false,
+          message: 'Internal Server Error: No class ID given.'
+        });
       }
-    });
+    }
+
   },
 
   newDiscipline: function(discipline, callback){
@@ -536,10 +590,7 @@ var DBQuery = {
   getDiscipline: function(discipline, callback){
     new Discipline({
       title: discipline
-    }).fetch({
-      columns: 'title',
-      columns: 'description',
-    })
+    }).fetch()
     .then(function(exist){
       if(exist){
        callback(exist.attributes);

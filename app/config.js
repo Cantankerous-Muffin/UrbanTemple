@@ -124,12 +124,12 @@ db.knex.schema.hasTable('progress').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('progress', function (table) {
       table.increments('id').primary();
+      table.integer('levelNum').unsigned();
       table.timestamps();
 
       //Relations
       table.integer('student_id').unsigned().references('students.id');
       table.integer('class_id').unsigned().references('classes.id');
-      table.integer('levelNum').unsigned().references('levels.levelNum');
 
       
     }).then(function (table) {
@@ -142,7 +142,7 @@ db.knex.schema.hasTable('levels').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('levels', function (table) {
       table.increments('id').primary();
-      table.integer('levelNum').unsigned().unique();
+      table.integer('levelNum').unsigned();
       table.string('title',100).unique();
       table.text('description');
       table.string('videoURL',255);
