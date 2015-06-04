@@ -25,25 +25,28 @@ define([
         prevLevel: function(e) {
           e.preventDefault();
           console.log('prev button clicked');
-          var extractFromUrl = VirtualDojo.getCurrentRoute().split("/");
-          var requestData = {
-            'disciplineId': extractFromUrl[1],
-            'classNum': extractFromUrl[3],
-            'levelNum': extractFromUrl[5]-1
+          if (this.model.get("prev")) {
+            var requestData = {
+              disciplineId: this.model.get("disciplineId"),
+              classNum: this.model.get("classNum"),
+              levelNum: this.model.get("levelNum") - 1
+            }
+            VirtualDojo.trigger("show:video", requestData);
           }
-          VirtualDojo.trigger("show:video", requestData)
         },
 
         nextLevel: function(e) {
-          e.preventDefault(e);
+          e.preventDefault();
           console.log('next button clicked');
-          var extractFromUrl = VirtualDojo.getCurrentRoute().split("/");
-          var requestData = {
-            'disciplineId': extractFromUrl[1],
-            'classNum': extractFromUrl[3],
-            'levelNum': extractFromUrl[5]+1
+          if (this.model.get("next")) {
+            var requestData = {
+              disciplineId: this.model.get("disciplineId"),
+              classNum: this.model.get("classNum"),
+              levelNum: this.model.get("levelNum") + 1
+            }
+            console.log("rd", requestData)
+            VirtualDojo.trigger("show:video", requestData);
           }
-          VirtualDojo.trigger("show:video", requestData)
         },
 
         navigate: function(e){
@@ -61,6 +64,10 @@ define([
             next: this.model.get("next"),
             prev: this.model.get("prev")
           }
+        },
+
+        initialize: function() {
+          console.log("level model", this.model)
         }
 
       });

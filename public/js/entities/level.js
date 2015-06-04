@@ -11,6 +11,8 @@ define(
           setTimeout(function(){
             var data = [
                         {
+                          disciplineId: 2,
+                          classNum: 1,
                           levelNum: 1,
                           title: "Hello world1",
                           description: "woolalamuchachapapaya",
@@ -20,6 +22,8 @@ define(
                           next: true
                         },
                         {
+                          disciplineId: 2,
+                          classNum: 1,
                           levelNum: 2,
                           title: "Hello world2",
                           description: "woolalamuchachapapaya",
@@ -29,6 +33,8 @@ define(
                           next: true, 
                         },
                         {
+                          disciplineId: 2,
+                          classNum: 1,
                           levelNum: 3,
                           title: "Hello world3",
                           description: "woolalamuchachapapaya",
@@ -38,6 +44,8 @@ define(
                           next: true 
                         },
                         {
+                          disciplineId: 2,
+                          classNum: 1,
                           levelNum: 4,
                           title: "Hello world4",
                           description: "woolalamuchachapapaya",
@@ -47,6 +55,8 @@ define(
                           next: true 
                         },
                         {
+                          disciplineId: 2,
+                          classNum: 1,
                           levelNum: 5,
                           title: "Hello world5",
                           description: "woolalamuchachapapaya",
@@ -81,6 +91,8 @@ define(
 
           setTimeout(function(){
             var data = {
+              disciplineId: 1,
+              classNum: 2,
               levelNum: 4,
               title: 'Advanced Sword Grip',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',

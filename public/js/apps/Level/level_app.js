@@ -8,7 +8,7 @@ define([
 
       LevelApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
-          "level": "showLevel"
+          "discipline/:disciplineId/class/:classNum/level/:levelNum": "showLevel"
         }
       });
 
@@ -20,6 +20,7 @@ define([
 
       var API = {
         showLevel: function(params){
+          console.log("api.showlevel")
           LevelController.showLevel(params);
         }
       };

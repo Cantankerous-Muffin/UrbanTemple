@@ -7,6 +7,8 @@ define(
       // Level model 
       LevelModels.Level = Backbone.Model.extend({
         default: {
+          disciplineId: null,
+          classNum: null,
 	        levelNum: null,
     		  title: "",
     		  description: "",

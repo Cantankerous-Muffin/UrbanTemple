@@ -87,6 +87,10 @@ UserRank = {
 return:
 DisciplineProgress[] // array of DisciplineProgress objects 
 
+** NEW **
+/user/<username>/progress/<disciplineId>
+
+return:
 DisciplineProgress = { 
   discipline: Discipline{},  
   currentClassNum: INT,
@@ -163,6 +167,8 @@ return: Level[]  // array of Level objects
 
 return:
 Level = {
+  disciplineId: INT, ** NEW **
+  classNum: INT, ** NEW **
   levelNum: INT,
   title: STRING,
   description: STRING,
@@ -209,7 +215,7 @@ Feedback = {
 request:
 {
   username: STRING,
-  classId: INT,
+  classNum: INT,
   videoUrl: URL(STRING)
 }
 
