@@ -45,9 +45,10 @@ db.knex.schema.hasTable('disciplines').then(function(exists){
   if(!exists){
     db.knex.schema.createTable('disciplines', function(table){
       table.increments('id').primary(); 
-      table.string('title', 100);
+      table.string('title', 100).unique();
       table.text('description');
       table.string('disLogo', 200);
+      table.timestamps();
 
     }).then(function (table) {
       console.log('Created Table', table);
@@ -62,6 +63,7 @@ db.knex.schema.hasTable('ranks').then(function(exists){
       table.string('rankTitle', 100);
       table.integer('rankNum').unsigned();//.notNullable();
       table.string('rankIcon', 200);//.notNullable();
+      table.timestamps();
 
       //relations
       table.integer('student_id').unsigned().references('students.id');
@@ -100,16 +102,17 @@ db.knex.schema.hasTable('classes').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('classes', function (table) {
       table.increments('id').primary();
-      table.string('title', 255).unique().notNullable();
+      table.string('title', 100).unique().notNullable();
+      table.integer('classNum').unsigned();
       table.text('description');
       table.string('image',255);
-      table.integer('levelCount').unsigned();
+      table.integer('levelCount').unsigned().defaultTo(0);
       table.timestamps();
 
       //Relations
       // instructor_id is a ForeignKey attached to instructor
       table.integer('instructor_id').unsigned().references('instructors.id');
-      table.integer('discipline_id').unsigned().references('desciplines.id');
+      table.integer('discipline_id').unsigned().references('disciplines.id');
       
     }).then(function (table) {
       console.log('Created Table', table);
@@ -121,11 +124,12 @@ db.knex.schema.hasTable('progress').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('progress', function (table) {
       table.increments('id').primary();
+      table.integer('levelNum').unsigned();
+      table.timestamps();
 
       //Relations
       table.integer('student_id').unsigned().references('students.id');
       table.integer('class_id').unsigned().references('classes.id');
-      table.integer('levelNum').unsigned().references('levels.levelNum');
 
       
     }).then(function (table) {
@@ -139,7 +143,7 @@ db.knex.schema.hasTable('levels').then(function(exists) {
     db.knex.schema.createTable('levels', function (table) {
       table.increments('id').primary();
       table.integer('levelNum').unsigned();
-      table.string('title',255).unique();
+      table.string('title',100).unique();
       table.text('description');
       table.string('videoURL',255);
       table.boolean('feedbackNeeded').defaultTo(false);
@@ -174,6 +178,7 @@ db.knex.schema.hasTable('classes_students').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('classes_students', function (table) {
       table.increments('id').primary();
+      table.timestamps();
 
       //relations
       table.integer('class_id').unsigned().references('classes.id');

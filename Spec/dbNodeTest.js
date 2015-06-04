@@ -12,26 +12,159 @@ var Student = require('../app/models/student.js');
 var DBQuery = require('../utils/dbQueries.js');
 
 var stu = {
-  username: 'Yen',
-  password: 'Yen',
+  username: 'Jim',
+  password: 'Jim',
 };
 var stu2 = {
-  username: 'Lin',
-  password: 'Lin',
+  username: 'Yuri',
+  password: 'Yuri',
 };
 var stu3 = {
-  username: 'Pamela',
-  password: 'Pamela',
+  username: 'Sokka',
+  password: 'Sokka',
 };
 var stu4 = {
-  username: 'Jason',
-  password: 'Jason',
+  username: 'Frey',
+  password: 'Frey',
 };
 
-// DBQuery.newInstructor(stu);
-// DBQuery.newInstructor(stu2);
-// DBQuery.newInstructor(stu3);
-// DBQuery.newInstructor(stu4);
+var inst = {
+  username: 'Key',
+  password: 'Key',
+};
+var inst2 = {
+  username: 'Quan',
+  password: 'Quan',
+};
+var inst3 = {
+  username: 'Gandalf',
+  password: 'Gandalf',
+};
+var inst4 = {
+  username: 'Morgan',
+  password: 'Morgan',
+};
+
+var dis = {
+  title: 'Kendo',
+  description: 'Way of the Stick',
+  disLogo: 'wwwwwwwww'
+};
+var dis2 = {
+  title: 'Tonfa',
+  description: 'Way of the Short Sticks',
+  disLogo: 'wwwwwwwww'
+};
+var dis3 = {
+  title: 'Flying',
+  description: 'Way of Falling',
+  disLogo: 'wwwwwwwww'
+};
+
+var clas = {
+  title: 'Posture',
+  classNum: 1,
+  description: 'Learn to Stand.',
+  image: 'classImageURL',
+};
+var clas2 = {
+  title: 'Grips',
+  classNum: 1,
+  description: 'Learn to Hold.',
+  image: 'classImageURL'
+};
+var clas3 = {
+  title: 'Jump',
+  classNum: 1,
+  description: 'First step to flying.',
+  image: 'classImageURL',
+};
+var clas4 = {
+  title: 'Steps',
+  classNum: 2,
+  description: 'Learn to Walk.',
+  image: 'classImageURL',
+};
+var clas5 = {
+  title: 'Three asasdfasdfdf Strike',
+  classNum: 3,
+  description: 'Learn to asdf after Three steps.',
+  image: 'classImageURL',
+};
+
+var levl = {
+  title: 'Steps - 1',
+  description: 'The first step.',
+  videoURL: 'www.wat',
+  levelNum: 1,
+  feedbackNeeded: false,
+  class_id: 4,
+};
+var levl2 = {
+  title: 'Steps - 2',
+  description: 'The second step.',
+  videoURL: 'www.wat',
+  levelNum: 2,
+  feedbackNeeded: false,
+  class_id: 4,
+};
+var levl3 = {
+  title: 'Steps - 3',
+  description: 'The third step.',
+  videoURL: 'www.wat',
+  levelNum: 3,
+  feedbackNeeded: true,
+  class_id: 4,
+};
+var levl4 = {
+  title: 'Strike - 1',
+  description: 'The first strike.',
+  videoURL: 'www.wat',
+  levelNum: 1,
+  feedbackNeeded: false,
+  class_id: 2,
+};
+
+// DBQuery.newStudent(stu);
+// DBQuery.newStudent(stu2);
+// DBQuery.newStudent(stu3);
+// DBQuery.newStudent(stu4);
+
+// DBQuery.newInstructor(inst);
+// DBQuery.newInstructor(inst2);
+// DBQuery.newInstructor(inst3);
+// DBQuery.newInstructor(inst4);
+
+// DBQuery.newDiscipline(dis);
+// DBQuery.newDiscipline(dis2);
+// DBQuery.newDiscipline(dis3);
+
+// DBQuery.newClass(clas, 'Kendo', 'Key');
+// DBQuery.newClass(clas2, 'Tonfa', 'Quan');
+// DBQuery.newClass(clas3, 'Flying', 'Gandalf');
+// DBQuery.newClass(clas4, 'Kendo', 'Key');
+// DBQuery.newClass(clas5, 'Kendo', 'Gandalf');
+
+// DBQuery.newLevel(levl, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
+// DBQuery.newLevel(levl2, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
+// DBQuery.newLevel(levl3, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
+// DBQuery.newLevel(levl4, function(data){
+//   if(!data.result){
+//     console.log(data.message);
+//   }
+// });
 
 
 db.knex('students')
@@ -51,7 +184,9 @@ db.knex('instructors')
   console.log('-------------------------');
 });
 db.knex('classes')
-.select('id','title')
+.join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
+// .select('classes.*')
+.select('classes.id','classes.title as Class', 'classes.levelCount', 'disciplines.title as Discipline')
 .then(function(data){
   console.log('-------------------------');
   console.log('classes');
@@ -62,7 +197,7 @@ db.knex('ranks')
 .select('*')
 .then(function(data){
   console.log('-------------------------');
-  console.log('disciplines');
+  console.log('ranks');
   console.log(data);
   console.log('-------------------------');
 });
@@ -75,7 +210,7 @@ db.knex('feedback')
   console.log('-------------------------');
 });
 db.knex('levels')
-.select('id','title')
+.select('id','title', 'description', 'class_id as classID')
 .then(function(data){
   console.log('-------------------------');
   console.log('levels');
@@ -84,6 +219,14 @@ db.knex('levels')
 });
 db.knex('progress')
 .select('*')
+.then(function(data){
+  console.log('-------------------------');
+  console.log('progress');
+  console.log(data);
+  console.log('-------------------------');
+});
+db.knex('disciplines')
+.select('id', 'title', 'description')
 .then(function(data){
   console.log('-------------------------');
   console.log('disciplines');
