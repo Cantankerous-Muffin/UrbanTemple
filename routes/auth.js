@@ -129,6 +129,20 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
+
+router.get('/checkauth', function(req, res, next) {
+  if (req.session.user) {
+    console.log('user is logged in')
+    res.json({isAuthed:true, username:req.session.user})
+  } else {
+    console.log('user is NOT logged in')
+    res.json({isAuthed:false})
+  }
+});
+
+
+
+
 module.exports = router;
 
 

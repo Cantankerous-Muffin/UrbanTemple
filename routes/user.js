@@ -11,13 +11,16 @@ var db = require('../app/config.js')
 
 var studentRoute = require('./student');
 var instructorRoute = require('./instructor');
-
+router.get('/', function(req, res) {
+	console.log('req.url is', req.url);
+});
 router.get('/:username', function(req, res) {
 	console.log('req.url is', req.url);
 	// we need to check if the user is a student or an instructor.
 		// if user is a student, direct to student route.
 		// else direct to instructor route.
-	// db.knex.raw
+	db.knex({username: req.url.slice(1)})
+		.where({})
 	if (req.url.slice(1)){
 		res.end('get to student without any parameters '+ req.get('host') + req.originalUrl);
 	} else {
