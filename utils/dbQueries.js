@@ -325,7 +325,8 @@ var DBQuery = {
             }).fetch().then(function(exists){
               if(!exists){
                 new Class({
-                  title: classInfo.title
+                  title: classInfo.title,
+                  discipline_id: disc.id,
                 }).fetch()
                 .then(function(used){
                   if(!used){
