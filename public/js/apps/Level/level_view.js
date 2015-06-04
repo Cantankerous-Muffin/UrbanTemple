@@ -6,6 +6,7 @@ define([
 
     VirtualDojo.module("LevelApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
+
       View.Video = Marionette.ItemView.extend({
         template: LevelViewTpl,
 
@@ -18,16 +19,31 @@ define([
         submitVideo: function(e) {
           e.preventDefault();
           console.log('submitVideo clicked');
+          
         },
 
         prevLevel: function(e) {
           e.preventDefault();
           console.log('prev button clicked');
+          var extractFromUrl = VirtualDojo.getCurrentRoute().split("/");
+          var requestData = {
+            'disciplineId': extractFromUrl[1],
+            'classNum': extractFromUrl[3],
+            'levelNum': extractFromUrl[5]-1
+          }
+          VirtualDojo.trigger("show:video", requestData)
         },
 
         nextLevel: function(e) {
           e.preventDefault(e);
           console.log('next button clicked');
+          var extractFromUrl = VirtualDojo.getCurrentRoute().split("/");
+          var requestData = {
+            'disciplineId': extractFromUrl[1],
+            'classNum': extractFromUrl[3],
+            'levelNum': extractFromUrl[5]+1
+          }
+          VirtualDojo.trigger("show:video", requestData)
         },
 
         navigate: function(e){
