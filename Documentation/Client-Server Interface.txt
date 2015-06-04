@@ -1,4 +1,21 @@
 -------------GET---------------
+////////////////////////////////////
+// Utility API Call to Check Auth //
+////////////////////////////////////
+
+/checkauth
+
+return:
+//if session not found
+{isAuthed: false}
+
+//if session is validated
+{
+  isAuthed: true
+  username: <req.session.user>
+}
+
+-------------GET---------------
 ///////////////////////////////
 // Page: Dashboard (profile)//
 ///////////////////////////////
