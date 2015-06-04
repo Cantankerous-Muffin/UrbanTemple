@@ -12,8 +12,8 @@ define([
         ui: {
           inputUsername: "input#username",
           inputPassword: "input#password",
-          loginButton: "button#loginButton",
-          signupButton: "button#signupButton"
+          loginButton: "#loginButton",
+          signupButton: "#signupLink"
         },
 
         events: {

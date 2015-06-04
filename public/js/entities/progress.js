@@ -68,7 +68,7 @@ define(
               },
             ]
             defer.resolve(data);
-          }, 600);
+          }, 200);
 
           return defer.promise();
 

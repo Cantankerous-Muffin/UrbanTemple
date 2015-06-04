@@ -13,6 +13,7 @@ app/local_config.js
 # DS_Store
 .DS_Store
 
+public/video
 
 npm-debug.log
 

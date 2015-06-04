@@ -10,7 +10,7 @@ define([
         
         showLevel: function(params){
           var LevelMainView = null
-          
+          console.log("show level controller !!")
           require(["entities/level"],function(){
             var fetchClass = VirtualDojo.request("entities:level:get", params)
               fetchClass
@@ -20,11 +20,8 @@ define([
                   }
 
                   LevelMainView = new LevelView.Video({model: videoModel});
-                  console.log(LevelMainView)
                   VirtualDojo.regions.main.show(LevelMainView);
                 });
-
-            
           })
         }
       };

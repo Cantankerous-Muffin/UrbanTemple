@@ -7,7 +7,8 @@ define([
     VirtualDojo.module("SidenavApp.List.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
       View.Sidenav = Marionette.ItemView.extend({
         template: listItemTpl,
-        tagName: "li",
+        tagName: "a",
+        className: "item",
 
         events: {
           "click a": "navigate"
@@ -19,6 +20,9 @@ define([
         },
 
         onRender: function(){
+          // set url for the menu item
+          this.$el.prop("href", "#" + this.model.get("url"));
+
           if(this.model.selected) {
             this.$el.addClass("active");
             //picky not working

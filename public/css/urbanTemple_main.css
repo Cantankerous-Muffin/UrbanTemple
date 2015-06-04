@@ -1,9 +1,51 @@
+.white-bg {
+  /*background: white;*/
+}
+
+.welcome-title {
+  color: white;
+}
+
+.login-title {
+  color: chocolate;
+}
+
+video#bgvid {
+  display: inline;
+  position: fixed;
+  opacity: 0.5;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: url(polina.jpg) no-repeat;
+  background-size: cover;
+}
+
+.login-form-item {
+  opacity: 0.8;
+  padding: 4px 0;
+}
+
+#signupLink {
+  color: rgb(219, 189, 138);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 #app-container {
   display: table;
+  width: 100%;
 }
 
 #sidenav-region {
-	display: table-cell;
+  display: table-cell;
+  /*background: white;*/
   vertical-align: top;
   padding: 10px 5px;
   text-align: center;
@@ -16,4 +58,53 @@
 
 #main-region {
   display: table-cell;
+  /*background: white;*/
+}
+
+.logo-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.logo-container {
+  width: 100px;
+  height: auto;
+}
+
+#main-region h1.level-header {
+  background: #CCC4AC;
+  color: white;
+}
+
+.class-thumb {
+  border: 1px solid rgb(225, 200, 127);
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+  margin: 10px;
+  width: 280px;
+  height: 230px;
+}
+
+.class-thumb.disabled {
+  border: 3px solid gray;
+  border-style: dashed;
+  background: rgb(211, 184, 184);
+  opacity: 0.6;
+}
+
+.class-thumb:hover {
+  border: 3px solid rgb(96, 79, 27);
+  background: rgb(255, 253, 234);
+}
+
+.class-thumb.disabled:hover{
+  border: 3px solid gray;
+  border-style: dashed;
+  background: rgb(211, 184, 184);
+  opacity: 0.6;
+}
+
+.class-thumb h5{
+  margin-bottom: 30px;
 }
