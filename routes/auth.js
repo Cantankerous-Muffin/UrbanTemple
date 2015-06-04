@@ -48,13 +48,15 @@ router.post('/signup', function(req, res, next) {
   var password  = req.body.password;
   if (!isInstructor){
     // sign up student
+    console.log('user is a student');
     new Student({username:username})
       .fetch()
       .then(function(model){
         if (model) {
           return next(null);
         } else {
-          new Student({username:username,password:password, firstname:req.body.firstname, lastname:req.body.lastname, email:req.body.email},{isNew:true}).save()
+
+          new Student({username:username,password:password, firstName:req.body.firstname, lastName:req.body.lastname, email:req.body.email},{isNew:true}).save()
   	        .then(function(model){
   	          handleAuth(req, res, username, model.attributes.id);
   	        });
@@ -63,25 +65,36 @@ router.post('/signup', function(req, res, next) {
   }
   else {
     // sign up instructor
+    console.log('user is a instructor');
+    console.log('req permissionKey', req.body.permissionKey);
     db.knex("instrKeys")
-      .where("key",req.permissionKey)
       .select("used")
+      .where("key",req.body.permissionKey)
       .then(function(exist){
-        if (exist){
-          console.log("Key already used by another instructor.")
+        console.log('exist',exist[0].used);
+        if (exist[0].used){
+          console.log("Key already used by another instructor.");
         } else {
           // look if instructor already exists
           new Instructor({username:username})
             .fetch()
             .then(function(model){
               if (model) {
-                // instructor present in DB
+                // instructor present in DB. update key to used.
+                console.log("Instructor present in DB.");
                 return next(null);
               } else {
                 // instructor not present in DB. Can save instructor to DB.
-                new Instructor({username:username,password:password, firstname:req.body.firstname, lastname:req.body.lastname, email:req.body.email},{isNew:true}).save()
-                  .then(function(model){
-                    handleAuth(req, res, username, model.attributes.id);
+                db.knex("instrKeys")
+                  .where('key',req.body.permissionKey)
+                  .update({
+                    used: true
+                  })
+                  .then(function(){
+                    new Instructor({username:username,password:password, firstName:req.body.firstname, lastName:req.body.lastname, email:req.body.email},{isNew:true}).save()
+                      .then(function(model){
+                        handleAuth(req, res, username, model.attributes.id);
+                      });
                   });
                 }
             });
