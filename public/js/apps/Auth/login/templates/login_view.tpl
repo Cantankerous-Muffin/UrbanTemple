@@ -14,6 +14,7 @@
             <input type="password" id="password" placeholder="Password">
         </div>
     </div>
+    
     <div class="control-group">
         <div class="controls">
             <button type="submit" class="btn" id="loginButton">Sign in</button>
