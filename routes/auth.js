@@ -5,7 +5,7 @@ var Instructor  = require('./../app/models/instructor');
 var passport = require('passport');
 var path         = require('path');
 var DBQuery = require('../utils/dbQueries.js')
-
+var db = require('../app/config.js');
 /**
  * handleAuth creates a session object, which we then store the username as a user
  * property under the req.session object
@@ -28,7 +28,6 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
   .fetch()
   .then(function(model) {
     handleAuth(req, res, username, model.attributes.id);
-
   });
 });
 
@@ -44,10 +43,10 @@ router.get('/login', function(req, res, next) {
 
 // Local Auth Sign-up
 router.post('/signup', function(req, res, next) {
-  var typeOf = req.body.typeOf;
+  var isInstructor = req.body.isInstructor;
   var username  = req.body.username;
   var password  = req.body.password;
-  if (typeOf !== 'Instructor'){
+  if (!isInstructor){
     // sign up student
     new Student({username:username})
       .fetch()
@@ -55,7 +54,7 @@ router.post('/signup', function(req, res, next) {
         if (model) {
           return next(null);
         } else {
-          new Student({username:username,password:password},{isNew:true}).save()
+          new Student({username:username,password:password, firstname:req.body.firstname, lastname:req.body.lastname, email:req.body.email},{isNew:true}).save()
   	        .then(function(model){
   	          handleAuth(req, res, username, model.attributes.id);
   	        });
@@ -64,18 +63,30 @@ router.post('/signup', function(req, res, next) {
   }
   else {
     // sign up instructor
-      new Instructor({username:username})
-        .fetch()
-        .then(function(model){
-          if (model) {
-            return next(null);
-          } else {
-            new Instructor({username:username,password:password},{isNew:true}).save()
-              .then(function(model){
-                handleAuth(req, res, username, model.attributes.id);
-              });
-            }
-        });
+    db.knex("instrKeys")
+      .where("key",req.permissionKey)
+      .select("used")
+      .then(function(exist){
+        if (exist){
+          console.log("Key already used by another instructor.")
+        } else {
+          // look if instructor already exists
+          new Instructor({username:username})
+            .fetch()
+            .then(function(model){
+              if (model) {
+                // instructor present in DB
+                return next(null);
+              } else {
+                // instructor not present in DB. Can save instructor to DB.
+                new Instructor({username:username,password:password, firstname:req.body.firstname, lastname:req.body.lastname, email:req.body.email},{isNew:true}).save()
+                  .then(function(model){
+                    handleAuth(req, res, username, model.attributes.id);
+                  });
+                }
+            });
+        }
+      })
   }
 });
 
