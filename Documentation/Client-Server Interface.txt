@@ -1,3 +1,41 @@
+-------------POST---------------
+///////////////////////////////
+//        Page: Login        //
+///////////////////////////////
+
+/auth/login
+
+request: {
+  username: STRING, 
+  password: INT
+}
+
+-------------GET---------------
+///////////////////////////////
+//        Page: Logout       //
+///////////////////////////////
+
+/auth/logout
+
+// destroy session 
+
+-------------POST---------------
+///////////////////////////////
+//       Page: Signup        //
+///////////////////////////////
+
+/auth/signup
+
+request: {
+  username: STRING,
+  password: INT,
+  firstname: STRING,
+  lastname: STRING,
+  isInstructor: BOOLEAN,
+  PermissionKey: INT  // only for instructors 
+}
+
+
 -------------GET---------------
 ////////////////////////////////////
 // Utility API Call to Check Auth //
@@ -7,7 +45,9 @@
 
 return:
 //if session not found
-{isAuthed: false}
+{
+  isAuthed: false
+}
 
 //if session is validated
 {
@@ -26,7 +66,7 @@ return:
 User = { // Student or Instructor
   isInstructor: BOOLEAN,
   username: STRING,
-  fullname: STRING,
+  lastname: STRING,
   ranks: UserRank[] // array of UserRank objects 
 }
 

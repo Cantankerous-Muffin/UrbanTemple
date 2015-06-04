@@ -38,7 +38,7 @@ define([
         console.log("authenticate initializing");
         //Make empty ajax GET
         require(["entities/auth"], function() {
-          var checkAuth = VirtualDojo.request("entities:auth:checkAuth", {});
+          var checkAuth = VirtualDojo.request("entities:auth:checkAuth");
           checkAuth
             .done(function(data){
               //means cookie is respected, authorized

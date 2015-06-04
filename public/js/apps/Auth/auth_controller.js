@@ -39,7 +39,7 @@ define([
           request.done(function() {
             console.log("[AJAX] login");
             // fake auth check
-            console.log("AuthCheck: on Ajax call success", VirtualDojo.authed);
+            console.log("AuthCheck: on Ajax call success");
             VirtualDojo.trigger("authenticate:init");
 
             // VirtualDojo.Utilities.enterApplication()
@@ -66,7 +66,8 @@ define([
 
           request.done(function(data) {
             console.log("[AJAX] signup done data", data);
-            done();
+            VirtualDojo.trigger("authenticate:init");
+            // done();
           });
 
           // request.fail(function(req, textStatus, err) {

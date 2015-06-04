@@ -5,7 +5,7 @@ define(
   ], function(VirtualDojo, Ajax) {
     VirtualDojo.module("Entities.Auth", function(Auth, ExaApp, Backbone, Marionette, $, _) {
       var API = {
-        checkAuth: function (param) {
+        checkAuth: function () {
           var ajax = Ajax.perform({
             type: "GET",
             url: "/checkauth",
@@ -18,8 +18,8 @@ define(
         }
       };
 
-      VirtualDojo.reqres.setHandler("entities:auth:checkAuth", function (params) {
-        return API.checkAuth(params);
+      VirtualDojo.reqres.setHandler("entities:auth:checkAuth", function () {
+        return API.checkAuth();
       });
     });
   }

@@ -16,7 +16,7 @@ define(
                           description: "kendo short description will be here",
                           classes: [
                             {
-                              classId: 1,
+                              classNum: 1,
                               disciplineId: 1,
                               instructorId: 1,
                               title: "Kendo 101: Philsophy",
@@ -25,7 +25,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 2,
+                              classNum: 2,
                               disciplineId: 1,
                               instructorId: 2,
                               title: "Kendo 102: Grip & Steps & Middle Stance ",
@@ -34,7 +34,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 3,
+                              classNum: 3,
                               disciplineId: 1,
                               instructorId: 3,
                               title: "Kendo 103: Strikes - Basic",
@@ -43,7 +43,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 4,
+                              classNum: 4,
                               disciplineId: 1,
                               instructorId: 4,
                               title: "Kendo 104: Strikes - Intermediate",
@@ -52,7 +52,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 5,
+                              classNum: 5,
                               disciplineId: 1,
                               instructorId: 5,
                               title: "Kendo 105: Strikes - Advanced",
@@ -61,7 +61,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 6,
+                              classNum: 6,
                               disciplineId: 1,
                               instructorId: 6,
                               title: "Kendo 106: Sparring",
@@ -77,7 +77,7 @@ define(
                           description: "Qigong short description will be here",
                           classes: [
                                   {
-                              classId: 1,
+                              classNum: 1,
                               disciplineId: 2,
                               instructorId: 1,
                               title: "Qigong 101: Philsophy",
@@ -86,7 +86,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 2,
+                              classNum: 2,
                               disciplineId: 2,
                               instructorId: 2,
                               title: "Qigong 102: Grip & Steps & Middle Stance ",
@@ -95,7 +95,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 3,
+                              classNum: 3,
                               disciplineId: 2,
                               instructorId: 3,
                               title: "Qigong 103: Strikes - Basic",
@@ -104,7 +104,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 4,
+                              classNum: 4,
                               disciplineId: 2,
                               instructorId: 4,
                               title: "Qigong 104: Strikes - Intermediate",
@@ -113,7 +113,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 5,
+                              classNum: 5,
                               disciplineId: 2,
                               instructorId: 5,
                               title: "Qigong 105: Strikes - Advanced",
@@ -122,7 +122,7 @@ define(
                               totalLevel: 5
                             },
                             {
-                              classId: 6,
+                              classNum: 6,
                               disciplineId: 2,
                               instructorId: 6,
                               title: "Kendo 106: Sparring",
@@ -137,7 +137,7 @@ define(
            // mock result from server
 
             defer.resolve(data);
-          }, 600);
+          }, 200);
 
           return defer.promise();
 

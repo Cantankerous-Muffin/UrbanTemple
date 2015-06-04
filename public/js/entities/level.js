@@ -58,7 +58,7 @@ define(
            // mock result from server
 
             defer.resolve(data);
-          }, 600);
+          }, 200);
 
           return defer.promise();
 
