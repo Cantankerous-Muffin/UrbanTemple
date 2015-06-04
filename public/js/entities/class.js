@@ -6,6 +6,10 @@ define(
     VirtualDojo.module("Entities.Classes", function(Classes, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getClasses: function (params) {
+
+          // var url = "/discipline/" + params.disciplineId + "/class/" + params.classNum;
+          // console.log("urltestsetts", url);
+          
           var defer = $.Deferred();
 
           setTimeout(function(){
@@ -22,13 +26,14 @@ define(
            // mock result from server - Route: /discipline/<discipline_id>/class/<class_num>/level/<level_num>
 
             defer.resolve(data);
-          }, 600);
+          }, 200);
 
           return defer.promise();
 
           //var ajax = Ajax.perform({
           //  type: "GET",
-          //  url: '/discipline,
+          //  url: '/discipline/ + params.disciplineID + /class/ + params.classNum
+              // eg. /discipline/1/class/1
           //  callback: function (data) {
           //    return data;
           //  }

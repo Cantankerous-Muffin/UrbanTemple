@@ -29,7 +29,7 @@ define([
         template: classThumbViewTpl,
 
         ui: {
-          thumbClick: ".foo"
+          thumbClick: ".class-wrapper"
         },
 
         events: {
@@ -37,11 +37,14 @@ define([
         },
         
         onThumbClick: function(event) {
-           console.log("xxxdisciplineIdxxx", this.model.get("disciplineId"));
-           console.log("xxxclassNumxxx", this.model.get("classNum"));
           event.preventDefault();
-           // call url maker function from ClassApp
-           // VirtualDojo.trigger("auth:class:show", url);
+           var disciplineId = this.model.get("disciplineId");
+           var classNum = this.model.get("classNum");
+
+            VirtualDojo.trigger("show:class", {
+              disciplineId: disciplineId,
+              classNum: classNum
+            });
         },
 
         initialize: function() {

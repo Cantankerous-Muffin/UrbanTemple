@@ -1,3 +1,23 @@
+-------------POST---------------
+///////////////////////////////
+//        Page: Login        //
+///////////////////////////////
+
+
+-------------POST---------------
+///////////////////////////////
+//        Page: Logout       //
+///////////////////////////////
+
+
+-------------POST---------------
+///////////////////////////////
+//       Page: Signup        //
+///////////////////////////////
+
+
+
+
 -------------GET---------------
 ////////////////////////////////////
 // Utility API Call to Check Auth //
@@ -26,7 +46,7 @@ return:
 User = { // Student or Instructor
   isInstructor: BOOLEAN,
   username: STRING,
-  fullname: STRING,
+  lastname: STRING,
   ranks: UserRank[] // array of UserRank objects 
 }
 
