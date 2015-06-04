@@ -8,7 +8,8 @@ define([
       AuthApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
           "login": "showLoginPage",
-          "signup": "showSignUpPage"
+          "signup": "showSignUpPage",
+          "logout": "logout"
         }
       });
      

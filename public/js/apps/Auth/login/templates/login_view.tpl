@@ -1,29 +1,28 @@
-<h1>Login</h1>
-<div class="alert alert-error" style="display:none;">
+<video autoplay loop poster="" id="bgvid" muted>
+  <source src="video/touch_my_body_bg.mp4" type="video/mp4">
+</video>
+<h1 class="welcome-title">Urban Temple</h1>
+<h3 class="login-title">Login</h3>
+<div class="alert alert-error" style="display:none;"></div>
+<div class="login-form-item">
+  <div class="ui corner labeled input">
+    <input type="text" id="username" placeholder="Username">
+    <div class="ui corner label">
+      <i class="asterisk icon"></i>
+    </div>
+  </div>
 </div>
-<form class="form-horizontal">
-    <div class="control-group">
-        <label class="control-label" for="username">Username</label>
-        <div class="controls">
-            <input type="text" id="username" placeholder="Username">
-        </div>
+<div class="login-form-item">
+  <div class="ui corner labeled input">
+    <input type="password" id="password" placeholder="Password">
+    <div class="ui corner label">
+      <i class="asterisk icon"></i>
     </div>
-    <div class="control-group">
-        <label class="control-label" for="password">Password</label>
-        <div class="controls">
-            <input type="password" id="password" placeholder="Password">
-        </div>
-    </div>
-    
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn" id="loginButton">Sign in</button>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn" id="signupButton">New user? Sign up</button>
-        </div>
-    </div>
-</form>
+  </div>
+</div>
+<div class="login-form-item">
+  <span id="loginButton" class="ui button primary">Sign in</span>
+</div>
+<div class="login-form-item">
+  <span id="signupLink">New user? Sign up</span>
+</div>

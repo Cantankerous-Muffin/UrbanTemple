@@ -1,5 +1,5 @@
 
-<h1><%= title %></h1>
+<h1 class="ui block header level-header"><%= title %></h1>
 <iframe width="560" height="315" src=<%= videoUrl %> frameborder="0" allowfullscreen></iframe>
 <div><%= description %></div>
 <div class="submitvideo"><%= (next == false) ? '<form class="form-horizontal"><div class="control-group"><div class="controls"><input type="text" id="submitVideoUrl" placeholder="Youtube embed link here"></div></div><div class="control-group"><div class="controls"><button type="submit" class="btn" id="submitVideoButton">Submit Video</button></div></div></form>' : '' %></div>

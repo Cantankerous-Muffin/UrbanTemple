@@ -1,8 +1,7 @@
-<div class="logo">
-<a class="brand" href="#sidenav">Urban Temple</a>
-</div>
-<div class="side-menu">
-  <ul id="menu-items" class="nav nav-pills nav-stacked">
-    
-  </ul>
+<div id="menu-items" class="ui visible left vertical labeled icon sidebar menu">
+  <div class="item" href="#">
+    <div class="logo-container">
+      <img src="img/logo.png"></img>
+    </div>
+  </div>
 </div>
