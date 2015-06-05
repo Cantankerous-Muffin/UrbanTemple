@@ -1,3 +1,3 @@
 <div id="profile-region"></div>
-<div class="ui divider"></div>
+<br>
 <div id="progress-region"></div>

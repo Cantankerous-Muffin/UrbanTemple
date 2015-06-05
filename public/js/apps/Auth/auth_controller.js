@@ -51,11 +51,16 @@ define([
           });
         },
 
-        signup: function(username, password, done) {
+        signup: function(username, password, firstname, lastname, PermissionKey, email, done) {
         var ajaxData = {
             username: username,
-            password: password
+            password: password,
+            firstname: firstname,
+            lastname: lastname,
+            email: email, 
+            PermissionKey: PermissionKey
           }
+          console.log('ajax signup post request object', ajaxData)
 
           var request = $.ajax({
             url: "/auth/signup",

@@ -12,7 +12,11 @@ define([
         ui: {
           inputUsername: "input#username",
           inputPassword: "input#password",
-          signupButton: "button#signupButton",
+          inputFirstName: "input#firstname",
+          inputLastName: "input#lastname",
+          inputEmail: "input#email",
+          inputInstructorKey: "input#instructorkey",
+          signupButton: "div#register_submit",
           backButton: "button#backButton"
         },
 
@@ -27,17 +31,37 @@ define([
         },
 
         signup: function(event) {
+          console.log('submit CLICKED')
           event.preventDefault();
           var username = this.ui.inputUsername.val();
           if (!username) return;
           var password = this.ui.inputPassword.val();
           if (!password) return;
+          var firstname = this.ui.inputFirstName.val();
+          if (!firstname) return;
+          var lastname = this.ui.inputLastName.val();
+          if (!lastname) return;
+          var email = this.ui.inputEmail.val();
+          if (!email) return;
+          var instructorKey = this.ui.inputInstructorKey.val();
 
           var whenDone = this.whenDone;
 
+          var isInstructor = false;
+          if (instructorKey) {
+            isInstructor = true;
+          } else {
+            instructorKey = null;
+          }
+
           VirtualDojo.trigger('authenticate:signup', {
             username: username, 
-            password: password, 
+            password: password,
+            firstname: firstname,
+            lastname: lastname, 
+            email: email,
+            isInstructor: isInstructor,
+            PermissionKey: instructorKey,
             whenDone: whenDone
           }); 
         },

@@ -31,6 +31,7 @@ request: {
   password: INT,
   firstname: STRING,
   lastname: STRING,
+  email: STRING, ***NEW*** as of 6/4/2015
   isInstructor: BOOLEAN,
   PermissionKey: INT  // only for instructors 
 }
