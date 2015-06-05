@@ -109,5 +109,46 @@ router.get('/:username', function(req, res) {
 	// });
 });
 
+router.get('/:username/progress', function(req,res){
+	// remove progress from url to find username
+	var username = req.url.slice(1,req.url.length - 9);
+	db.knex('students')
+		.where({'students.username': username})
+		.select('id')
+		.then(function(data){
+			// console.log('data',data);
+			db.knex('classes_students')
+				.where({'classes_students.student_id': data[0].id})
+				.select('*')
+				.then(function(data2){
+					// console.log('data2',data2);
+					var userProgressPackage = [];
+					var inner = 0;
+					for (var i = 0; i < data2.length; i++){
+						db.knex('classes')
+							.where({'classes.id':data2[i].class_id})
+							.select('*')
+							.then(function(data3){
+								console.log('data3',data3);
+									db.knex('levels')
+										.where({'levels.class_id':data2[inner].class_id})
+										.select('*')
+										.then(function(data4){
+											var userLevelPackage = [];
+											for (var j = 0; j < data4.length; j++){
+												userLevelPackage.push({'disciplineId':data3[0].discipline_id,'classNum':data3[0].classNum,'levelNum':data4[j].levelNum,'title':data4[j].title,'description':data4[j].description,'videoURL':data4[j].videoURL,'feedbackNeeded':data4[j].feedbackNeeded});
+											}
+											userProgressPackage.push(userLevelPackage);
+											console.log('data4',data4);
+											if (userProgressPackage.length === data2.length){
+												res.json(userProgressPackage);
+											}
+										});
+									inner++;
+							});
+					}
+				});
+		});
+})
 
 module.exports = router;
