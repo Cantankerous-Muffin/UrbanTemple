@@ -84,6 +84,7 @@ video#bgvid {
   margin: 10px;
   width: 280px;
   height: 230px;
+  box-sizing: border-box;
 }
 
 .class-thumb.disabled {
