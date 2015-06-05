@@ -10,11 +10,6 @@ define([
       ClassApp.Controller = {
             
         showClass: function(params) {
-          // params = {
-          //   disciplineId: disciplineId,
-          //   classNum: classNum
-          // }
-
           var classLayoutView = new ClassView.classLayout();
 
           // ajax call to retrieve user data and instantiate user model

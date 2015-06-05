@@ -6,6 +6,14 @@ define(
     VirtualDojo.module("Entities.Classes", function(Classes, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getClasses: function (params) {
+          console.log("xxxxxxx", params);
+          
+          // var url = VirtualDojo.getCurrentRoute();
+          // console.log("foooooo", foo);
+
+          var url = '/discipline/' + params.disciplineId + '/class/' + params.classNum;
+          console.log("api call url :", url);
+
           var defer = $.Deferred();
 
           setTimeout(function(){
@@ -23,12 +31,6 @@ define(
               totalLevel: 5
             };
 
-// /discipline/<discipline_id>/class/<class_num>/level/<level_num>
-
-
-
-           // mock result from server
-
             defer.resolve(data);
           }, 600);
 
@@ -36,7 +38,7 @@ define(
 
           //var ajax = Ajax.perform({
           //  type: "GET",
-          //  url: '/discipline,
+          //  url: '/discipline/ + params.disciplineID + /class/ + params.classNum'
           //  callback: function (data) {
           //    return data;
           //  }

@@ -1,6 +1,7 @@
-<video autoplay loop poster="" id="bgvid" muted>
+<!-- <video autoplay loop poster="" id="bgvid" muted>
   <source src="video/touch_my_body_bg.mp4" type="video/mp4">
-</video>
+  <source src="video/dojo_bg.mp4" type="video/mp4">
+</video> -->
 <h1 class="welcome-title">Urban Temple</h1>
 <h3 class="login-title">Login</h3>
 <div class="alert alert-error" style="display:none;"></div>

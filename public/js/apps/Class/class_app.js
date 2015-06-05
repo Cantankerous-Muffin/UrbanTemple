@@ -8,7 +8,6 @@ define([
 
       ClassApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
-          // "class/:id": "showClass",
           "discipline/:disciplineId/class/:classNum": "showClass",
         }
       });

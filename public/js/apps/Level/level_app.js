@@ -27,7 +27,6 @@ define([
 
       VirtualDojo.on("show:video", function(params){
         console.log('Show:video executed from level_app');
-        // console.log("ssssssss," params);
         VirtualDojo.navigate(LevelApp.generateClassUrl(params.disciplineId, params.classNum, params.levelNum));
         API.showLevel(params);
       });

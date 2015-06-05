@@ -10,9 +10,11 @@ define(
       FeedbackModels.Feedback = Backbone.Model.extend({
         default: {
           feedbackId: null,
-          username: "",
+          studentUsername: "",
+          instrUsername: "",
           videoUrl: "",
           class: null,
+          comment: "",
           approved: null
         },
         initialize: function() {

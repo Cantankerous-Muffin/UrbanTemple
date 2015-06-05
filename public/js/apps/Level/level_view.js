@@ -1,6 +1,6 @@
 define([
     "app",
-    "tpl!apps/Level/video/templates/level_view.tpl"
+    "tpl!apps/Level/templates/level_view.tpl"
   ], 
   function(VirtualDojo,LevelViewTpl){
 
@@ -10,16 +10,31 @@ define([
       View.Video = Marionette.ItemView.extend({
         template: LevelViewTpl,
 
+
+        ui: {
+          prevButton: ".prev",
+          nextButton: ".next",
+          submitVidBtn: ".submitvideBtn",
+          urlInput: ".submitVideoUrl"
+        },
+
         events: {
-          'click .submitvideo' : 'submitVideo',
-          'click .prev' : 'prevLevel',
-          'click .next' : 'nextLevel'
+          'click @ui.prevButton' : 'prevLevel',
+          'click @ui.nextButton' : 'nextLevel',
+          'click @ui.submitVidBtn': 'submitVideo'
         },
 
         submitVideo: function(e) {
           e.preventDefault();
-          console.log('submitVideo clicked');
+          var requestData = {
+            username: UTConfig.username,
+            classNum: this.model.get("classNum"),
+            videoUrl: this.ui.urlInput.val()
+          }
+
+          // console.log(requestData);
           
+          VirtualDojo.trigger('entities:feedback:post', requestData); 
         },
 
         prevLevel: function(e) {
@@ -44,7 +59,6 @@ define([
               classNum: this.model.get("classNum"),
               levelNum: this.model.get("levelNum") + 1
             }
-            console.log("rd", requestData)
             VirtualDojo.trigger("show:video", requestData);
           }
         },
