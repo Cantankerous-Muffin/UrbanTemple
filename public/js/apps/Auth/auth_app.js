@@ -47,7 +47,6 @@ define([
               if (data.isAuthed) {
                 // store the username on global object
                 UTConfig.username = data.username;
-
                 VirtualDojo.Utilities.enterApplication();
 
               } else {
