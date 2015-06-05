@@ -257,3 +257,6 @@ db.knex('disciplines')
   console.log('-------------------------');
 });
 
+DBQuery.studentToClass('ggg','Grips',function(data){
+  console.log(data);
+})
