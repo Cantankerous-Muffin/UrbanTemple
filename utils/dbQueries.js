@@ -20,11 +20,11 @@ var DBQuery = {
     // Student
     // Instructor
     // Classes
-    // Rank *
+    // Rank 
     // Feedback *
     // Level 
     // Discipline
-    // Progress *
+    // Progress 
   //Get Queries
     //
   
@@ -193,20 +193,20 @@ var DBQuery = {
     });
   },
 
-  setRank: function(userID, discipline, rankInfo, isInstructor, callback){
+  setRank: function(userID, disciplineID, rankInfo, isInstructor, callback){
     if(!isInstructor){
       db.knex('students')
       .join('ranks', 'students.id', '=', 'ranks.student_id')
       .join('disciplines', 'ranks.discipline_id', '=', 'disciplines.id')
       .where({
         'students.id': userID,
-        'disciplines.title': discipline
+        'disciplines.id': disciplineID
       })
       .then(function(exist){
         if(!exist || exist.length===0){
           new Rank({
             'student_id': userID,
-            'discipline_id': discipline,
+            'discipline_id': disciplineID,
             rankTitle: rankInfo.rankTitle,
             rankNum: rankInfo.rankNum,
             rankIcon: rankInfo.rankIcon,
@@ -228,7 +228,18 @@ var DBQuery = {
             }
           });
         }else{
-          exist.save(rankInfo, {patch: true})
+          db.knex('ranks')
+          .where('id', exist[0].id)
+          .update({
+            rankTitle: rankInfo.rankTitle,
+            rankNum: rankInfo.rankNum,
+            rankIcon: rankInfo.rankIcon,
+          })
+          // exist[0].update({
+          //   rankTitle: rankInfo.rankTitle,
+          //   rankNum: rankInfo.rankNum,
+          //   rankIcon: rankInfo.rankIcon,
+          // })
           .catch(function(err){
             console.log(err);
             if(callback){
@@ -239,6 +250,7 @@ var DBQuery = {
             }
           })
           .then(function(){
+            console.log('Rank updated');
             if(callback){
               callback({
                 result: true,
@@ -253,13 +265,13 @@ var DBQuery = {
       .join('disciplines', 'ranks.discipline_id', '=', 'disciplines.id')
       .where({
         'instructors.id': userID,
-        'disciplines.title': discipline
+        'disciplines.title': disciplineID
       })
       .then(function(exist){
         if(!exist || exist.length===0){
           new Rank({
             'instructor_id': userID,
-            'discipline_id': discipline,
+            'discipline_id': disciplineID,
             rankTitle: rankInfo.rankTitle,
             rankNum: rankInfo.rankNum,
             rankIcon: rankInfo.rankIcon,
@@ -391,45 +403,7 @@ var DBQuery = {
    */
   submitFeedback: function(infoObject, callback){
     //check if a video under the students id already exists
-    db.knex('feedback')
-    .where({
-      videoURL: infoObject.videoURL,
-      student_id: infoObject.student_id,
-      instructor_id: infoObject.instructor_id,
-      class_id: infoObject.class_id
-    })
-    .select('*')
-    .then(function(exist){
-      if(!exist || exist.length===0){
-        new Feedback(infoObject)
-        .save()
-        .catch(function(err){
-          console.log(err);
-          if(callback){
-            callback({
-              result: false,
-              message: 'Internal Server Error.'
-            });
-          }
-        })
-        .then(function(data){
-          if(callback){
-            callback({
-              result: true
-            });
-          }
-        });
-      }else{
-        exist.save( infoObject, {patch: true} )
-        .then(function(data){
-          if(callback){
-            callback({
-              result:true,
-            });
-          }
-        });
-      }
-    });
+    
   },
 
   /**
@@ -539,48 +513,128 @@ var DBQuery = {
     });
   },
 
-  setProgress: function(studentID, classID, levelNum, callback){
-    newProgress = new Progress({
-      student_id: studentID,
-      class_id: classID,
-      levelNum: 1,
-    });
-    new Progress({
-      student_id: studentID,
-      class_id: classID,
+  setProgress: function(username, classTitle, levelNum, callback){
+    var studentID; 
+    var classID;
+
+    new Student({
+      username: username
     }).fetch()
-    .catch(function(err){
-      console.log(err);
-      if(callback){
+    .then(function(exist){
+      if(exist){
+        studentID =  exist.get('id');
+        checkClass();
+      }else{
         callback({
           result: false,
-          message: 'Internal Server Error.'
+          message: 'Could not find student of that username.'
         });
-      }
-    })
-    .then(function(exist){
-      if(!exist || exist.length===0){
-        newProgress.save()
-        .catch(function(err){
-          console.log(err);
-          if(callback){
-            callback({
-              result: false,
-              message: 'Internal Server Error.'
-            });
-          }
-        })
-        .then(function(){
-          if(callback){
-            callback({
-              result:true
-            });
-          }
-        });
-      }else{
-        exist.save({levelNum: levelNum}, {patch: true});
       }
     });
+    var checkClass = function(){
+      new Class({
+        title: classTitle
+      }).fetch()
+      .then(function(exist){
+        if(exist){
+          classID = exist.get('id');
+          saveProgress();
+        }else{
+          callback({
+            result: false,
+            message: 'Could not find class of that title.'
+          });
+          return;
+        }
+      });
+    };
+
+    var saveProgress = function(){
+      var newProgress = new Progress({
+        student_id: studentID,
+        class_id: classID,
+        levelNum: levelNum
+      });
+
+      newProgress.fetch()
+      .then(function(data){
+        if(data){
+          //update progress
+          data.save({levelNum: levelNum}, {patch: true})
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result:false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Progress updated.');
+            callback({
+              result: true
+            });
+          });
+        }else{
+          newProgress.save()
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result:false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Progress saved.');
+            callback({
+              result: true
+            });
+          });
+        }
+      });
+
+    };
+
+    // newProgress = new Progress({
+    //   student_id: studentID,
+    //   class_id: classID,
+    //   levelNum: 1,
+    // });
+    // new Progress({
+    //   student_id: studentID,
+    //   class_id: classID,
+    // }).fetch()
+    // .catch(function(err){
+    //   console.log(err);
+    //   if(callback){
+    //     callback({
+    //       result: false,
+    //       message: 'Internal Server Error.'
+    //     });
+    //   }
+    // })
+    // .then(function(exist){
+    //   if(!exist || exist.length===0){
+    //     newProgress.save()
+    //     .catch(function(err){
+    //       console.log(err);
+    //       if(callback){
+    //         callback({
+    //           result: false,
+    //           message: 'Internal Server Error.'
+    //         });
+    //       }
+    //     })
+    //     .then(function(){
+    //       if(callback){
+    //         callback({
+    //           result:true
+    //         });
+    //       }
+    //     });
+    //   }else{
+    //     exist.save({levelNum: levelNum}, {patch: true});
+    //   }
+    // });
   },
 
 

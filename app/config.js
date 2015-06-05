@@ -124,7 +124,7 @@ db.knex.schema.hasTable('progress').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('progress', function (table) {
       table.increments('id').primary();
-      table.integer('levelNum').unsigned();
+      table.integer('levelNum').unsigned().notNullable();
       table.timestamps();
 
       //Relations
