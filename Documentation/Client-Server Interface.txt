@@ -217,6 +217,7 @@ request:
 {
   username: STRING,
   classNum: INT,
+  disciplineID: INT,
   videoUrl: URL(STRING)
 }
 

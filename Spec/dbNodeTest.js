@@ -125,6 +125,18 @@ var levl4 = {
   class_id: 2,
 };
 
+var rank = {
+  rankTitle: 'Beginner - 2',
+  rankNum: 2,
+  rankIcon: 'rankBeginnerIcon'
+};
+
+var feed = {
+  username: '',
+  classNum: 1,
+  discipline_id: 1,
+};
+
 // DBQuery.newStudent(stu);
 // DBQuery.newStudent(stu2);
 // DBQuery.newStudent(stu3);
@@ -166,6 +178,17 @@ var levl4 = {
 //   }
 // });
 
+// DBQuery.setRank(1,2,rank, false, function(result){
+//   console.log(result);
+// });
+
+// DBQuery.setProgress('Sokka', 'Steps', 1, function(result){
+//   console.log(result);
+// });
+
+// DBQuery.clearTable('progress');
+
+
 
 db.knex('students')
 .select('id','username')
@@ -194,7 +217,7 @@ db.knex('classes')
   console.log('-------------------------');
 });
 db.knex('ranks')
-.select('*')
+.select('rankTitle', 'rankNum', 'student_id', 'discipline_id')
 .then(function(data){
   console.log('-------------------------');
   console.log('ranks');
@@ -210,7 +233,7 @@ db.knex('feedback')
   console.log('-------------------------');
 });
 db.knex('levels')
-.select('id','title', 'description', 'class_id as classID')
+.select('id','title', 'levelNum', 'class_id as classID')
 .then(function(data){
   console.log('-------------------------');
   console.log('levels');
