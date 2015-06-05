@@ -325,7 +325,7 @@ var DBQuery = {
     //Check if discipline exists
     var getInst = this.getInstructorUsing;
 
-    this.getDiscipline(discipline, function(disc){
+    this.getDisciplineByTitle(discipline, function(disc){
       if(!disc){
         console.log('Something went wrong.');
       }else{
@@ -401,9 +401,93 @@ var DBQuery = {
    * @vidInfo  {[Object]}
    * @callback {[Function]} 
    */
-  submitFeedback: function(infoObject, callback){
-    //check if a video under the students id already exists
+  submitStudentFeedback: function(username, classNum, disciplineID, feedback, callback){
+    var checkDiscipline = this.getDisciplineByID;
+    this.getStudentUsing('username', username, function(student){
+      if(!student){
+        callback({
+          result: false,
+          message: 'Invalid student username',
+        });
+      }else{
+        //Get Discipline with ID
+        checkDiscipline(disciplineID, function(discipline){
+          if(!discipline){
+            callback(discipline);
+          }else{
+            //Get class with classNum and disciplineID
+            new Class({
+              discipline_id: disciplineID,
+              classNum: classNum
+            }).fetch()
+            .then(function(theClass){
+              if(!theClass){
+                callback(theClass);
+              }else{
+                submitFeedback(student.id, theClass.get('id'), theClass.get('instructor_id'));
+              }
+            });
+          }
+        });
+      }
+    });
     
+    var submitFeedback = function(studentID, classID, instructorID){
+      var newFeedback = new Feedback({
+        videoURL: feedback.videoURL,
+        comment: feedback.comment,
+        approved: feedback.approved,
+        student_id: studentID,
+        class_id: classID,
+        instructor_id: instructorID,
+      });
+
+      new Feedback({
+        student_id: studentID,
+        class_id: classID,
+        instructor_id: instructorID,
+      }).fetch()
+      .then(function(exist){
+        if(!exist){
+          newFeedback.save()
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Saved student feedback.');
+            callback({
+              result: true,
+            });
+          });
+        }else{
+          exist.save({
+            videoURL: feedback.videoURL,
+            comment: feedback.comment,
+            approved: false,
+            student_id: studentID,
+            class_id: classID,
+            instructor_id: instructorID,
+          }, {patch: true})
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Updated student feedback.');
+            callback({
+              result: true,
+            });
+          });
+        }
+      });
+    };
   },
 
   /**
@@ -642,15 +726,43 @@ var DBQuery = {
                                   //Get Queries//
   //============================================================================//
   
-  getDiscipline: function(discipline, callback){
+  getDisciplineByTitle: function(title, callback){
     new Discipline({
-      title: discipline
+      title: title
     }).fetch()
     .then(function(exist){
       if(exist){
        callback(exist.attributes);
       }else{
-        console.log('Discipline does not exist.');
+        console.log('Discipline of that title does not exist.');
+        callback({
+          result: false,
+          message: 'No discipline with that title.'
+        });
+      }
+    });
+  },
+
+  getDisciplineByID: function(ID, callback){
+    new Discipline({
+      id: ID
+    }).fetch({required: true})
+    .catch(function(err){
+      console.log(err);
+      callback({
+        result: false,
+        message: 'Internal Server Error'
+      });
+    })
+    .then(function(exist){
+      if(exist){
+       callback(exist.attributes);
+      }else{
+        console.log('Discipline of that ID does not exist.');
+        callback({
+          result: false,
+          message: 'No discipline with that ID.'
+        });
       }
     });
   },
