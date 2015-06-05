@@ -36,18 +36,31 @@ router.get('/:username', function(req, res) {
 							res.end('user not found!');
 						} else {
 							console.log('instructor data',data);
-							res.json({'isInstructor':true,'username':req.url.slice(1),'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':''});
+							var userRankArray=[];
+							db.knex('ranks')
+								.where({'ranks.instructor_id':data[0].id})
+								.select('*')
+								.then(function(data1){
+									console.log('data1',data1);
+									for (var i = 0; i < data1.length; i++){
+										console.log('item',data1[i]);
+										db.knex('disciplines')
+											.where({'disciplines.id':data1[i].discipline_id})
+											.select('title')
+											.then(function(data2){
+												console.log('data2',data2);
+												userRankArray.push({'disciplineTitle':data2[0].title, 'rankNum':data1[0].rankNum, 'rankTitle':data1[0].rankTitle, 'rankIcon':data1[0].rankIcon});
+											if (data1.length === userRankArray.length){
+												res.json({'isInstructor':true,'username':req.url.slice(1),'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':userRankArray});
+											}
+											});
+									}
+								})
 						}
 					})
 			} else {
 				console.log('student data',data);
 				var userRankArray=[];
-				// db.knex('ranks')
-				// 	.where({'student_id':data[0].id})
-				// 	.select('*')
-				// 	.then(function(data){
-				// 		userRankArray.push(data);
-				// 	});
 				db.knex('classes_students')
 					.where({'classes_students.student_id':data[0].id})
 					.select('*')
