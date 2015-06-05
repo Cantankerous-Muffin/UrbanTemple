@@ -27,7 +27,7 @@ define([
         },
 
         signup: function(data) {
-          AuthController.signup(data.username, data.password, data.whenDone)
+          AuthController.signup(data.username, data.password, data.firstname, data.lastname, data.PermissionKey, data.email, data.whenDone)
         },
 
         logout: function() {
@@ -70,6 +70,7 @@ define([
       });
 
       VirtualDojo.on('authenticate:signup', function(data) {
+        console.log('signup object', data)
         API.signup(data);
       });
 

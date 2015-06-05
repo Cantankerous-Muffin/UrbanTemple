@@ -11,6 +11,5 @@
     </div>
     <div class="label">Rank Progress</div>
   </div>
-
 </div>
 <br>

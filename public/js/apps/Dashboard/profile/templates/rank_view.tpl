@@ -1,5 +1,4 @@
 
-    <div class="two wide column">
       
       <div class="ui card">
   <div class="image">
