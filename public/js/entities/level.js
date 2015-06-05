@@ -16,7 +16,7 @@ define(
                           levelNum: 1,
                           title: "Hello world1",
                           description: "woolalamuchachapapaya",
-                          videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
+                          videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
                           feedbackNeeded: false,
                           prev: false,
                           next: true
@@ -27,7 +27,7 @@ define(
                           levelNum: 2,
                           title: "Hello world2",
                           description: "woolalamuchachapapaya",
-                          videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
+                          videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
                           feedbackNeeded: false,
                           prev: true,
                           next: true, 
@@ -38,7 +38,7 @@ define(
                           levelNum: 3,
                           title: "Hello world3",
                           description: "woolalamuchachapapaya",
-                          videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
+                          videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
                           feedbackNeeded: false,
                           prev: true,
                           next: true 
@@ -49,7 +49,7 @@ define(
                           levelNum: 4,
                           title: "Hello world4",
                           description: "woolalamuchachapapaya",
-                          videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
+                          videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
                           feedbackNeeded: false,
                           prev: true,
                           next: true 
@@ -60,7 +60,7 @@ define(
                           levelNum: 5,
                           title: "Hello world5",
                           description: "woolalamuchachapapaya",
-                          videoUrl: "https://www.youtube.com/embed/ouR4nn1G9r4",
+                          videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
                           feedbackNeeded: true,
                           prev: true,
                           next: false
@@ -96,10 +96,10 @@ define(
               levelNum: 4,
               title: 'Advanced Sword Grip',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-              videoUrl: 'https://www.youtube.com/embed/NCQpzHPYRUc',
+              videoUrl: 'https://www.youtube.com/embed/Q4SHWXQBVL4',
               feedbackNeeded: false,
               prev: true,
-              next: true
+              next: false
             }
 
             defer.resolve(data);

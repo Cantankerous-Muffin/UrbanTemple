@@ -50,7 +50,8 @@ require(
     "apps/TrainingCenter/trainingCenter_app",
     "apps/Class/class_app",
     "apps/InstVideo/instVid_app",
-    "apps/Level/level_app"
+    "apps/Level/level_app",
+    "apps/Feedback/feedback_app",
   ],
   function(VirtualDojo){
     VirtualDojo.start();

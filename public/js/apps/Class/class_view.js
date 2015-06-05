@@ -35,11 +35,11 @@ define([
         },
         clickLevel: function(e){
           e.preventDefault();
-          var urlFragment = VirtualDojo.getCurrentRoute().split("/");
+          // var urlFragment = VirtualDojo.getCurrentRoute().split("/");
           var model = this.model;
 
-          var disciplineId = urlFragment[1];
-          var classNum = urlFragment[3];
+          var disciplineId = model.get("disciplineId");
+          var classNum = model.get("classNum");
           var levelNum = model.get("levelNum");
 
           VirtualDojo.trigger("show:video", {
