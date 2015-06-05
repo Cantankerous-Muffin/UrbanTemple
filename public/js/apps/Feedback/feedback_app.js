@@ -13,7 +13,7 @@ define([
       });
 
       FeedbackApp.generateFeedbackUrl = function(feedbackId) {
-        var url = "discipline/" + feedbackId;
+        var url = "feedback/" + feedbackId;
         // console.log("url xxxxxxx", url);
         return url;
       };
@@ -31,7 +31,6 @@ define([
 
       VirtualDojo.on("show:feed", function(params){
         console.log('Show:feed executed from level_app');
-        // console.log("ssssssss," params);
         VirtualDojo.navigate(FeedbackApp.generateFeedbackUrl(params.feedbackId));
         API.showFeedback(params);
       });

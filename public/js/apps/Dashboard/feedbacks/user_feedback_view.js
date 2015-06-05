@@ -1,42 +1,51 @@
 // collection view
 define([
     "app",
-    "tpl!apps/Dashboard/progress/templates/progress_view.tpl"
+    "tpl!apps/Dashboard/feedbacks/templates/user_feedback_view.tpl"
   ],
-  function(VirtualDojo, progressViewTpl) {
+  function(VirtualDojo, feedbackViewTpl) {
     VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
       // single class item view
-      View.Progress = Marionette.ItemView.extend({
-        template: progressViewTpl,
+      View.UserFeedback = Marionette.ItemView.extend({
+        template: feedbackViewTpl,
+
         events: {
-          "click div": "clickVideo"
+          "click .user-feedback": "clickFeedback"
         },
 
-        clickVideo: function(e){
+        clickFeedback: function(e){
           e.preventDefault();
-          var model = this.model;
-          var disciplineId = model.get('discipline').attributes.disciplineId;
-          var classNum = model.get('currentClassNum');
-          var levelNum = model.get('currentLevelNum');
+          var feedbackId = this.model.get("feedbackId");
 
-
-          VirtualDojo.trigger("show:video", {
-            'disciplineId': disciplineId,
-            'classNum': classNum,
-            'levelNum': levelNum
+          VirtualDojo.trigger("show:feed", {
+            'feedbackId': feedbackId
           })
         },
 
-
         serializeData: function() {
+          var model = this.model;
+          var username = model.get("studentUsername");
+          var cls = model.get("class");
+          var classTitle = cls.get("title");
+          var instructorName = cls.get("instructorName");
+
+          return {
+            username: username,
+            classTitle: classTitle,
+            instructorName: instructorName
+          } 
+        },
+
+        initialize: function() {
+          console.log("feedback model", this.model);
         }
       });
 
       // my classes collection view
-      View.Progresses = Marionette.CollectionView.extend({
-        className: "progresses-container",
-        childView: View.Progress
+      View.UserFeedbacks = Marionette.CollectionView.extend({
+        className: "userfeedbacks-container",
+        childView: View.UserFeedback
       });
     });
 

@@ -18,11 +18,12 @@ define([
 
         events: {
           "click @ui.loginButton": "onLoginButtonClick",
-          "click @ui.signupButton": "onSignupButtonClick"
+          "click @ui.signupButton": "onSignupButtonClick",
+          "keydown .login-form-item": "onLoginItemKeyDown"
         },
 
         onLoginButtonClick: function(event) {
-          event.preventDefault();
+          event && event.preventDefault();
           var username = this.ui.inputUsername.val();
           var password = this.ui.inputPassword.val();
           if (!username) return;
@@ -39,6 +40,13 @@ define([
         onSignupButtonClick: function(event) {
           event.preventDefault();
            VirtualDojo.trigger("auth:signup:show");
+        },
+
+        onLoginItemKeyDown: function(event) {
+          var code = event.keyCode || event.which;
+           if(code == 13) { 
+             this.onLoginButtonClick();
+           }
         },
 
         onUnauthorized: function() {

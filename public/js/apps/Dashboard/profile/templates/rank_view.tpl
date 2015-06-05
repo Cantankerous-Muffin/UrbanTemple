@@ -1,6 +1,4 @@
-
-      
-      <div class="ui card">
+<div class="ui card">
   <div class="image">
     <img src="/images/avatar/large/stevie.jpg">
   </div>

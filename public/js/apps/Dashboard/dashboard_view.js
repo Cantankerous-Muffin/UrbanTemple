@@ -12,7 +12,6 @@ define([
 
         regions: {
           profileRegion: "#profile-region",
-          feedbackRegion: "#feedback-region",
           progressRegion: "#progress-region"
         }
       });
