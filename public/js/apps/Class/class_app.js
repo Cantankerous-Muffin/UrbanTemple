@@ -18,8 +18,13 @@ define([
       }
      
     	var API = {
-        showClass: function(params){
-        	ClassApp.Controller.showClass(params);
+        showClass: function(disciplineId, classNum){
+        	ClassApp.Controller.showClass(
+            {
+              disciplineId: disciplineId,
+              classNum: classNum
+            }
+          );
         }
       };
       
