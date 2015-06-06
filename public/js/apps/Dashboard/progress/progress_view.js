@@ -4,7 +4,7 @@ define([
     "tpl!apps/Dashboard/progress/templates/progress_view.tpl"
   ],
   function(VirtualDojo, progressViewTpl) {
-    VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
+    VirtualDojo.module("DashApp.Progress.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
       // single class item view
       View.Progress = Marionette.ItemView.extend({
@@ -54,7 +54,7 @@ define([
       });
     });
 
-    return VirtualDojo.DashApp.View;
+    return VirtualDojo.DashApp.Progress.View;
   }
 );
 

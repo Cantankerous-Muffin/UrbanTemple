@@ -18,16 +18,40 @@ define(
               [
               {
                 disciplineTitle: "Kendo",
+                rankNum: 1,
+                rankTitle: "Beginner",
+                rankIcon: null,
+              },              
+              {
+                disciplineTitle: "Qigong",
+                rankNum: 2,
+                rankTitle: "Advanced",
+                rankIcon: null,
+              },
+              {
+                disciplineTitle: "Kendo",
+                rankNum: 3,
+                rankTitle: "Beginner",
+                rankIcon: null,
+              },              
+              {
+                disciplineTitle: "Qigong",
+                rankNum: 4,
+                rankTitle: "Advanced",
+                rankIcon: null,
+              },
+              {
+                disciplineTitle: "Kendo",
                 rankNum: 5,
                 rankTitle: "Beginner",
                 rankIcon: null,
               },              
               {
                 disciplineTitle: "Qigong",
-                rankNum: 10,
+                rankNum: 6,
                 rankTitle: "Advanced",
                 rankIcon: null,
-              }
+              },
               ]
             }; // mock result from server
 
