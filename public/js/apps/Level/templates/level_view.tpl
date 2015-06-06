@@ -3,9 +3,13 @@
 <div><%= description %></div>
 
 </br></br>
-  <% if (!next && !UTConfig.isInstructor) { %>
-    <input type="text" class="submitVideoUrl" placeholder="type youtube url here">
-    <button type="submit" class="submitvideBtn">Sign up</button>
+  <% if (!next) { %>
+  <form action="/path/to/action" id="new_video" method="POST">
+    <input type="hidden" name="panda_video_id"/>
+    <div class='progress'><span id="progress-bar" class='bar'></span></div>
+    <div id="file-drop">Drop files here</div>
+    <div id="browse-files">Choose file</div>
+  </form>
   <% } %>
 
 </br></br></br>

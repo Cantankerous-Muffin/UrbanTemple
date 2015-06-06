@@ -1,3 +1,3 @@
 <div id="class-region"></div>
-<hr>
+<br>
 <div id="level-region"></div>
