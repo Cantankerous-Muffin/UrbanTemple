@@ -35,6 +35,17 @@ define([
                   VirtualDojo.regions.main.show(FeedView);
                 });
           })
+        },
+        approveFeedback: function(params){
+          console.log("uuuuuuuu", params);
+          require(["entities/feedback"],function(){
+            var approveFeed = VirtualDojo.request("entities:feedback:approve", params)
+              approveFeed
+                .done(function(data){
+                  console.log("approved!");
+                  VirtualDojo.trigger("show:dashboard");
+                });
+          })
         }
       };
 

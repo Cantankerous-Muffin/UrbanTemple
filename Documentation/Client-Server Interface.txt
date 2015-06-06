@@ -88,17 +88,23 @@ UserRank = {
 return:
 DisciplineProgress[] // array of DisciplineProgress objects 
 
-** NEW **
-/user/<username>/progress/<disciplineId>
-
 return:
 DisciplineProgress = { 
-  discipline: Discipline{},  
-  currentClassNum: INT,
-  currentLevelNum: INT,
-  currentLevel: Level{},
+  discipline: Discipline{}, //disciplines.*
+  currentClassNum: INT,   //classes.classNum
+  currentLevelNum: INT,   //levels.levelNum
+  currentLevelTitle: STRING,  //levels.title
   percentage: INT // eg. 34 (%)
 }
+
+Discipline = {
+  disciplineId: INT,
+  title: STRING,
+  description: STRING, 
+  disciplineLogo: STRING (URL),
+  totalClass: INT
+}
+
 
 >> discipline, class, level routes should check session user's progress, to see if
    the resource is accessible for it, if not should return 403 Forbidden
@@ -126,6 +132,17 @@ Discipline = {
   totalClass: INT
 }
 
+Class = {
+  classNum: INT,
+  disciplineId: INT,
+  instructorId: INT,
+  instructorName: STRING, 
+  title: STRING,
+  description: STRING,
+  classImage: STRING (URL),
+  totalLevel: INT  //how many levels there are in this particular class
+}
+
 -------------GET---------------
 ///////////////////////////////
 //        Page: Class        //
@@ -142,7 +159,6 @@ return:
 Class = {
   classNum: INT,
   disciplineId: INT,
-  instructorId: INT,
   instructorName: STRING, 
   instructorRank: INT,
   instructorRankTitle: STRING,
@@ -175,8 +191,6 @@ Level = {
   description: STRING,
   videoUrl: URL(STRING),
   feedbackNeeded: false,
-  prev: Boolean,
-  next: Boolean
 }
 
 
@@ -202,8 +216,13 @@ Feedback = {
   instrUsername: STRING,
   videoUrl: URL(STRING),
   comment: String,
-  class: Class,
+  class: Class{},
   approved: Boolean
+}
+
+Class = {
+  classNum: INT,
+  disciplineId: INT
 }
 
 -------------POST---------------
@@ -221,7 +240,16 @@ request:
   videoUrl: URL(STRING)
 }
 
-return: Feedback
+return: 
+Feedback = {
+  feedbackId: INT,
+  studentUsername: STRING,
+  instrUsername: STRING,
+  videoUrl: URL(STRING),
+  comment: String,
+  class: Class{},
+  approved: Boolean
+}
 
 
 -------------PUT---------------

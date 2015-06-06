@@ -9,14 +9,32 @@ define([
       View.Feedback = Marionette.ItemView.extend({
         template: feedbackViewTpl,
 
-        events: {
-          'click .submitfeedback' : 'submitFeedback',
+        ui: {
+          approveButton: ".approve-video",
+          disapproveButton: ".disapprove-video",
+          commentBox: ".comments"
         },
 
-        submitFeedback: function(e) {
+        events: {
+          'click @ui.approveButton' : 'submitApproval',
+          'click @ui.disapproveButton' : 'submitDisapproval',
+        },
+
+        submitApproval: function(e) {
           e.preventDefault();
-          console.log('submitFeedback clicked');
-          
+          var requestData = {
+            feedbackId: this.model.get("feedbackId"),
+            comment: this.ui.commentBox.val(),
+            approved: true, 
+          }
+
+          VirtualDojo.trigger("entities:feedback:approve", requestData)
+        },
+
+  
+        submitDisapproval: function(e) {
+          e.preventDefault();
+          console.log('failed!!');        
         },
 
         serializeData: function() {

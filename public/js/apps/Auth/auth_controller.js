@@ -37,8 +37,7 @@ define([
           });
 
           request.done(function() {
-            console.log("[AJAX] login");
-            // fake auth check
+
             console.log("AuthCheck: on Ajax call success");
             VirtualDojo.trigger("authenticate:init");
 

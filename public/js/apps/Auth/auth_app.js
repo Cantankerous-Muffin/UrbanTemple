@@ -1,9 +1,10 @@
 define([
     "app",
     "apps/Auth/auth_controller",
-    "utilities/utilities"
+    "utilities/utilities",
+    "entities/models/user_models"
   ],
-  function(VirtualDojo, AuthController, Utilities) {
+  function(VirtualDojo, AuthController, Utilities, UserModels) {
     VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
       AuthApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
@@ -48,6 +49,14 @@ define([
                 // store the username on global object
                 UTConfig.username = data.username;
                 VirtualDojo.Utilities.enterApplication();
+
+                require(["entities/users"], function() {
+                  var fetchUser = VirtualDojo.request("entities:users:get", {username: UTConfig.username});
+                  fetchUser
+                    .done(function(data){
+                      UTConfig.isInstructor = data.isInstructor;
+                    });
+                });
 
               } else {
                 VirtualDojo.trigger("auth:login:show");

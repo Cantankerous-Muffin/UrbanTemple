@@ -1,10 +1,9 @@
-
 <h1 class="ui block header level-header"><%= title %></h1>
 <iframe width="560" height="315" src=<%= videoUrl %> frameborder="0" allowfullscreen></iframe>
 <div><%= description %></div>
 
 </br></br>
-  <% if (!next) { %>
+  <% if (!next && !UTConfig.isInstructor) { %>
     <input type="text" class="submitVideoUrl" placeholder="type youtube url here">
     <button type="submit" class="submitvideBtn">Sign up</button>
   <% } %>

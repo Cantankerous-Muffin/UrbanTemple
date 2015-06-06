@@ -36,20 +36,11 @@ define([
           var disciplineTitle = discipline.get("title");
 
           // class
-          var currentClassId = model.get("CurrentClassId");
-          var classes = discipline.get("classes");
-          var currentClass = classes.findById(currentClassId);
-          var currentClassTitle = currentClass.get("title");
-
-          // level
-          var currentLevel = model.getCurrentLevel();
-          var currentLevelTitle = currentLevel.get("title");
-
+          var currentLevelTitle = model.get("currentLevelTitle");
           var percentage = model.get("percentage");
           
           return {
             disciplineTitle: disciplineTitle,
-            currentClassTitle: currentClassTitle,
             currentLevelTitle: currentLevelTitle,
             percentage: percentage
           };

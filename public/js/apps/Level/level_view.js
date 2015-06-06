@@ -39,7 +39,6 @@ define([
 
         prevLevel: function(e) {
           e.preventDefault();
-          console.log('prev button clicked');
           if (this.model.get("prev")) {
             var requestData = {
               disciplineId: this.model.get("disciplineId"),
@@ -52,7 +51,6 @@ define([
 
         nextLevel: function(e) {
           e.preventDefault();
-          console.log('next button clicked');
           if (this.model.get("next")) {
             var requestData = {
               disciplineId: this.model.get("disciplineId"),
@@ -81,7 +79,6 @@ define([
         },
 
         initialize: function() {
-          console.log("level model", this.model)
         }
 
       });
