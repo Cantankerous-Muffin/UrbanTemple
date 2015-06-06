@@ -507,51 +507,56 @@ var DBQuery = {
         .then(function(feed){
           console.log('Feedback updated');
 
-          //Here we have to update student's progress and rank.
-          new Progress()
-          .where({
-            student_id: feed.get('student_id')
-          })
-          .fetch()
-          .then(function(progress){
-            console.log('!!!!!!!!!!!!!!');
-            if(progress){
-              //Get the current classNum
-              new Class()
-              .where({
-                id: progress.get('class_id')
-              })
-              .fetch()
-              .then(function(oldClass){
+          if(update.approved){
+            //Here we have to update student's progress and rank.
+            new Progress()
+            .where({
+              student_id: feed.get('student_id')
+            })
+            .fetch()
+            .then(function(progress){
+              console.log('!!!!!!!!!!!!!!');
+              if(progress){
+                //Get the current classNum
                 new Class()
                 .where({
-                  discipline_id: oldClass.get('discipline_id'),
-                  classNum: oldClass.get('classNum')+1
+                  id: progress.get('class_id')
                 })
                 .fetch()
-                .then(function(nextClass){
-                  if(nextClass){
-                    progress.save({
-                      class_id: nextClass.get('id')
-                    }, {patch: true})
-                    .then(function(data){
-                      console.log('Update progress from '+oldClass.get('title')+' to '+nextClass.get('title'));
+                .then(function(oldClass){
+                  new Class()
+                  .where({
+                    discipline_id: oldClass.get('discipline_id'),
+                    classNum: oldClass.get('classNum')+1
+                  })
+                  .fetch()
+                  .then(function(nextClass){
+                    if(nextClass){
+                      progress.save({
+                        class_id: nextClass.get('id')
+                      }, {patch: true})
+                      .then(function(data){
+                        console.log('Update progress from '+oldClass.get('title')+' to '+nextClass.get('title'));
 
-                      //Still need to do upgrade student's rank.
+                        //Still need to do upgrade student's rank.
 
-                      callback(feed);
-                    });
-                  }else{
-                    console.log('Class of that number does not exist in this discipline.');
-                    callback({
-                      result: true,
-                      message: 'You have reached the top class of this discipline.'
-                    });
-                  }
+                        callback(feed);
+                      });
+                    }else{
+                      console.log('Class of that number does not exist in this discipline.');
+                      callback({
+                        result: true,
+                        message: 'You have reached the top class of this discipline.'
+                      });
+                    }
+                  });
                 });
-              });
-            }
-          });
+              }
+            });
+          }else{
+            console.log('Student did not pass.');
+            callback(feed);
+          }
         });
       } 
     });
