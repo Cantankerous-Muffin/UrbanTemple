@@ -4,7 +4,7 @@ define([
     "tpl!apps/Dashboard/instructor/templates/pending_feedback.tpl",
   ],
   function(VirtualDojo, instructorDashboardTpl, pendingFeedbackTpl) {
-    VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
+    VirtualDojo.module("DashApp.Instructor.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
       
 
       View.PendingFeedback = Marionette.ItemView.extend({
@@ -53,7 +53,7 @@ define([
         }
       });
     });
-    return VirtualDojo.DashApp.View;
+    return VirtualDojo.DashApp.Instructor.View;
   }
 );
 

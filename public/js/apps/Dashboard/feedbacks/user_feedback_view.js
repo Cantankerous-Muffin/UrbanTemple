@@ -1,13 +1,15 @@
 // collection view
 define([
     "app",
-    "tpl!apps/Dashboard/feedbacks/templates/user_feedback_view.tpl"
+    "tpl!apps/Dashboard/feedbacks/templates/user_feedback_view.tpl",
+    "tpl!apps/Dashboard/feedbacks/templates/user_feedbacks_view.tpl"
   ],
-  function(VirtualDojo, feedbackViewTpl) {
-    VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
+  function(VirtualDojo, feedbackViewTpl, feedbacksViewTpl) {
+    VirtualDojo.module("DashApp.Feedback.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
       // single class item view
       View.UserFeedback = Marionette.ItemView.extend({
+        className: "event",
         template: feedbackViewTpl,
 
         events: {
@@ -43,13 +45,14 @@ define([
       });
 
       // my classes collection view
-      View.UserFeedbacks = Marionette.CollectionView.extend({
-        className: "userfeedbacks-container",
-        childView: View.UserFeedback
+      View.UserFeedbacks = Marionette.CompositeView.extend({
+        template: feedbacksViewTpl,
+        childView: View.UserFeedback,
+        childViewContainer: ".feedbacks-container"
       });
     });
 
-    return VirtualDojo.DashApp.View;
+    return VirtualDojo.DashApp.Feedback.View;
   }
 );
 
