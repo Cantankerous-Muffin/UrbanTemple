@@ -119,32 +119,49 @@ router.get('/:username/progress', function(req,res){
 			// console.log('data',data);
 			db.knex('classes_students')
 				.where({'classes_students.student_id': data[0].id})
+				// get class_id for particular student in join table classes_students
 				.select('*')
 				.then(function(data2){
 					// console.log('data2',data2);
-					var userProgressPackage = [];
+					var userProgressPackages = [];
 					var inner = 0;
 					for (var i = 0; i < data2.length; i++){
 						db.knex('classes')
 							.where({'classes.id':data2[i].class_id})
+						// get classes for class_id for particular student
 							.select('*')
 							.then(function(data3){
 								console.log('data3',data3);
-									db.knex('levels')
-										.where({'levels.class_id':data2[inner].class_id})
-										.select('*')
-										.then(function(data4){
-											var userLevelPackage = [];
-											for (var j = 0; j < data4.length; j++){
-												userLevelPackage.push({'disciplineId':data3[0].discipline_id,'classNum':data3[0].classNum,'levelNum':data4[j].levelNum,'title':data4[j].title,'description':data4[j].description,'videoURL':data4[j].videoURL,'feedbackNeeded':data4[j].feedbackNeeded});
-											}
-											userProgressPackage.push(userLevelPackage);
-											console.log('data4',data4);
-											if (userProgressPackage.length === data2.length){
-												res.json(userProgressPackage);
-											}
-										});
-									inner++;
+								db.knex('disciplines')
+									.where({'disciplines.id': data3[0].discipline_id})
+									.select('*')
+									.then(function(data35){
+										// console.log('data35', data35);
+										db.knex('classes')
+											.where({'classes.discipline_id': data35[0].id})
+											.select('*')
+											.then(function(data37){
+												console.log('data37',data37);
+												db.knex('levels')
+													.where({'levels.class_id':data2[inner].class_id})
+													.select('*')
+													.then(function(data4){
+														console.log('data4',data4.length);
+														var userPackage = [];
+														data37[0].totalLevel = data4.length;
+														data35[0]['class'] = data37[0];
+														console.log('data35', data35);
+														for (var j = 0; j < data4.length; j++){
+															userPackage.push({'discipline':data35,'classNum':data3[0].classNum,'levelNum':data4[j].levelNum,'title':data4[j].title,'description':data4[j].description,'videoURL':data4[j].videoURL,'feedbackNeeded':data4[j].feedbackNeeded});
+														}
+														userProgressPackages.push(userPackage);
+														if (userProgressPackages.length === data2.length){
+															res.json(userProgressPackages);
+														}
+													});
+											inner++;
+											});
+									});
 							});
 					}
 				});
