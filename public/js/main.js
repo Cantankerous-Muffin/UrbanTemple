@@ -49,7 +49,6 @@ require(
     "apps/Sidenav/sidenav_app",
     "apps/TrainingCenter/trainingCenter_app",
     "apps/Class/class_app",
-    "apps/InstVideo/instVid_app",
     "apps/Level/level_app",
     "apps/Feedback/feedback_app",
   ],
