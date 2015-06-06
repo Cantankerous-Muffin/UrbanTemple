@@ -47,8 +47,14 @@ define([
             });
         },
 
-        initialize: function() {
-        }
+        
+        initialize: function(){
+          if (this.model.get("classNum") === 1) {
+            this.$el.attr( "class", "class-thumb disabled" );
+          } else {
+            this.$el.attr( "class", "class-thumb" );
+          }
+        },
       });
 
       // ClassList composite view

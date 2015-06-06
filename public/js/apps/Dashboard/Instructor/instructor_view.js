@@ -16,7 +16,6 @@ define([
         },
 
         clickFeedback: function(e){
-          console.log('clicked', this.model.get("feedbackId"));
           e.preventDefault();
           var feedbackId = this.model.get("feedbackId");
 
@@ -26,7 +25,6 @@ define([
         },
 
         initialize: function() {
-          console.log("xxxxx", this.model);
         },
         serializeData: function() {
           var model = this.model;

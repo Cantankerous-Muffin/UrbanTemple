@@ -6,7 +6,6 @@ define(
     VirtualDojo.module("Entities.Feedbacks", function(Feedbacks, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getFeedback: function(params) {
-          console.log("feedback params", params);
           var defer = $.Deferred();
           //from route: /discipline/<discipline_id>/class/<class_num>/level/<level_num>
 
@@ -55,7 +54,7 @@ define(
           setTimeout(function(){
             var data = [
                         {
-                          feedbackId: 30,
+                          feedbackId: 35,
                           studentUsername: "Raymond Luong ",
                           instructorName: "Ken Kang",
                           videoUrl: "https://www.youtube.com/embed/Q33SoblaZbU",
@@ -113,7 +112,7 @@ define(
 
         postFeedback: function(reqData) {
           var defer = $.Deferred();
-          console.log("feedfeed", reqData);
+          // console.log("feedfeed", reqData);
 
           // var ajax = Ajax.perform({
           //   type: "POST",
@@ -127,7 +126,7 @@ define(
 
           setTimeout(function(){
             var data = {
-              feedbackId: 35,
+              feedbackId: 55,
               studentUsername: "Jimmy",
               instrUsername: "Ken Kang",
               videoUrl: "https://www.youtube.com/embed/Q33SoblaZbU",
@@ -151,6 +150,29 @@ define(
           }, 200);
 
           return defer.promise();
+        },
+
+        approveFeedback: function(reqData) {
+          console.log("xxxxxjjxxx", reqData);
+          var defer = $.Deferred();
+
+          // var ajax = Ajax.perform({
+          //   type: "POST",
+          //   url: '/feedback/' + reqData.feedbackID + '/update',
+          //   data: reqData,
+          //   callback: function (data) {
+          //     return data;
+          //   }
+          // });
+          // return ajax.promise();
+
+          setTimeout(function(){
+            var data = {}
+
+            defer.resolve(data);
+          }, 200);
+
+          return defer.promise();
         }
       };
 
@@ -164,6 +186,10 @@ define(
 
       VirtualDojo.reqres.setHandler("entities:feedback:getAll", function(params) {
         return API.getUserFeedbacks(params);
+      });
+
+      VirtualDojo.reqres.setHandler("entities:feedback:approve", function(params) {
+        return API.approveFeedback(params);
       });
 
     });

@@ -1,7 +1,7 @@
 <div class="ui segment">
   <h2 class="ui header">
     <%= disciplineTitle %>
-    <div class="sub header"><%= currentClassTitle %>:  <%= currentLevelTitle %></div>
+    <div class="sub header"> <%= currentLevelTitle %></div>
   </h2>
 
 

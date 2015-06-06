@@ -14,7 +14,6 @@ define([
 
       FeedbackApp.generateFeedbackUrl = function(feedbackId) {
         var url = "feedback/" + feedbackId;
-        // console.log("url xxxxxxx", url);
         return url;
       };
 
@@ -26,17 +25,24 @@ define([
         postFeedback: function(params){
           console.log("api.postFeedback");
           FeedbackController.postFeedback(params);
+        },
+        approveFeedback: function(params){
+          console.log("api.approveFeedback");
+          FeedbackController.approveFeedback(params);
         }
       };
 
       VirtualDojo.on("show:feed", function(params){
-        console.log('Show:feed executed from level_app');
         VirtualDojo.navigate(FeedbackApp.generateFeedbackUrl(params.feedbackId));
         API.showFeedback(params);
       });
 
       VirtualDojo.on("entities:feedback:post", function(params){
         API.postFeedback(params);
+      });
+
+      VirtualDojo.on("entities:feedback:approve", function(params){
+        API.approveFeedback(params);
       });
 
       FeedbackApp.on("start", function(){

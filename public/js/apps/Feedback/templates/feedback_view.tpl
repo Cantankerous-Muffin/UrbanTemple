@@ -2,21 +2,27 @@
 <iframe width="560" height="315" src=<%= videoUrl %> frameborder="0" allowfullscreen></iframe>
 <div><%= "Instructor: " + instrUsername %></div>
 
-
-  
-    <input type="text" class="submitVideoUrl" placeholder="type youtube url here">
-    <button type="submit" class="submitvideBtn">Submit</button>
-  
-
 <% if (UTConfig.isInstructor) { %>
   <div class="ui form">
     <div class="field">
-      <label>Instructor Feedback</label>
-      <textarea></textarea>
+        <h4> Comment: </h4>
+      <textarea class="comments"></textarea>
     </div>
   </div>
 <% } %>
+<% if (UTConfig.isInstructor) { %>
+<div class="approve-video">
+  <div class="positive ui button">Approve</div>
+</div>
+<div class="disapprove-video">
+  <div class="negative ui button">Disapprove</div>
+</div>
+<% } %>
 
-<p><%= comment %></p>
+<% if (UTConfig.isInstructor === false) { %>
+  <h4>Instructor Comment:</h4>
+  <p><%= comment %></p>
+<% } %>
+
 
 

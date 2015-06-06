@@ -10,63 +10,33 @@ define(
 
           setTimeout(function(){
             var data = [
-              {
-                discipline: {
-                  disciplineId: 1,
-                  title: "Kendo",
-                  classes: [
-                    {
-                      classNum: 1,
-                      disciplineId: 1,
-                      instructorId: 5,
-                      title: "Kendo 101",
-                      description: "This class covers the basics of Kendo",
-                      totalLevel: 5
-                    }
-                  ]
-                },  
-                currentClassNum: 1,
-                currentLevelNum: 2,
-                currentLevel: {
-                  levelNum: 2,
-                  title: "Basic Steps",
-                  description: "Stand Straight",
-                  videoUrl: "https://www.youtube.com/watch?v=cMwIMU1pWIc",
-                  feedbackNeeded: false,
-                  prev: 1,
-                  next: 3
-                },
-                percentage: 3
-              },
-              {
-                discipline: {
-                  disciplineId: 2,
-                  title: "QiGong",
-                  classes: [
-                    {
-                      classNum: 1,
-                      disciplineId: 2,
-                      instructorId: 9,
-                      title: "QiGong 101",
-                      description: "This class covers the basics and the mystery of Qi",
-                      totalLevel: 5
-                    }
-                  ]
-                },  
-                currentClassNum: 1,
-                currentLevelNum: 3,
-                currentLevel: {
-                  levelNum: 3,
-                  title: "Water Mill Stance",
-                  description: "Position yourself like a water mill",
-                  videoUrl: "https://www.youtube.com/watch?v=lIr2JzXarzs",
-                  feedbackNeeded: false,
-                  prev: 2,
-                  next: 4
-                },
-                percentage: 7
-              },
-            ]
+                        {
+                          discipline: {
+                            disciplineId: 1,
+                            title: "Kendo",
+                            description: "hello world",
+                            disciplineLogo: "",
+                            totalClass: 6                
+                          },  
+                          currentClassNum: 2,
+                          currentLevelNum: 4,
+                          currentLevelTitle: "12 directional steps",
+                          percentage: 3
+                        },
+                        {
+                          discipline: {
+                            disciplineId: 2,
+                            title: "Qigong",
+                            description: "hello world",
+                            disciplineLogo: "",
+                            totalClass: 6                
+                          },  
+                          currentClassNum: 4,
+                          currentLevelNum: 1,
+                          currentLevelTitle: "watermill stance",
+                          percentage: 15
+                        }
+                      ]
             defer.resolve(data);
           }, 200);
 
