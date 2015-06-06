@@ -1,3 +1,6 @@
+<br>
 <div id="kendo-region"></div>
-<hr>
+<br>
+<br>
+<br>
 <div id="qigong-region"></div>

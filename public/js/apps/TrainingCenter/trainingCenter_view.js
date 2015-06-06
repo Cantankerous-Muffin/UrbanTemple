@@ -25,11 +25,11 @@ define([
       // ClassThumb Itemview
       View.ClassThumb = Marionette.ItemView.extend({
 
-        className: "class-thumb",
+        className: "card",
         template: classThumbViewTpl,
 
         ui: {
-          thumbClick: ".class-wrapper"
+          thumbClick: ".image"//used to be .class-wrapper
         },
 
         events: {
@@ -38,6 +38,7 @@ define([
         
         onThumbClick: function(event) {
           event.preventDefault();
+          console.log('thumb clicked')
            var disciplineId = this.model.get("disciplineId");
            var classNum = this.model.get("classNum");
 
@@ -50,9 +51,9 @@ define([
         
         initialize: function(){
           if (this.model.get("classNum") === 1) {
-            this.$el.attr( "class", "class-thumb disabled" );
+            this.$el.attr( "class", "card" );//used to be this.$el.attr( "class", "class-thumb disabled" )
           } else {
-            this.$el.attr( "class", "class-thumb" );
+            this.$el.attr( "class", "card" );// used to be ( "class", "class-thumb" )
           }
         },
       });
