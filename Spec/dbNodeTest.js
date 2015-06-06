@@ -136,9 +136,11 @@ var feed = {
   comment: 'A comment for a feedback.',
 };
 
-// DBQuery.submitStudentFeedback('Sokka', 2, 1, feed, function(result){
-//   console.log(result);
-// });
+var feedReply = {
+  comment: 'You shall not PASS!!',
+  approved: false,
+};
+
 
 // DBQuery.newStudent(stu);
 // DBQuery.newStudent(stu2);
@@ -189,6 +191,10 @@ var feed = {
 //   console.log(result);
 // });
 
+DBQuery.replyToFeedback(2, feedReply, function(result){
+  console.log(result);
+});
+
 // DBQuery.clearTable('progress');
 
 
@@ -212,7 +218,7 @@ db.knex('instructors')
 db.knex('classes')
 .join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
 // .select('classes.*')
-.select('classes.id','classes.title as Class', 'classes.levelCount',
+.select('classes.id','classes.title as Class', 'classes.levelCount', 'classes.classNum',
   'disciplines.title as Discipline', 'instructor_id as InstrID')
 .then(function(data){
   console.log('-------------------------');
