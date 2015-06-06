@@ -1,6 +1,6 @@
-<div class="ui card">
+<!-- <div class="ui card"> -->
   <div class="image">
-    <img src="/images/avatar/large/stevie.jpg">
+    <img src="">
   </div>
   <div class="content">
     <a class="header"><%= disciplineTitle %></a>
@@ -11,5 +11,5 @@
       <h1>5</h1>
     </div>
   </div>
-</div>
+<!-- </div> -->
 

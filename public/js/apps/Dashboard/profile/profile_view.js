@@ -8,8 +8,8 @@ define([
     VirtualDojo.module("DashApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
       
       View.ProfileLayout = Marionette.LayoutView.extend({
+        className: "profile-layout",
         template: profileLayoutTpl,
-
         regions: {
           rankRegion: "#rank-region",
           feedbackRegion: "#feedback-region"
@@ -17,7 +17,7 @@ define([
       });
 
       View.RankView = Marionette.ItemView.extend({
-        className: "rank",
+        className: "rank ui card",
         template: rankViewTpl,
         initialize: function() {
         }

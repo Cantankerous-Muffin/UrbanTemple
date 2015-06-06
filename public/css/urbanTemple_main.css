@@ -1,7 +1,10 @@
+/* common */
+
 .white-bg {
   /*background: white;*/
 }
 
+/* login, signup */
 .welcome-title {
   color: white;
 }
@@ -13,7 +16,7 @@
 video#bgvid {
   display: inline;
   position: fixed;
-  opacity: 0.7;
+  opacity: 0.8;
   top: 50%;
   left: 50%;
   min-width: 100%;
@@ -28,7 +31,7 @@ video#bgvid {
 }
 
 .login-form-item {
-  opacity: 0.8;
+  opacity: 0.7;
   padding: 4px 0;
 }
 
@@ -37,6 +40,8 @@ video#bgvid {
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* main page */
 
 #app-container {
   display: table;
@@ -76,7 +81,26 @@ video#bgvid {
   color: white;
 }
 
-/*.class-thumb {
+/* profile */
+
+.profile-layout {
+  display: table;
+}
+
+#rank-region {
+  display: table-cell;
+  width: 45%;
+}
+
+#feedback-region {
+  /*padding-top: 50px;*/
+  padding-left: 15px;
+  display: table-cell;
+}
+
+/* training center */
+
+.class-thumb {
   border: 1px solid rgb(225, 200, 127);
   display: inline-block;
   text-align: center;
@@ -108,4 +132,9 @@ video#bgvid {
 
 .class-thumb h5{
   margin-bottom: 30px;
-}*/
+}
+
+.column.login-view-container {
+  margin-top: 100px;
+  width: 350px;
+}
