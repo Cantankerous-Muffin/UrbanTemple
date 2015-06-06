@@ -82,7 +82,7 @@ db.knex.schema.hasTable('feedback').then(function(exists) {
       table.increments('id').primary();
       table.string('videoURL',255);
       table.text('comment');
-      table.boolean('approved').defaultTo(false);
+      table.boolean('approved').defaultTo(null);
       table.timestamps();
       
       //relations

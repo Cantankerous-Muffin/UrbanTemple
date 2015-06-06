@@ -21,7 +21,7 @@ var DBQuery = {
     // Instructor
     // Classes
     // Rank 
-    // Feedback *
+    // Feedback 
     // Level 
     // Discipline
     // Progress 
@@ -435,7 +435,6 @@ var DBQuery = {
     var submitFeedback = function(studentID, classID, instructorID){
       var newFeedback = new Feedback({
         videoURL: feedback.videoURL,
-        comment: feedback.comment,
         approved: feedback.approved,
         student_id: studentID,
         class_id: classID,
@@ -467,7 +466,6 @@ var DBQuery = {
           exist.save({
             videoURL: feedback.videoURL,
             comment: feedback.comment,
-            approved: false,
             student_id: studentID,
             class_id: classID,
             instructor_id: instructorID,
@@ -488,6 +486,75 @@ var DBQuery = {
         }
       });
     };
+  },
+
+
+  replyToFeedback: function(feedbackID, update, callback){
+    new Feedback({
+      id: feedbackID
+    }).fetch()
+    .then(function(feedback){
+      if(!feedback){
+        callback({
+          result: false,
+          message: 'Feedback of that ID not found.'
+        });
+      }else{
+        feedback.save({
+          approved: update.approved,
+          comment: update.comment,
+        }, {patch: true})
+        .then(function(feed){
+          console.log('Feedback updated');
+
+          //Here we have to update student's progress and rank.
+          new Progress()
+          .where({
+            student_id: feed.get('student_id')
+          })
+          .fetch()
+          .then(function(progress){
+            console.log('!!!!!!!!!!!!!!');
+            if(progress){
+              //Get the current classNum
+              new Class()
+              .where({
+                id: progress.get('class_id')
+              })
+              .fetch()
+              .then(function(oldClass){
+                new Class()
+                .where({
+                  discipline_id: oldClass.get('discipline_id'),
+                  classNum: oldClass.get('classNum')+1
+                })
+                .fetch()
+                .then(function(nextClass){
+                  if(nextClass){
+                    progress.save({
+                      class_id: nextClass.get('id')
+                    }, {patch: true})
+                    .then(function(data){
+                      console.log('Update progress from '+oldClass.get('title')+' to '+nextClass.get('title'));
+
+                      //Still need to do upgrade student's rank.
+
+                      callback(feed);
+                    });
+                  }else{
+                    console.log('Class of that number does not exist in this discipline.');
+                    callback({
+                      result: true,
+                      message: 'You have reached the top class of this discipline.'
+                    });
+                  }
+                });
+              });
+            }
+          });
+        });
+      } 
+    });
   },
 
   /**
@@ -675,50 +742,7 @@ var DBQuery = {
           });
         }
       });
-
     };
-
-    // newProgress = new Progress({
-    //   student_id: studentID,
-    //   class_id: classID,
-    //   levelNum: 1,
-    // });
-    // new Progress({
-    //   student_id: studentID,
-    //   class_id: classID,
-    // }).fetch()
-    // .catch(function(err){
-    //   console.log(err);
-    //   if(callback){
-    //     callback({
-    //       result: false,
-    //       message: 'Internal Server Error.'
-    //     });
-    //   }
-    // })
-    // .then(function(exist){
-    //   if(!exist || exist.length===0){
-    //     newProgress.save()
-    //     .catch(function(err){
-    //       console.log(err);
-    //       if(callback){
-    //         callback({
-    //           result: false,
-    //           message: 'Internal Server Error.'
-    //         });
-    //       }
-    //     })
-    //     .then(function(){
-    //       if(callback){
-    //         callback({
-    //           result:true
-    //         });
-    //       }
-    //     });
-    //   }else{
-    //     exist.save({levelNum: levelNum}, {patch: true});
-    //   }
-    // });
   },
 
 
