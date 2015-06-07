@@ -106,6 +106,7 @@ db.knex.schema.hasTable('classes').then(function(exists) {
       table.integer('classNum').unsigned().notNullable();
       table.text('description');
       table.string('image',255);
+      table.string('thumbVid', 255);
       table.integer('levelCount').unsigned().defaultTo(0);
       table.timestamps();
 

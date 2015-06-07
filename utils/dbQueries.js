@@ -1068,6 +1068,30 @@ var DBQuery = {
   },
 
 
+  getFeedbacksForUser: function(username, callback){
+    new Student({
+      username: username
+    })
+    .fetch({withrRelated: 'feedbacks'})
+    .then(function(model){
+      // callback(model.related('feedback').toJSON());
+      callback(model.related('feedbacks'));
+    });
+  },
+
+
+  getFeedbackUsing: function(using, info, callback){
+    new Feedback()
+    .where(using, info)
+    .fetch()
+    .then(function(model){
+      callback(model);
+    });
+  },
+
+
+
+
 
   /////////////////////
   //Special functions//

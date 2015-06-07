@@ -191,81 +191,117 @@ var feedReply = {
 //   console.log(result);
 // });
 
-DBQuery.replyToFeedback(2, feedReply, function(result){
-  console.log(result);
-});
+// DBQuery.replyToFeedback(2, feedReply, function(result){
+//   console.log(result);
+// });
 
 // DBQuery.clearTable('progress');
 
 
 
-db.knex('students')
-.select('id','username')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('students');
-  console.log(data);
-  console.log('-------------------------');
+// db.knex('students')
+// .select('id','username')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('students');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy(function(){
+//     console.log('destroy');
+//   });
+// });
+// db.knex('instructors')
+// .select('id','username')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('Instructors');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy();
+// });
+// db.knex('classes')
+// .join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
+// // .select('classes.*')
+// .select('classes.id','classes.title as Class', 'classes.levelCount', 'classes.classNum',
+//   'disciplines.title as Discipline', 'instructor_id as InstrID')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('classes');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy();
+// });
+// db.knex('ranks')
+// .select('rankTitle', 'rankNum', 'student_id', 'discipline_id')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('ranks');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy();
+// });
+// db.knex('feedback')
+// .select('*')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('feedback');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy(function(){
+//     console.log('destroy');
+//   });
+// });
+// db.knex('levels')
+// .select('id','title', 'levelNum', 'class_id as classID')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('levels');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy();
+// });
+// db.knex('progress')
+// .select('levelNum', 'student_id', 'class_id')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('progress');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy();
+// });
+// db.knex('disciplines')
+// .select('id', 'title', 'description')
+// .then(function(data){
+//   console.log('-------------------------');
+//   console.log('disciplines');
+//   console.log(data);
+//   console.log('-------------------------');
+//   db.knex.destroy();
+// });
+
+new Class()
+.fetchAll()
+.then(function(model){
+  console.log(model.toJSON());
+
+  new Student({
+    username: 'Sokka'
+  })
+  .fetch({withRelated: 'classes'})
+  .then(function(model){
+    console.log(model.related('classes').toJSON());
+    // model.related('classes').attach(2)
+    // .then(function(){
+    //   db.knex.destroy();
+    // });
+
+    db.knex.destroy();
+  });
 });
-db.knex('instructors')
-.select('id','username')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('Instructors');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('classes')
-.join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
-// .select('classes.*')
-.select('classes.id','classes.title as Class', 'classes.levelCount', 'classes.classNum',
-  'disciplines.title as Discipline', 'instructor_id as InstrID')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('classes');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('ranks')
-.select('rankTitle', 'rankNum', 'student_id', 'discipline_id')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('ranks');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('feedback')
-.select('*')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('feedback');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('levels')
-.select('id','title', 'levelNum', 'class_id as classID')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('levels');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('progress')
-.select('levelNum', 'student_id', 'class_id')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('progress');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('disciplines')
-.select('id', 'title', 'description')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('disciplines');
-  console.log(data);
-  console.log('-------------------------');
-});
+
+
+
+
 
 
 
