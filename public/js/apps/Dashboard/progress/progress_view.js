@@ -1,9 +1,10 @@
 // collection view
 define([
     "app",
+    "chroma",
     "tpl!apps/Dashboard/progress/templates/progress_view.tpl"
   ],
-  function(VirtualDojo, progressViewTpl) {
+  function(VirtualDojo, chroma, progressViewTpl) {
     VirtualDojo.module("DashApp.Progress.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
 
       // single class item view
@@ -27,8 +28,6 @@ define([
             'levelNum': levelNum
           })
         },
-
-
         serializeData: function() {
           var model = this.model;
           // discipline
@@ -44,6 +43,15 @@ define([
             currentLevelTitle: currentLevelTitle,
             percentage: percentage
           };
+        },
+        onShow: function() {
+          var $progressBar = this.$(".progress-bar");
+          var percentage = this.model.get("percentage")
+          $progressBar.css("width", percentage + "%");
+
+          var colorScale = chroma.scale(['lime', 'black']).mode('lab');
+          var progressColor = colorScale(percentage/100).hex();
+          $progressBar.css("background", progressColor);
         }
       });
 

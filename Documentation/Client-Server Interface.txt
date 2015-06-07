@@ -140,6 +140,7 @@ Class = {
   title: STRING,
   description: STRING,
   classImage: STRING (URL),
+  classVideo: STRING (URL), // ** NEW **
   totalLevel: INT  //how many levels there are in this particular class
 }
 

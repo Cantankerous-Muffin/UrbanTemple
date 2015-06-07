@@ -1,13 +1,18 @@
-
-    <a class="image">
-      <img src="http://33.media.tumblr.com/avatar_161256d168d5_128.png">
-    </a>
-    <div class="content">
-      <a class="header"><%= title %></a>
-<!--       <div class="meta">
-        <a>Friends</a>
-      </div> -->
-      <div class="description">
-        <%= description %>
-      </div>
+<div class="image">
+  <div class="thumbnail-container">
+    <div class="img-container with-fadeout">
+      <img src="img/class_thumbnail_kendo.png"></img>
     </div>
+    <% if (classVideo) { %>
+      <video class="thumbnail-video" poster="" muted>
+        <source src="<%= classVideo %>" type="video/mp4">
+      </video>
+    <% } %>
+  </div>
+</div>
+<div class="content">
+  <a class="header"><%= title %></a>
+  <div class="description">
+    <%= description %>
+  </div>
+</div>

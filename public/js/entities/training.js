@@ -22,6 +22,7 @@ define(
                               title: "Kendo 101: Philsophy",
                               description: "This class covers the basics of Kendo",
                               classImage: "http://33.media.tumblr.com/avatar_161256d168d5_128.png",
+                              classVideo: "video/dojo_bg.mp4",
                               totalLevel: 5
                             },
                             {
