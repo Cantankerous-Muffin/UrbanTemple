@@ -21,7 +21,7 @@ var DBQuery = {
     // Instructor
     // Classes
     // Rank 
-    // Feedback *
+    // Feedback 
     // Level 
     // Discipline
     // Progress 
@@ -325,7 +325,7 @@ var DBQuery = {
     //Check if discipline exists
     var getInst = this.getInstructorUsing;
 
-    this.getDiscipline(discipline, function(disc){
+    this.getDisciplineByTitle(discipline, function(disc){
       if(!disc){
         console.log('Something went wrong.');
       }else{
@@ -401,9 +401,165 @@ var DBQuery = {
    * @vidInfo  {[Object]}
    * @callback {[Function]} 
    */
-  submitFeedback: function(infoObject, callback){
-    //check if a video under the students id already exists
+  submitStudentFeedback: function(username, classNum, disciplineID, feedback, callback){
+    var checkDiscipline = this.getDisciplineByID;
+    this.getStudentUsing('username', username, function(student){
+      if(!student){
+        callback({
+          result: false,
+          message: 'Invalid student username',
+        });
+      }else{
+        //Get Discipline with ID
+        checkDiscipline(disciplineID, function(discipline){
+          if(!discipline){
+            callback(discipline);
+          }else{
+            //Get class with classNum and disciplineID
+            new Class({
+              discipline_id: disciplineID,
+              classNum: classNum
+            }).fetch()
+            .then(function(theClass){
+              if(!theClass){
+                callback(theClass);
+              }else{
+                submitFeedback(student.id, theClass.get('id'), theClass.get('instructor_id'));
+              }
+            });
+          }
+        });
+      }
+    });
     
+    var submitFeedback = function(studentID, classID, instructorID){
+      var newFeedback = new Feedback({
+        videoURL: feedback.videoURL,
+        approved: feedback.approved,
+        student_id: studentID,
+        class_id: classID,
+        instructor_id: instructorID,
+      });
+
+      new Feedback({
+        student_id: studentID,
+        class_id: classID,
+        instructor_id: instructorID,
+      }).fetch()
+      .then(function(exist){
+        if(!exist){
+          newFeedback.save()
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Saved student feedback.');
+            callback({
+              result: true,
+            });
+          });
+        }else{
+          exist.save({
+            videoURL: feedback.videoURL,
+            comment: feedback.comment,
+            student_id: studentID,
+            class_id: classID,
+            instructor_id: instructorID,
+          }, {patch: true})
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Updated student feedback.');
+            callback({
+              result: true,
+            });
+          });
+        }
+      });
+    };
+  },
+
+
+  replyToFeedback: function(feedbackID, update, callback){
+    new Feedback({
+      id: feedbackID
+    }).fetch()
+    .then(function(feedback){
+      if(!feedback){
+        callback({
+          result: false,
+          message: 'Feedback of that ID not found.'
+        });
+      }else{
+        feedback.save({
+          approved: update.approved,
+          comment: update.comment,
+        }, {patch: true})
+        .then(function(feed){
+          console.log('Feedback updated');
+
+          if(update.approved){
+            //Here we have to update student's progress and rank.
+            new Progress()
+            .where({
+              student_id: feed.get('student_id')
+            })
+            .fetch()
+            .then(function(progress){
+              console.log('!!!!!!!!!!!!!!');
+              if(progress){
+                //Get the current classNum
+                new Class()
+                .where({
+                  id: progress.get('class_id')
+                })
+                .fetch()
+                .then(function(oldClass){
+                  new Class()
+                  .where({
+                    discipline_id: oldClass.get('discipline_id'),
+                    classNum: oldClass.get('classNum')+1
+                  })
+                  .fetch()
+                  .then(function(nextClass){
+                    if(nextClass){
+                      progress.save({
+                        class_id: nextClass.get('id')
+                      }, {patch: true})
+                      .then(function(data){
+                        console.log('Update progress from '+oldClass.get('title')+' to '+nextClass.get('title'));
+
+                        //Still need to do upgrade student's rank.
+
+                        callback(feed);
+                      });
+                    }else{
+                      console.log('Class of that number does not exist in this discipline.');
+                      callback({
+                        result: true,
+                        message: 'You have reached the top class of this discipline.'
+                      });
+                    }
+                  });
+                });
+              }
+            });
+          }else{
+            console.log('Student did not pass.');
+            callback(feed);
+          }
+        });
+      } 
+    });
   },
 
   /**
@@ -591,50 +747,7 @@ var DBQuery = {
           });
         }
       });
-
     };
-
-    // newProgress = new Progress({
-    //   student_id: studentID,
-    //   class_id: classID,
-    //   levelNum: 1,
-    // });
-    // new Progress({
-    //   student_id: studentID,
-    //   class_id: classID,
-    // }).fetch()
-    // .catch(function(err){
-    //   console.log(err);
-    //   if(callback){
-    //     callback({
-    //       result: false,
-    //       message: 'Internal Server Error.'
-    //     });
-    //   }
-    // })
-    // .then(function(exist){
-    //   if(!exist || exist.length===0){
-    //     newProgress.save()
-    //     .catch(function(err){
-    //       console.log(err);
-    //       if(callback){
-    //         callback({
-    //           result: false,
-    //           message: 'Internal Server Error.'
-    //         });
-    //       }
-    //     })
-    //     .then(function(){
-    //       if(callback){
-    //         callback({
-    //           result:true
-    //         });
-    //       }
-    //     });
-    //   }else{
-    //     exist.save({levelNum: levelNum}, {patch: true});
-    //   }
-    // });
   },
 
 
@@ -642,15 +755,43 @@ var DBQuery = {
                                   //Get Queries//
   //============================================================================//
   
-  getDiscipline: function(discipline, callback){
+  getDisciplineByTitle: function(title, callback){
     new Discipline({
-      title: discipline
+      title: title
     }).fetch()
     .then(function(exist){
       if(exist){
        callback(exist.attributes);
       }else{
-        console.log('Discipline does not exist.');
+        console.log('Discipline of that title does not exist.');
+        callback({
+          result: false,
+          message: 'No discipline with that title.'
+        });
+      }
+    });
+  },
+
+  getDisciplineByID: function(ID, callback){
+    new Discipline({
+      id: ID
+    }).fetch({required: true})
+    .catch(function(err){
+      console.log(err);
+      callback({
+        result: false,
+        message: 'Internal Server Error'
+      });
+    })
+    .then(function(exist){
+      if(exist){
+       callback(exist.attributes);
+      }else{
+        console.log('Discipline of that ID does not exist.');
+        callback({
+          result: false,
+          message: 'No discipline with that ID.'
+        });
       }
     });
   },
@@ -925,6 +1066,30 @@ var DBQuery = {
 
     });
   },
+
+
+  getFeedbacksForUser: function(username, callback){
+    new Student({
+      username: username
+    })
+    .fetch({withrRelated: 'feedbacks'})
+    .then(function(model){
+      // callback(model.related('feedback').toJSON());
+      callback(model.related('feedbacks'));
+    });
+  },
+
+
+  getFeedbackUsing: function(using, info, callback){
+    new Feedback()
+    .where(using, info)
+    .fetch()
+    .then(function(model){
+      callback(model);
+    });
+  },
+
+
 
 
 
