@@ -132,10 +132,13 @@ var rank = {
 };
 
 var feed = {
-  username: '',
-  classNum: 1,
-  discipline_id: 1,
+  videoURL: 'feedbackURL',
+  comment: 'A comment for a feedback.',
 };
+
+// DBQuery.submitStudentFeedback('Sokka', 2, 1, feed, function(result){
+//   console.log(result);
+// });
 
 // DBQuery.newStudent(stu);
 // DBQuery.newStudent(stu2);
@@ -209,7 +212,8 @@ db.knex('instructors')
 db.knex('classes')
 .join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
 // .select('classes.*')
-.select('classes.id','classes.title as Class', 'classes.levelCount', 'disciplines.title as Discipline')
+.select('classes.id','classes.title as Class', 'classes.levelCount',
+  'disciplines.title as Discipline', 'instructor_id as InstrID')
 .then(function(data){
   console.log('-------------------------');
   console.log('classes');
@@ -241,7 +245,7 @@ db.knex('levels')
   console.log('-------------------------');
 });
 db.knex('progress')
-.select('*')
+.select('levelNum', 'student_id', 'class_id')
 .then(function(data){
   console.log('-------------------------');
   console.log('progress');
@@ -256,4 +260,9 @@ db.knex('disciplines')
   console.log(data);
   console.log('-------------------------');
 });
+
+
+
+
+
 
