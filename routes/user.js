@@ -112,59 +112,79 @@ router.get('/:username', function(req, res) {
 router.get('/:username/progress', function(req,res){
 	// remove progress from url to find username
 	var username = req.url.slice(1,req.url.length - 9);
+	var userPackage = [];
+	var disciplinePackage = {};
+	var levelNum;
+	var levelTitle;
+	var classNum;
+					var outer = 0;
 	db.knex('students')
 		.where({'students.username': username})
 		.select('id')
 		.then(function(data){
-			// console.log('data',data);
-			db.knex('classes_students')
-				.where({'classes_students.student_id': data[0].id})
-				// get class_id for particular student in join table classes_students
+			return data[0];
+		})
+		.then(function(studentData){
+			console.log('studentData',studentData);
+			db.knex('progress')
+				.where({'progress.student_id':studentData.id})
 				.select('*')
 				.then(function(data2){
-					// console.log('data2',data2);
-					var userProgressPackages = [];
-					var inner = 0;
+					var outer = 0;
 					for (var i = 0; i < data2.length; i++){
+						console.log('data2',i, data2[i]);
+						// levelNum = data2[i].levelNum;
+						db.knex('levels')
+							.where({'levels.levelNum': data2[i].levelNum})
+							.select('title')
+							.then(function(levelData){
+								levelTitle = levelData;
+								console.log('outer',outer);
+								console.log('levelTitle',levelTitle);
+							})
 						db.knex('classes')
 							.where({'classes.id':data2[i].class_id})
-						// get classes for class_id for particular student
 							.select('*')
 							.then(function(data3){
-								console.log('data3',data3);
-								db.knex('disciplines')
-									.where({'disciplines.id': data3[0].discipline_id})
-									.select('*')
-									.then(function(data35){
-										// console.log('data35', data35);
-										db.knex('classes')
-											.where({'classes.discipline_id': data35[0].id})
-											.select('*')
-											.then(function(data37){
-												console.log('data37',data37);
-												db.knex('levels')
-													.where({'levels.class_id':data2[inner].class_id})
-													.select('*')
-													.then(function(data4){
-														console.log('data4',data4.length);
-														var userPackage = [];
-														data37[0].totalLevel = data4.length;
-														data35[0]['class'] = data37[0];
-														console.log('data35', data35);
-														for (var j = 0; j < data4.length; j++){
-															userPackage.push({'discipline':data35,'classNum':data3[0].classNum,'levelNum':data4[j].levelNum,'title':data4[j].title,'description':data4[j].description,'videoURL':data4[j].videoURL,'feedbackNeeded':data4[j].feedbackNeeded});
-														}
-														userProgressPackages.push(userPackage);
-														if (userProgressPackages.length === data2.length){
-															res.json(userProgressPackages);
-														}
-													});
-											inner++;
-											});
+								console.log('classes',data3);
+									db.knex('disciplines')
+										.where({'disciplines.id':data3[0].discipline_id})
+										.select('*')
+										.then(function(data4){
+											disciplinePackage['id'] = data4[0].id;
+											disciplinePackage['title'] = data4[0].title;
+											disciplinePackage['description'] = data4[0].description;
+											disciplinePackage['disciplineLogo'] = data4[0].disLogo;
+											console.log('data4',data4 ,'disciplinePackage', disciplinePackage, 'levelTitle', levelTitle);
+											userPackage.push({'discipline':data4[0], 'classNum':data3[0].classNum,'levelNum':data2[outer].levelNum, 'currentLevelTitle':levelTitle[outer].title});
+											outer++;
+											// userPackage.push({'i':i,'discipline':disciplinePackage, 'classNum': classNum, 'levelNum':levelNum});
+											if (userPackage.length === i){
+												console.log('our data', userPackage);
+												res.json(userPackage);
+											}
+											// DisciplineProgress = { 
+											//   discipline: Discipline{
+												// disciplineId: INT,
+												// title: STRING,
+												// description: STRING, 
+												// disciplineLogo: STRING (URL),
+												// totalClass: INT}, 
+											//disciplines.*
+											//   currentClassNum: INT,   //classes.classNum
+											//   currentLevelNum: INT,   //levels.levelNum
+											//   currentLevelTitle: STRING,  //levels.title
+											//   percentage: INT // eg. 34 (%)
+											// }
+
+										})
 									});
-							});
+								// outer++;
+							}
+							
 					}
-				});
+				)
+
 		});
 })
 
