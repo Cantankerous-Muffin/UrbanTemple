@@ -24,8 +24,8 @@ define([
 
         var initializeSidenavItems = function() {
           Entities.sidenavItems = new Entities.SidenavCollection([
-              { name: "Dashboard", url: "dashboard", navigationTrigger: "show:dashboard"},
-              { name: "Training Center", url: "training", navigationTrigger: "show:training"},
+              { name: "Profile", url: "dashboard", navigationTrigger: "show:dashboard"},
+              { name: "Training", url: "training", navigationTrigger: "show:training"},
               { name: "Logout", url: "logout", navigationTrigger: "authenticate:logout"}
             ]);
         };
