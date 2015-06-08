@@ -117,6 +117,7 @@ router.get('/:username/progress', function(req,res){
 	var levelNum;
 	var levelTitle;
 	var classNum;
+	var totalLevels;
 					var outer = 0;
 	db.knex('students')
 		.where({'students.username': username})
@@ -125,44 +126,60 @@ router.get('/:username/progress', function(req,res){
 			return data[0];
 		})
 		.then(function(studentData){
-			console.log('studentData',studentData);
+			// console.log('studentData',studentData);
 			db.knex('progress')
 				.where({'progress.student_id':studentData.id})
 				.select('*')
 				.then(function(data2){
 					var outer = 0;
 					for (var i = 0; i < data2.length; i++){
-						console.log('data2',i, data2[i]);
+						// console.log('data2',i, data2[i]);
 						// levelNum = data2[i].levelNum;
 						db.knex('levels')
 							.where({'levels.levelNum': data2[i].levelNum})
 							.select('title')
 							.then(function(levelData){
 								levelTitle = levelData;
-								console.log('outer',outer);
-								console.log('levelTitle',levelTitle);
+								// console.log('outer',outer);
+								// console.log('levelTitle',levelTitle);
 							})
+
 						db.knex('classes')
 							.where({'classes.id':data2[i].class_id})
 							.select('*')
 							.then(function(data3){
+
 								console.log('classes',data3);
 									db.knex('disciplines')
 										.where({'disciplines.id':data3[0].discipline_id})
 										.select('*')
 										.then(function(data4){
-											disciplinePackage['id'] = data4[0].id;
-											disciplinePackage['title'] = data4[0].title;
-											disciplinePackage['description'] = data4[0].description;
-											disciplinePackage['disciplineLogo'] = data4[0].disLogo;
-											console.log('data4',data4 ,'disciplinePackage', disciplinePackage, 'levelTitle', levelTitle);
-											userPackage.push({'discipline':data4[0], 'classNum':data3[0].classNum,'levelNum':data2[outer].levelNum, 'currentLevelTitle':levelTitle[outer].title});
-											outer++;
-											// userPackage.push({'i':i,'discipline':disciplinePackage, 'classNum': classNum, 'levelNum':levelNum});
-											if (userPackage.length === i){
-												console.log('our data', userPackage);
-												res.json(userPackage);
-											}
+											db.knex('classes')
+												.where({'classes.discipline_id':data4[0].id})
+												.select('*')
+												.then(function(all_classes){
+													console.log('all classes', all_classes.length);
+													data4[0]['totalClass'] = all_classes.length;
+													disciplinePackage['id'] = data4[0].id;
+													disciplinePackage['title'] = data4[0].title;
+													disciplinePackage['description'] = data4[0].description;
+													disciplinePackage['disciplineLogo'] = data4[0].disLogo;
+													// console.log('data4',data4 ,'disciplinePackage', disciplinePackage, 'levelTitle', levelTitle);
+													db.knex('levels')
+														.where({'levels.class_id':data3[0].classNum})
+														.select('*')
+														.then(function(data5){
+																totalLevels = data5.length;
+																console.log('data5',totalLevels);
+													userPackage.push({'discipline':data4[0], 'classNum':data3[0].classNum,'levelNum':data2[outer].levelNum, 'currentLevelTitle':levelTitle[outer].title, 'totalLevels':totalLevels});
+													outer++;
+													// userPackage.push({'i':i,'discipline':disciplinePackage, 'classNum': classNum, 'levelNum':levelNum});
+													if (userPackage.length === i){
+														// console.log('our data', userPackage);
+														res.json(userPackage);
+													}
+												})
+									})
 											// DisciplineProgress = { 
 											//   discipline: Discipline{
 												// disciplineId: INT,
