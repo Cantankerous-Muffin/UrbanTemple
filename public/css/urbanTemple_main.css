@@ -4,6 +4,14 @@
   /*background: white;*/
 }
 
+.with-fadeout {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
 /* login, signup */
 .welcome-title {
   color: white;
@@ -101,6 +109,13 @@ video#bgvid {
   display: table-cell;
 }
 
+.progress-bar {
+  height: 20px;
+  background: green;
+  border-radius: 5px;
+  /*border: 3px solid #00AC25;*/
+}
+
 /* dashboard ranks */
 .profile-ranks-header-container {
   padding-bottom: 20px;
@@ -123,6 +138,41 @@ video#bgvid {
 
 /* training center */
 
+#kendo-region {
+  margin-top: 20px;
+}
+
+.training-container .thumbnail-container {
+  width: 290px;
+  height: 163px;
+}
+
+.training-container .img-container {
+  display: inline;
+  position: absolute;
+  overflow: hidden;
+  z-index: 15;
+}
+
+.training-container video {
+  display: inline;
+  position: absolute;
+  overflow: hidden;
+  z-index: 10;
+  width: 290px;
+  height: 163px;
+}
+
+.thumbnail-hidden {
+  /*display: none!important;*/
+  opacity: 0;
+}
+
+.class-thumb.disabled {
+  opacity: 0.5;
+}
+
+/*
 .class-thumb {
   border: 1px solid rgb(225, 200, 127);
   display: inline-block;
@@ -132,13 +182,6 @@ video#bgvid {
   width: 280px;
   height: 230px;
   box-sizing: border-box;
-}
-
-.class-thumb.disabled {
-  border: 3px solid gray;
-  border-style: dashed;
-  background: rgb(211, 184, 184);
-  opacity: 0.6;
 }
 
 .class-thumb:hover {
@@ -156,6 +199,7 @@ video#bgvid {
 .class-thumb h5{
   margin-bottom: 30px;
 }
+*/
 
 .column.login-view-container {
   margin-top: 100px;

@@ -25,18 +25,55 @@ define([
       // ClassThumb Itemview
       View.ClassThumb = Marionette.ItemView.extend({
 
-        className: "card",
+        className: "class-thumb card",
         template: classThumbViewTpl,
 
-        ui: {
-          thumbClick: ".image"//used to be .class-wrapper
+        serializeData: function() {
+          var model = this.model;
+
+          var title = model.get("title");
+          var description = model.get("description");
+          var classImage = model.get("classImage");
+          var classVideo = model.get("classVideo");
+
+          return {
+            title: title,
+            description: description,
+            classImage: classImage,
+            classVideo: classVideo
+          };
         },
 
-        events: {
-          "click @ui.thumbClick": "onThumbClick"
+        initialize: function() {
+          _.bindAll(this, "onCardClick");
+
+          var that = this;
+          this.$el.on("click", this.onCardClick);
+
+          // video thumbnail
+          var classVideo = this.model.get("classVideo");
+          if (classVideo) {
+            this.$el.on("mouseenter", function() {
+              var $video = that.$(".thumbnail-video");
+              var vid = $video.get()[0];
+              that.$(".img-container").addClass("thumbnail-hidden");
+              vid.currentTime = 0;
+              vid.play();
+            });
+
+            this.$el.on("mouseleave", function() {
+              var $video = that.$(".thumbnail-video");
+              var vid = $video.get()[0];
+              that.$(".img-container").removeClass("thumbnail-hidden");
+              vid.pause();
+            });
+          }
+
+          console.log("class model", this.model);
+          this.$el.addClass("disabled");
         },
         
-        onThumbClick: function(event) {
+        onCardClick: function(event) {
           event.preventDefault();
           console.log('thumb clicked')
            var disciplineId = this.model.get("disciplineId");
@@ -46,16 +83,7 @@ define([
               disciplineId: disciplineId,
               classNum: classNum
             });
-        },
-
-        
-        initialize: function(){
-          if (this.model.get("classNum") === 1) {
-            this.$el.attr( "class", "card" );//used to be this.$el.attr( "class", "class-thumb disabled" )
-          } else {
-            this.$el.attr( "class", "card" );// used to be ( "class", "class-thumb" )
-          }
-        },
+        }
       });
 
       // ClassList composite view

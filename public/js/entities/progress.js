@@ -21,7 +21,7 @@ define(
                           currentClassNum: 2,
                           currentLevelNum: 4,
                           currentLevelTitle: "12 directional steps",
-                          percentage: 3
+                          percentage: 34
                         },
                         {
                           discipline: {
@@ -34,7 +34,7 @@ define(
                           currentClassNum: 4,
                           currentLevelNum: 1,
                           currentLevelTitle: "watermill stance",
-                          percentage: 15
+                          percentage: 68
                         }
                       ]
             defer.resolve(data);
