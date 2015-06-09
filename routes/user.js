@@ -186,58 +186,6 @@ router.get('/:username/progress', function(req,res){
 			console.log('aa',aa);
 			res.json(aa);
 		});
-	// 				var outer = 0;
-	// db.knex('students')
-	// 	.where({'students.username': username})
-	// 	.select('id')
-	// 	.then(function(student_id){
-	// 		console.log('student_id',student_id)
-	// 		// get progress using student_id
-	// 		db.knex('progress')
-	// 			.where({'progress.student_id':student_id[0].id})
-	// 			.then(function(progressData){
-	// 				console.log('progressData',progressData);
-	// 				var outer = 0;
-	// 				for (var i = 0; i < progressData.length; i++){
-	// 					// find class that matches class_id in progressData
-	// 					db.knex('classes')
-	// 						.where({'classes.id':progressData[i].class_id}	)
-	// 						.then(function(classe){
-	// 							console.log('class',classe);
-	// 							// find discipline that matches certain class
-	// 							db.knex('disciplines')
-	// 								.where({'disciplines.id':classe[0].discipline_id})
-	// 								.then(function(disciplineData){
-	// 									console.log('disciplineData',disciplineData);
-	// 									// find number of classes in discipline
-	// 									db.knex('classes')
-	// 										.where({'classes.discipline_id':disciplineData[0].id})
-	// 										.then(function(classesInDisciplineData){
-	// 											console.log('classesInDisciplineData', classesInDisciplineData.length);
-	// 											// find levels inside a class, using classe
-	// 											db.knex('levels')
-	// 												.where({'levels.class_id':classe[0].id})
-	// 												.then(function(levelsInClass){
-	// 													console.log('levelsInClass',levelsInClass.length);
-	// 													// find current level title:
-	// 													db.knex('levels')
-	// 														.where({'levels.levelNum':progressData[outer].levelNum, 'levels.class_id': classe.id})
-	// 														.select('title')
-	// 														.then(function(levelTitleData){
-
-	// 															userPackage.push({'discipline':disciplineData, 'levelNum':progressData[outer].levelNum, 'classNum':classe[0].classNum, 'levelTitle':levelTitleData});
-	// 															if (userPackage.length === progressData.length){
-	// 																res.json(userPackage);
-	// 															}
-	// 															outer++;
-	// 														})
-	// 												})
-	// 										})
-	// 								})
-	// 						})
-	// 				}
-	// 			})
-	// 	});
 })
 
 module.exports = router;
