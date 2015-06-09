@@ -260,33 +260,15 @@ router.get('/:discipline_id/class/:class_id/level', function(req, res) {
 			}
 			return db.knex('levels')
 				.where({'levels.class_id':classData[0].id})
-				.then(function(datapack){
-					// console.log('datapack',datapack, 'classData.instructor_id', classData.instructor_id);
-					classData[0].levelData = datapack;
-					return db.knex('instructors')
-						.where({'instructors.id': classData[0].instructor_id})
-						.select('*')
-						.then(function(instrData){
-							// console.log('instrData', instrData[0]);
-							classData[0].instructor_name = instrData[0].username;
-							// set instructor_id to 2 if not found.
-							instrData[0].id = instrData[0].id || 2;
-							// console.log('gets here discipline is', discipline[0].id, instrData[0].id);
-							return db.knex('ranks')
-								.where({'ranks.instructor_id': instrData[0].id, 'ranks.discipline_id': discIDfromURL})
-								.then(function(instructorRankData){
-									console.log('instructorRankData',instructorRankData);
-									if (!instructorRankData[0]){
-										return {'message': 'instructor not assigned to one of the classes. Check DB'};
-									}
-									classData[0].instructorRankTitle = instructorRankData[0].rankTitle;
-									classData[0].instructorRankNum = instructorRankData[0].rankNum;
-									return classData[0];
-									})
-							})
-					})
-
+				.map(function(datapack){
+					console.log('datapack',datapack);
+					// classData[0].levelData = datapack;
+					datapack.discipline_id = classData[0].discipline_id;
+					datapack.classNum = classData[0].classNum;
+					return datapack;
 				})
+
+			})
 				.then(function(collatedClassData){
 					console.log('collatedClassData', collatedClassData);
 					// discipline.classData = collatedClassData;
