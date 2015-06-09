@@ -18,7 +18,6 @@ define([
           qigongRegion: "#qigong-region"
         },
         initialize: function() {
-          console.log("init", this)
         }
       });
       
@@ -75,15 +74,22 @@ define([
         
         onCardClick: function(event) {
           event.preventDefault();
-          console.log('thumb clicked')
            var disciplineId = this.model.get("disciplineId");
            var classNum = this.model.get("classNum");
-
             VirtualDojo.trigger("show:class", {
               disciplineId: disciplineId,
               classNum: classNum
             });
-        }
+        },
+
+        
+        initialize: function(){
+          if (this.model.get("classNum") === 1) {
+            this.$el.attr( "class", "card" );
+          } else {
+            this.$el.attr( "class", "card" );
+          }
+        },
       });
 
       // ClassList composite view
