@@ -24,7 +24,7 @@ define([
       // ClassThumb Itemview
       View.ClassThumb = Marionette.ItemView.extend({
 
-        className: "class-thumb card",
+        // className: "class-thumb card",
         template: classThumbViewTpl,
 
         serializeData: function() {
@@ -44,6 +44,21 @@ define([
         },
 
         initialize: function() {
+
+          if (this.model.get("disciplineId") === 1 ) {
+            if (this.model.get("classNum") > UTConfig.currentKendoClass) {
+              this.$el.addClass("class-thumb card disabled");
+            } else {
+              this.$el.addClass("class-thumb card");
+            }
+          } else {
+            if (this.model.get("classNum") > UTConfig.currentQigongClass) {
+              this.$el.addClass("class-thumb card disabled")
+            } else {
+              this.$el.addClass("class-thumb card");
+            }
+          } 
+
           _.bindAll(this, "onCardClick");
 
           var that = this;
@@ -68,28 +83,29 @@ define([
             });
           }
 
-          console.log("class model", this.model);
-          this.$el.addClass("disabled");
+          // console.log("class model", this.model);
+          // this.$el.addClass("disabled");
         },
         
         onCardClick: function(event) {
           event.preventDefault();
            var disciplineId = this.model.get("disciplineId");
            var classNum = this.model.get("classNum");
+
             VirtualDojo.trigger("show:class", {
               disciplineId: disciplineId,
               classNum: classNum
             });
         },
-
         
-        initialize: function(){
-          if (this.model.get("classNum") === 1) {
-            this.$el.attr( "class", "card" );
-          } else {
-            this.$el.attr( "class", "card" );
-          }
-        },
+        // initialize: function(){
+        //   if (this.model.get("classNum") === 1) {
+        //     this.$el.attr( "class", "card" );
+        //   } else {
+        //     this.$el.attr( "class", "card" );
+        //   }
+        // },
+
       });
 
       // ClassList composite view

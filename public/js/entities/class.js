@@ -6,10 +6,6 @@ define(
     VirtualDojo.module("Entities.Classes", function(Classes, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getClasses: function (params) {
-          console.log("xxxxxxx", params);
-          
-          // var url = VirtualDojo.getCurrentRoute();
-          // console.log("foooooo", foo);
 
           var url = '/discipline/' + params.disciplineId + '/class/' + params.classNum;
           console.log("api call url :", url);

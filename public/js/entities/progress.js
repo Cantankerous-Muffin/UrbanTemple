@@ -18,10 +18,10 @@ define(
                             disciplineLogo: "",
                             totalClass: 6                
                           },  
-                          currentClassNum: 2,
-                          currentLevelNum: 4,
+                          currentClassNum: 3,
+                          currentLevelNum: 5,
                           currentLevelTitle: "12 directional steps",
-                          percentage: 34
+                          percentage: 50
                         },
                         {
                           discipline: {
@@ -31,10 +31,10 @@ define(
                             disciplineLogo: "",
                             totalClass: 6                
                           },  
-                          currentClassNum: 4,
+                          currentClassNum: 2,
                           currentLevelNum: 1,
                           currentLevelTitle: "watermill stance",
-                          percentage: 68
+                          percentage: 16
                         }
                       ]
             defer.resolve(data);

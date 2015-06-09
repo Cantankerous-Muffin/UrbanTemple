@@ -44,6 +44,7 @@ define([
             percentage: percentage
           };
         },
+        // update user progress bar based on percentage data 
         onShow: function() {
           var $progressBar = this.$(".progress-bar");
           var percentage = this.model.get("percentage")

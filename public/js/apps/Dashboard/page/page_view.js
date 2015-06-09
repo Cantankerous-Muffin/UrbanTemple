@@ -8,7 +8,7 @@ define([
   function(VirtualDojo, UserModels, ProfileView, ProgressView, layoutTpl) {
     VirtualDojo.module("DashApp.Page.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
     
-      // Dashboard Layout View 
+      // Student dashboard Layout View 
       View.Layout = Marionette.LayoutView.extend({
         className: "dashboard-layout",
         template: layoutTpl,
@@ -16,22 +16,22 @@ define([
           profileRegion: "#profile-region",
           progressRegion: "#progress-region"
         },
+        // function invoked when the view is rendered 
         onShow: function() {
           var that = this;
-
           var profileLayout = new ProfileView.ProfileLayout({
             model: this.model
           });
           this.profileRegion.show(profileLayout);
 
-
+          // fetch the user's progress data
           require(["entities/progress"], function() {
             var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
             fetchUserProgress
-              .done(function(data){
+              // instantiate user progress and show it on progress region
+              .done(function(data){ 
                 var progresses = data;
                 if (progresses) {
-                  // instantiate progress collection and models
                   var progressCollection = new UserModels.Progresses();
                   progresses.forEach(function(progress) {
                     progressCollection.add(new UserModels.Progress(progress));

@@ -13,6 +13,7 @@ define([
       View.RankView = Marionette.ItemView.extend({
         className: "rank ui card",
         template: rankViewTpl,
+        // display user rank color based on user's rank number
         onShow: function() {
           var colorScale = chroma.scale(['lime', 'black']).mode('lab');
           var rankNum = this.model.get("rankNum");
@@ -35,6 +36,7 @@ define([
           rankRegion: "#rank-region",
           feedbackRegion: "#feedback-region"
         },
+        // serialize uder model data
         serializeData: function() {
           return {
             firstname: this.model.get("firstname"),
@@ -45,7 +47,7 @@ define([
           var that = this;
           var model = this.model;
 
-          /* instantiate profile */
+          // instantiate profile view
           var profileView = new View.RanksView({
             model: model,
             collection: model.get("ranks"),
@@ -53,18 +55,20 @@ define([
 
           this.rankRegion.show(profileView);
 
-
-          /* instantiate feedback */
+          // fetch user feedbacks from ajax request 
           require(["entities/feedback"], function() {
             var fetchUser = VirtualDojo.request("entities:feedback:getAll", {username: UTConfig.username});
             fetchUser.done(function(data){
               var userFeeds = data;
               if (userFeeds) {
+                // instantiate new feedbacks collection 
                 var feedbackCollection = new FeedbackModels.Feedbacks();
+                // add feedback to the feedbacks collection 
                 userFeeds.forEach(function(feedback) {
                   feedbackCollection.add(new FeedbackModels.Feedback(feedback));
                 });
               }
+              // instantiate new user feedbacks collection view
               that.feedbackRegion.show(new UserFeedbackView.UserFeedbacks({
                 collection: feedbackCollection
               }));
