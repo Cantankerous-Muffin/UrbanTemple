@@ -280,5 +280,51 @@ router.get('/:discipline_id/class/:class_id/level', function(req, res) {
 
 		});
 
+router.get('/:discipline_id/class/:class_id/level/:level_id', function(req, res) {
+	console.log('url for discipline_id', req.url);
+	var markers = [];
+	for (var i = 1; i < req.url.length; i++){
+		if (req.url[i] === '\/'){
+			markers.push(i);
+		}
+	}
+	console.log('markers',markers);
+	var discIDfromURL = req.url.slice(1,markers[0]);
+	var classIDfromURL = req.url.slice(markers[1]+1, req.url.length - 8);
+	var levelIDfromURL = req.url.slice(markers[3]+1);
+
+	console.log('discIDfromURL',discIDfromURL,'classIDfromURL',classIDfromURL, 'levelIDfromURL',levelIDfromURL);
+	db.knex('classes')
+		.where({'classes.discipline_id': discIDfromURL, 'classes.id': classIDfromURL})
+		.then(function(classData){
+			console.log('classData',classData);
+			// discipline.classes = classData;
+			// discipline.totalClass = classData.length;
+			// classData.discipline = discipline;
+			if (!classData[0]){
+				// trigger error
+				return;
+			}
+			return db.knex('levels')
+				.where({'levels.class_id':classData[0].id, 'levels.id': levelIDfromURL})
+				.map(function(levelData){
+					console.log('levelData',levelData);
+					// classData[0].levelData = levelData;
+					levelData.discipline_id = classData[0].discipline_id;
+					levelData.classNum = classData[0].classNum;
+					return levelData;
+				})
+
+			})
+				.then(function(collatedClassData){
+					console.log('collatedClassData', collatedClassData);
+					// discipline.classData = collatedClassData;
+					if (!collatedClassData){
+						res.json({'message':'Class id not found for particular discipline'+ req.url.slice(1)});
+					}
+					res.json(collatedClassData[0]);
+				})
+
+		});
 
 module.exports = router;
