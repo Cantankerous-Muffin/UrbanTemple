@@ -141,6 +141,74 @@ db.knex('disciplines')
 											}
 											classData.instructorRankTitle = instructorRankData[0].rankTitle;
 											classData.instructorRankNum = instructorRankData[0].rankNum;
+											return db.knex('feedback')
+												.where({'feedback.instructor_id':instrData[0].id, 'feedback.class_id':classData.id})
+												.select('videoURL')
+												.then(function(videoURLData){
+													console.log('videoURLData', videoURLData)
+													if (!videoURLData[0]){
+														videoURLData[0] = {'videoURL': 'generic video URL. Original not found.'};
+													}
+													classData.videoURL = videoURLData[0].videoURL;
+													return classData;
+												})
+										})
+								})
+						})
+
+				})
+				.then(function(collatedClassData){
+					// console.log('discipline',discipline, 'collatedClassData', collatedClassData);
+					// discipline.classData = collatedClassData;
+					if (!collatedClassData[0]){
+						res.json({'message':'No classes found for discipline'+ req.url.slice(1)});
+					}
+					res.json(collatedClassData);
+				})
+
+			})
+			.catch(function(err){
+				res.json({'message':err})
+			});
+});
+
+router.get('/:discipline_id/class/:class_id', function(req, res) {
+	console.log('url for discipline_id', req.url);
+db.knex('disciplines')
+		.where({'disciplines.id': req.url.match(/\w+/)[0]})
+		.then(function(discipline){
+			console.log('discipline',discipline);
+			db.knex('classes')
+				.where({'classes.discipline_id': discipline[0].id})
+				.map(function(classData){
+					console.log('classData',classData);
+					// discipline.classes = classData;
+					// discipline.totalClass = classData.length;
+					// classData.discipline = discipline;
+					
+					return db.knex('levels')
+						.where({'levels.class_id':classData.id})
+						.then(function(datapack){
+							// console.log('datapack',datapack, 'classData.instructor_id', classData.instructor_id);
+							classData.totalLevel = datapack.length;
+							return db.knex('instructors')
+								.where({'instructors.id': classData.instructor_id})
+								.select('*')
+								.then(function(instrData){
+									// console.log('instrData', instrData[0]);
+									classData.instructor_name = instrData[0].username;
+									// set instructor_id to 2 if not found.
+									instrData[0].id = instrData[0].id || 2;
+									console.log('gets here discipline is', discipline[0].id, instrData[0].id);
+									return db.knex('ranks')
+										.where({'ranks.instructor_id': instrData[0].id, 'ranks.discipline_id': discipline[0].id})
+										.then(function(instructorRankData){
+											console.log('instructorRankData',instructorRankData);
+											if (!instructorRankData[0]){
+												return {'message': 'instructor not assigned to one of the classes. Check DB'};
+											}
+											classData.instructorRankTitle = instructorRankData[0].rankTitle;
+											classData.instructorRankNum = instructorRankData[0].rankNum;
 											return classData;
 										})
 								})
