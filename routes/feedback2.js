@@ -68,7 +68,7 @@ router.post('/submit', function(req, res) {
 					.then(function(student_idData){
 						console.log('student_idData',student_idData);
 						// we can write to the SQL DB feedback with our prepared feedback
-						db.knex.raw('insert into feedback ("videoURL","approved","student_id","instructor_id","class_id") values ('+"'"+req.body.videoUrl+"'"+','+"'f'"+','+student_idData[0].id+','+data[0].instructor_id+','+data[0].id+') RETURNING *;')
+						db.knex.raw('insert into feedback ("videoURL","approved","updated_at", "student_id","instructor_id","class_id") values ('+"'"+req.body.videoUrl+"'"+','+"'f'"+','+"'"+'now()'+"'"+','+student_idData[0].id+','+data[0].instructor_id+','+data[0].id+') RETURNING *;')
 						.then(function(returnData){
 							//successful insert. get the last value added with lastval() or RETURNING last added in original query
 							var prev = returnData.rows[0];
@@ -117,7 +117,7 @@ router.post('/:feedback_id/update', function(req, res) {
 								res.json({'message':'Wrong instructor for class'});
 							} else {
 								console.log('gets to raw');
-								db.knex.raw('UPDATE feedback SET comment='+"'"+req.body.comment+"'"+', approved='+"'"+req.body.approved+"'"+' WHERE id = '+req.url.match(/\w+/)+' returning *;')
+								db.knex.raw('UPDATE feedback SET comment='+"'"+req.body.comment+"'"+', updated_at=now(), approved='+"'"+req.body.approved+"'"+' WHERE id = '+req.url.match(/\w+/)+' returning *;')
 								.then(function(data){
 									console.log('data row',data.rows);
 									res.json(data.rows[0]);
