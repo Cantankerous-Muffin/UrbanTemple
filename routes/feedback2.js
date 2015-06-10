@@ -92,42 +92,42 @@ router.post('/submit', function(req, res) {
 					});
 			});
 	}
+});
 
+router.post('/:feedback_id/update', function(req, res) {
+	console.log('req.url is', req.url, req.url.match(/\w+/));
 
-	// if (!req.session.user){
-	// 	res.json({'message': 'user not defined.'});
-	// } else {
-	// 	db.knex('instructors')
-	// 		.where({'instructors.username': req.session.user})
-	// 		.then(function(instructorData){
-	// 			console.log('instructorData', instructorData);
-	// 			if (!instructorData[0]){
-	// 				res.json({'message': 'no instructor found.'});
-	// 			} else {
-	// 				db.knex('feedback')
-	// 					.where({'feedback.instructor_id': instructorData[0].id})
-	// 					.select('*')
-	// 					.then(function(feedbackData){
-	// 						console.log('feedbackData', feedbackData);
-	// 						db.knex('students')
-	// 							.where({'students.id': feedbackData[0].student_id})
-	// 							.select('username')
-	// 							.then(function(studentData){
-	// 								console.log(studentData,instructorData[0].username);
-	// 								feedbackData[0].studentName = studentData[0].username;
-	// 								feedbackData[0].instructorName = instructorData[0].username;
-	// 								db.knex('classes')
-	// 									.where({'classes.id': feedbackData[0].class_id})
-	// 									.select('*')
-	// 									.then(function(classesData){
-	// 										feedbackData[0].Class = classesData[0];
-	// 										res.json(feedbackData);
-	// 									})
-	// 							})
-	// 					});
-	// 			}
-	// 		});
-	// }
+	console.log('req.session.user is', req.session.user);
+	console.log('req.body is', req.body);
+	if (!req.session.user){
+		res.json({'message':'user not signed in'});
+	} else {
+		db.knex('instructors')
+			.where({'instructors.username': req.session.user})
+			.then(function(instructorData){
+				if (!instructorData[0]){
+					res.json({'message':'User not signed in as instructor.'});
+				} else {
+					console.log('instructorData[0].id',instructorData[0].id);
+					db.knex('feedback')
+						.where({'feedback.instructor_id': instructorData[0].id, 'feedback.id': req.url.match(/\w+/)[0]})
+						.then(function(feedbackData){
+							console.log('feedbackData', feedbackData);
+							if (!feedbackData[0]){
+								res.json({'message':'Wrong instructor for class'});
+							} else {
+								console.log('gets to raw');
+								db.knex.raw('UPDATE feedback SET comment='+"'"+req.body.comment+"'"+', approved='+"'"+req.body.approved+"'"+' WHERE id = '+req.url.match(/\w+/)+' returning *;')
+								.then(function(data){
+									console.log('data row',data.rows);
+									res.json(data.rows[0]);
+								})
+							}
+						})
+				}
+			})
+	}
+
 });
 
 
