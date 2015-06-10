@@ -186,6 +186,51 @@ router.get('/:username/progress', function(req,res){
 			console.log('aa',aa);
 			res.json(aa);
 		});
-})
+});
+
+router.get('/:username/feedbacks', function(req, res) {
+	console.log('req.url is', req.url);
+	var markers = [];
+	for (var i = 1; i < req.url.length; i++){
+		if (req.url[i] === '\/'){
+			markers.push(i);
+		}
+	}
+	console.log('markers',markers,req.url.slice(1,markers[0]));
+	var usernameFromURL = req.url.slice(1,markers[0]);
+	db.knex('students')
+		.where({'students.username': usernameFromURL})
+		.select('id')
+		.then(function(user_id){
+			if (!user_id[0]){
+				console.log('perhaps an instructor?')
+				db.knex('instructors')
+					.where({'instructors.username': usernameFromURL})
+					.then(function(instructorData){
+						db.knex('feedback')
+							.where({'feedback.instructor_id': instructorData[0].id})
+							.then(function(feedbackData){
+								console.log('feedbackData', feedbackData);
+								res.json(feedbackData);
+							});
+					})
+					.catch(function(err){
+						res.json({'message': 'No student/instructor with this username found.'});
+					});
+			} else {
+					db.knex('feedback')
+						.where({'feedback.student_id': user_id[0].id})
+						.then(function(feedbackData){
+							console.log('feedbackData', feedbackData);
+							res.json(feedbackData);
+						});
+			}
+		})
+		// .catch(function(err){
+		// 	res.json({'message': 'No student with this username found.'});
+		// });
+});
+
+
 
 module.exports = router;
