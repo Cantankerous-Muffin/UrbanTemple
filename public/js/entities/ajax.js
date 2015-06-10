@@ -1,3 +1,5 @@
+//Helper module to perform AJAX calls
+
 define(
   [
   ], function() {

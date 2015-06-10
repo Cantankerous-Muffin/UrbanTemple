@@ -12,7 +12,6 @@ define([
       };
 
       VirtualDojo.on("show:sidenav", function(){
-        console.log('show:sidenav listener executed')
         API.listSidenav();
       });
     });
