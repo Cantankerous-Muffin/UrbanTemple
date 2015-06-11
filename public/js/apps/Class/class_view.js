@@ -7,7 +7,6 @@ define([
   function(VirtualDojo, classlayoutTpl, classViewTpl, levelViewTpl) {
     VirtualDojo.module("ClassApp.View", function(View, VirtualDojo, Backbone, Marionette, $, _){
       
-    
     // TrainingCenter Layout View 
 
       View.classLayout = Marionette.LayoutView.extend({
