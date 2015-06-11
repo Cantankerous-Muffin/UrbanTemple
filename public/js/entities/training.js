@@ -52,7 +52,7 @@ define(
                               title: "Kendo 104: Sparring basics",
                               description: "This class covers the basics of Kendo",
                               classImage: "img/kendo_class_4.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/kendo_class_4.mp4",
                               totalLevel: 5
                             },
                             {
@@ -62,7 +62,7 @@ define(
                               title: "Kendo 105: Sparring Intermediate",
                               description: "This class covers the basics of Kendo",
                               classImage: "img/kendo_class_5.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/kendo_class_5.mp4",
                               totalLevel: 5
                             },
                             {
@@ -72,7 +72,7 @@ define(
                               title: "Kendo 106: Instructor's program",
                               description: "This class covers the basics of Kendo",
                               classImage: "img/kendo_class_6.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/kendo_class_6.mp4",
                               totalLevel: 5
                             }
                           ]
@@ -89,7 +89,7 @@ define(
                               title: "Qigong 101: Philsophy",
                               description: "This class covers the basics of Qigong",
                               classImage: "img/qigong_class_1.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/qigong_class_1.mp4",
                               totalLevel: 5
                             },
                             {
@@ -99,7 +99,7 @@ define(
                               title: "Qigong 102: Grip & Steps & Middle Stance ",
                               description: "This class covers the basics of Qigong",
                               classImage: "img/qigong_class_2.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/qigong_class_2.mp4",
                               totalLevel: 5
                             },
                             {
@@ -109,7 +109,7 @@ define(
                               title: "Qigong 103: Strikes - Basic",
                               description: "This class covers the basics of Qigong",
                               classImage: "img/qigong_class_3.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/qigong_class_3.mp4",
                               totalLevel: 5
                             },
                             {
@@ -119,7 +119,7 @@ define(
                               title: "Qigong 104: Strikes - Intermediate",
                               description: "This class covers the basics of Qigong",
                               classImage: "img/qigong_class_4.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/qigong_class_4.mp4",
                               totalLevel: 5
                             },
                             {
@@ -129,7 +129,7 @@ define(
                               title: "Qigong 105: Strikes - Advanced",
                               description: "This class covers the basics of Qigong",
                               classImage: "img/qigong_class_5.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/qigong_class_5.mp4",
                               totalLevel: 5
                             },
                             {
@@ -139,7 +139,7 @@ define(
                               title: "Kendo 106: Sparring",
                               description: "This class covers the basics of Kendo",
                               classImage: "img/qigong_class_6.jpg",
-                              classVideo: "video/dojo_bg.mp4",
+                              classVideo: "video/qigong_class_6.mp4",
                               totalLevel: 5
                             }
                           ]

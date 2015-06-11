@@ -20,13 +20,11 @@ define(
                 disciplineTitle: "Kendo",
                 rankNum: 1,
                 rankTitle: "Beginner",
-                rankIcon: null,
               },              
               {
                 disciplineTitle: "Qigong",
                 rankNum: 4,
                 rankTitle: "Advanced",
-                rankIcon: null,
               }
               ]
             }; // mock result from server
@@ -36,15 +34,14 @@ define(
 
           return defer.promise();
 
-          //var ajax = Ajax.perform({
+          // var ajax = Ajax.perform({
           //  type: "GET",
-          //  url: '/user/' + params.username,
+          //  url: 'api/user/' + params.username,
           //  callback: function (data) {
           //    return data;
           //  }
-          //});
-          //
-          //return ajax.promise();
+          // });
+          // return ajax.promise();
         }
       };
 

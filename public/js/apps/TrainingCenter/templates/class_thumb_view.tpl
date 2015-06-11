@@ -4,9 +4,9 @@
       <img src="<%= classImage %>"></img>
     </div>
     <% if (classVideo) { %>
-<!--       <video class="thumbnail-video" poster="" muted>
+      <video class="thumbnail-video" poster="" muted>
         <source src="<%= classVideo %>" type="video/mp4">
-      </video> -->
+      </video>
     <% } %>
   </div>
 </div>
