@@ -13,7 +13,7 @@ define(
               studentUsername: "Raymond Luong ",
               instrUsername: "Ken Kang",
               videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
-              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+              comment: "Good Job Raymond! Overall, your neutral stance is good. For your 3 step strike, try to use your left elbow to yield power to slice. Be mindful that left hand is responsible for power and right hand is only for navigating your sword. Also, for your 1 step strike, use your tan tien (core) to throw your body forward and back. Other than that, you did great! Congratulations for your promotion.",
               class: {
                       classNum: 4,
                       disciplineId: 1,

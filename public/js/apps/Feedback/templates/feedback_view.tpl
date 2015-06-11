@@ -12,7 +12,7 @@
 
 
           <div><h2><%= "Instructor: " + instrUsername %></h2></div>
-          </div>
+          
 
           <% if (UTConfig.isInstructor) { %>
             <div class="ui form">
@@ -22,24 +22,16 @@
               </div>
             </div>
           <% } %>
-          <h4>Good Job Raymond! Overall, your neutral stance is good. For your 3 step strike, try to use your left elbow to yield power to slice. Be mindful that left hand is responsible for power and right hand is only for navigating your sword. Also, for your 1 step strike, use your tan tien (core) to throw your body forward and back. Other than that, you did great! Congratulations for your promotion. </h4>
           <% if (UTConfig.isInstructor) { %>
-          <!-- <div class="approve-video"> -->
             <div class="positive ui button">Approve</div>
-          <!-- </div> -->
-          <!-- <div class="disapprove-video"> -->
             <div class="negative ui button">Disapprove</div>
-          <!-- </div> -->
           <% } %>
 
           <% if (UTConfig.isInstructor === false) { %>
             <h4>Instructor Comment:</h4>
             <p><%= comment %></p>
           <% } %>
-
-          
-
-        
+        </div>
       </div>
       </div>
   </div>
