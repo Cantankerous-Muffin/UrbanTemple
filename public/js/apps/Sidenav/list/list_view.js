@@ -45,8 +45,5 @@ define([
         }
       });
     });
-    console.log(VirtualDojo.SidenavApp)
-
     return VirtualDojo.SidenavApp.List.View;
-
 })

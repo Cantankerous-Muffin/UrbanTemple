@@ -1,56 +1,42 @@
-<b>
-<form class="ui form">
-  <h4 class="ui dividing header">Personal Information</h4>
-  <div class="two fields">
-    <div class="field">
-      <label>Name</label>
+    <br>
+     <div id="register_form" class="ui form segment">
       <div class="two fields">
+          <div class="field">
+              <div class="two fields">
+                <div class="field">
+                  <input id="firstname" placeholder="First Name" type="text">
+                </div>
+                <div class="field">
+                  <input id="lastname" placeholder="Last Name" type="text">
+                </div>
+              </div>
+          </div>
+
+          <div class="field">
+              <div class="two fields">
+                <div class="field">
+                  <input id="email" placeholder="Email" type="text">
+                </div>
+                <div class="field">
+                  <input id="instructorkey" placeholder="Key to register as Instructor" type="text">
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="three fields">
         <div class="field">
-          <input id="firstname" type="text" name="first-name" placeholder="First Name">
+          <input id="username" placeholder="Username" type="text">
         </div>
         <div class="field">
-          <input id="lastname" type="text" name="last-name" placeholder="Last Name">
+          <input id="password" placeholder="Password" type="password">
+        </div>
+        <div class="field">
+          <input placeholder="Confirm Password" type="password">
         </div>
       </div>
-    </div>
-    <div class="field">
-      <label>Instructor Key</label>
-      <div class="field">
-          <input id="instructorkey" type="text" name="instructor-key" placeholder="Enter Key if Registering as Instructor">
-        </div>
+      <br>
+      <div id="register_submit" class="ui submit button">Create New Account</div>
+      <div id="back_to_login" class="ui button">Back to Login</div>
     </div>
 
-    <div class="field">
-      <label>Email </label>
-      <input id="email" type="text" name="user-email" placeholder="Email">
-    </div>  
-
-  </div>
-  
-  
-  <h4 class="ui dividing header">Account Info</h4>
-  <div class="three fields">
-    <div class="required field">
-      <label>Username</label>
-      <div class="ui icon input">
-        <input id="username" type="text" placeholder="Username">
-        <i class="user icon"></i>
-      </div>
-    </div>
-    <div class="required field">
-      <label>Password</label>
-      <div class="ui icon input">
-        <input id="password" type="password">
-        <i class="lock icon"></i>
-      </div>
-    </div>
-     <div class="required field">
-      <label>Confirm Password</label>
-      <div class="ui icon input">
-        <input type="confirm password">
-        <i class="lock icon"></i>
-      </div>
-    </div>
-  </div>
-  <div class="ui submit button" id="register_submit">Register</div>
-</form>
+ 

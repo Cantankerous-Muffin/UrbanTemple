@@ -18,8 +18,8 @@ define([
         }
       };
       
+      //display training view
       VirtualDojo.on("show:training", function(){
-        console.log('show:training listener executed');
         VirtualDojo.navigate("training");
         API.showTraining();
       });

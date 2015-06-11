@@ -7,8 +7,6 @@ define(
       var API = {
         getFeedback: function(params) {
           var defer = $.Deferred();
-          //from route: /discipline/<discipline_id>/class/<class_num>/level/<level_num>
-
           setTimeout(function(){
             var data = {
               feedbackId: 30,

@@ -1,14 +1,9 @@
-
-
-
-
-
 <div class="ui center aligned segment">
   <div class="ui items">
     <div class="item">
       <div class="content">
         <h1><%= title %> </h1>
-        <iframe width="560" height="315" src=<%= videoUrl %> frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315" src=<%= videoUrl %> frameborder="0" allowfullscreen><iframe>
           <div class="meta">
             <p><%= description %></p>
           </div>
@@ -22,7 +17,6 @@
 </div>
 
 
-
 <div class="ui center aligned segment">
     <% if (!next) { %>
     <form action="/path/to/action" id="new_video" method="POST">
@@ -33,16 +27,16 @@
     </form>
     <% } %>
 
-  <div class="prev ui button">
+    <div class="prev ui button">
     <% if (prev) { %>
       <i class="left arrow icon"></i>
       Previous
     <% } %>
-  </div>
-  <div class="next ui button">
+    </div>
+    <div class="next ui button">
     <% if (next) { %>
       Next
       <i class="right arrow icon"></i>
     <% } %>
-  </div>
+    </div>
 </div>

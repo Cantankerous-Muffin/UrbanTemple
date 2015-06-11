@@ -17,7 +17,7 @@ define([
           inputEmail: "input#email",
           inputInstructorKey: "input#instructorkey",
           signupButton: "div#register_submit",
-          backButton: "button#backButton"
+          backButton: "div#back_to_login"
         },
 
         events: {
@@ -26,6 +26,7 @@ define([
         },
 
         backToLogin: function(event) {
+          console.log('backtologin fired')
           event.preventDefault();
            VirtualDojo.trigger("auth:login:show");
         },

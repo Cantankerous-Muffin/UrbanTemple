@@ -206,3 +206,7 @@ video#bgvid {
   width: 350px;
 }
 
+#register_form {
+  position: relative;
+  max-width: 85%;
+}
