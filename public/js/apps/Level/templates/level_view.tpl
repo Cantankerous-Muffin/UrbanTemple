@@ -1,42 +1,41 @@
 <div class="ui center aligned segment">
-  <div class="ui items">
-    <div class="item">
-      <div class="content">
-        <h1><%= title %> </h1>
-        <iframe width="560" height="315" src=<%= videoUrl %> frameborder="0" allowfullscreen><iframe>
-          <div class="meta">
-            <p><%= description %></p>
-          </div>
-
-        <div class="description">
-
-        </div>
-      </div>
-      </div>
+  <h1 class="level-title"><%= title %></h1>
+  <iframe width="960" height="540" src=" <%= videoUrl %>" frameborder="0" allowfullscreen></iframe>
+  <div class="ui center align segment">
+    <h4 class= "ui header"><%= description %></h4>
   </div>
+  <% if (!next) { %>
+    <div class="ui action input">
+      <input type="text" class="submitVideoUrl" placeholder="submit your video url here">
+      <button type="submit" class="ui button submitvideBtn"><i class="upload icon"></i>Submit</button>
+    </div>
+  <% } %>
 </div>
 
-
-<div class="ui center aligned segment">
-    <% if (!next) { %>
-    <form action="/path/to/action" id="new_video" method="POST">
+<!-- <form action="/path/to/action" id="new_video" method="POST">
       <input type="hidden" name="panda_video_id"/>
       <div class='progress'><span id="progress-bar" class='bar'></span></div>
       <div id="file-drop">Drop files here</div>
       <div id="browse-files">Choose file</div>
-    </form>
-    <% } %>
+    </form> -->
+<!-- 
+<div class="ui action input">
+  <input type="text" placeholder="Search...">
+  <button class="ui button">Search</button>
+</div>
+ -->
 
+<div class="level-pagination">
+  <% if (prev) { %>
     <div class="prev ui button">
-    <% if (prev) { %>
-      <i class="left arrow icon"></i>
-      Previous
-    <% } %>
-    </div>
+    <i class="left arrow icon"></i>
+    Previous
+  <% } %>
+  </div>
+  <% if (next) { %>
     <div class="next ui button">
-    <% if (next) { %>
-      Next
-      <i class="right arrow icon"></i>
-    <% } %>
-    </div>
+    Next
+    <i class="right arrow icon"></i>
+  <% } %>
+  </div>
 </div>
