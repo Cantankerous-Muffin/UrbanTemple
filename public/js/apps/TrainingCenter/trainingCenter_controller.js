@@ -12,6 +12,22 @@ define([
         showTraining: function() {
           var trainingLayoutView = new TrainingView.TrainingLayout();
 
+          // save the user's current progress in class
+          require(["entities/progress"], function() {
+            var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
+            fetchUserProgress
+              .done(function(data){ 
+                var progresses = data;
+                progresses.forEach(function(progress) {
+                  if (progress.discipline.disciplineId === 1) {
+                    UTConfig.currentKendoClass = progress.currentClassNum;
+                  } else {
+                    UTConfig.currentQigongClass = progress.currentClassNum;
+                  }
+                });
+              });
+          });
+          
           require(["entities/training"], function() {
             var fetchDiscipline = VirtualDojo.request("entities:training:get");
             fetchDiscipline

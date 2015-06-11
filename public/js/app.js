@@ -17,7 +17,7 @@ define([
 
     //Define regions before app starts
     VirtualDojo.on("before:start", function(){
-
+      // define the main regions for the app
       var RegionContainer = Marionette.LayoutView.extend({
         el: "#app-container",
 
@@ -28,7 +28,7 @@ define([
       });
       VirtualDojo.regions = new RegionContainer();
     });
-
+    // start the marionette application 
     VirtualDojo.on("start", function(){
       console.log("Virtualdojo application started")
       

@@ -1,15 +1,14 @@
 <br>
-<div class="ui center aligned segment">
-  <img class="ui centered medium circular image" src="<%= classImage %>">
+<div class="ui segment class-page-main">
   <div class="ui items">
     <div class="item">
       
-        
-      
       <div class="content">
-        <a class="header"><%= title %> taught by <%= instructorRankTitle %> <%= instructorName%> - Rank <%= instructorRank %></a>
+        <h1 class="ui header class-title"><%= title %> </h1> 
+        <h3 class="ui header class-instructor"> taught by <%= instructorName%> </h3> 
           <div class="meta">
-            <p><%= description %></p>
+            <img class="ui medium circle left floated image class-image" src="<%= classImage %>">
+            <p class="class-description"><%= description %></p>
           </div>
 
         <div class="description">

@@ -101,7 +101,6 @@ Discipline = {
   disciplineId: INT,
   title: STRING,
   description: STRING, 
-  disciplineLogo: STRING (URL),
   totalClass: INT
 }
 
