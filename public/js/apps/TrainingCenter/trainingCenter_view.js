@@ -87,7 +87,7 @@ define([
         
         onCardClick: function(event) {
           event.preventDefault();
-           var disciplineId = this.model.get("disciplineId");
+           var disciplineId = this.model.get("disciplineId"); 
            var classNum = this.model.get("classNum");
 
             // access control 

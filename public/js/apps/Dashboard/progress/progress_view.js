@@ -17,9 +17,9 @@ define([
         clickVideo: function(e){
           e.preventDefault();
           var model = this.model;
-          var disciplineId = model.get('discipline').attributes.disciplineId;
+          var disciplineId = model.get('id');
           var classNum = model.get('currentClassNum');
-          var levelNum = model.get('currentLevelNum');
+          var levelNum = model.get('levelNum');
 
 
           VirtualDojo.trigger("show:video", {
@@ -32,10 +32,13 @@ define([
           var model = this.model;
           // discipline
           var discipline = model.get("discipline");
-          var disciplineTitle = discipline.get("title");
+          var disciplineTitle = model.get("title");
 
           // class
           var currentLevelTitle = model.get("currentLevelTitle");
+          
+          // calculate the percentage 
+
           var percentage = model.get("percentage");
           
           return {

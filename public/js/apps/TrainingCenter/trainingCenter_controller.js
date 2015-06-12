@@ -19,7 +19,7 @@ define([
               .done(function(data){ 
                 var progresses = data;
                 progresses.forEach(function(progress) {
-                  if (progress.discipline.disciplineId === 1) {
+                  if (progress.id === 1) {
                     UTConfig.currentKendoClass = progress.currentClassNum;
                   } else {
                     UTConfig.currentQigongClass = progress.currentClassNum;
