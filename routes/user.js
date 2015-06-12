@@ -78,9 +78,10 @@ router.get('/:username', function(req, res) {
 									.then(function(data2){
 										console.log('data2',data2);
 										db.knex('ranks')
-											.where({'student_id':data[0].id})
+											.where({'student_id':data[0].student_id})
 											.select('*')
 											.then(function(data3){
+												// console.log('data3',data3);
 												userRankArray.push({'disciplineTitle':data2[0].title, 'rankNum':data3[0].rankNum, 'rankTitle':data3[0].rankTitle, 'rankIcon':data3[0].rankIcon});
 												console.log(i,'i','length',data.length);
 												if (userRankArray.length === data.length){
