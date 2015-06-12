@@ -1,7 +1,7 @@
 var db = require('../config');
 
 var Feedbacks = db.Model.extend({
-  tableName: 'feedbacks',
+  tableName: 'feedback',
   hasTimestamps: true,
   initialize: function(){
   },

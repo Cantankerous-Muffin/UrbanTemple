@@ -11,252 +11,504 @@ var Student = require('../app/models/student.js');
 
 var DBQuery = require('../utils/dbQueries.js');
 
-var stu = {
-  username: 'Jim',
-  password: 'Jim',
-};
-var stu2 = {
-  username: 'Yuri',
-  password: 'Yuri',
-};
-var stu3 = {
-  username: 'Sokka',
-  password: 'Sokka',
-};
-var stu4 = {
-  username: 'Frey',
-  password: 'Frey',
-};
 
-var inst = {
-  username: 'Key',
-  password: 'Key',
-};
-var inst2 = {
-  username: 'Quan',
-  password: 'Quan',
-};
-var inst3 = {
-  username: 'Gandalf',
-  password: 'Gandalf',
-};
-var inst4 = {
-  username: 'Morgan',
-  password: 'Morgan',
-};
+//Insert students
+var stu = [
+  {
+    username: 'Jim',
+    password: 'Jim',
+    email: 'jim@mail.com',
+    firstName: 'Jim',
+    lastName: 'Tim',
+  },
+  {
+    username: 'Yuri',
+    password: 'Yuri',
+    email: 'yuri@mail.com',
+    firstName: 'Yuri',
+    lastName: 'Shim',
+  },
+  {
+    username: 'Sokka',
+    password: 'Sokka',
+    email: 'sokka@mail.com',
+    firstName: 'Sokka',
+    lastName: 'Krim',
+  },
+  {
+    username: 'Frey',
+    password: 'Frey',
+    email: 'frey@mail.com',
+    firstName: 'Frey',
+    lastName: 'Odin',
+  },
+  {
+    username: 'temple',
+    password: 'temple',
+    email: 'temple@mail.com',
+    firstName: 'Urban',
+    lastName: 'Temple',
+  }
+];
+// console.log('-------------------------------');
+// console.log('Students');
+// console.log('-------------------------------');
+// for(var i=0; i<stu.length; i++){
+//   DBQuery.newStudent(stu[i], function(model){
+//     console.log(model);
+//   });
+// }
 
-var dis = {
-  title: 'Kendo',
-  description: 'Way of the Stick',
-  disLogo: 'wwwwwwwww'
-};
-var dis2 = {
-  title: 'Tonfa',
-  description: 'Way of the Short Sticks',
-  disLogo: 'wwwwwwwww'
-};
-var dis3 = {
-  title: 'Flying',
-  description: 'Way of Falling',
-  disLogo: 'wwwwwwwww'
-};
+//Instructors
+var inst = [
+  {
+    username: 'Key',
+    password: 'Key',
+    email: 'key@mail.com',
+    firstName: 'Key',
+    lastName: 'Jam',
+  },
+  {
+    username: 'Quan',
+    password: 'Quan',
+    email: 'quan@mail.com',
+    firstName: 'Quan',
+    lastName: 'Qin',
+  },
+  {
+    username: 'Gandalf',
+    password: 'Gandalf',
+    email: 'gandalf@mail.com',
+    firstName: 'Gandalf',
+    lastName: 'Greybeard',
+  },
+  {
+    username: 'Morgan',
+    password: 'Morgan',
+    email: 'morgan@mail.com',
+    firstName: 'Morgan',
+    lastName: 'Lefay',
+  }
+];
 
-var clas = {
-  title: 'Posture',
-  classNum: 1,
-  description: 'Learn to Stand.',
-  image: 'classImageURL',
-};
-var clas2 = {
-  title: 'Grips',
-  classNum: 1,
-  description: 'Learn to Hold.',
-  image: 'classImageURL'
-};
-var clas3 = {
-  title: 'Jump',
-  classNum: 1,
-  description: 'First step to flying.',
-  image: 'classImageURL',
-};
-var clas4 = {
-  title: 'Steps',
-  classNum: 2,
-  description: 'Learn to Walk.',
-  image: 'classImageURL',
-};
-var clas5 = {
-  title: 'Three asasdfasdfdf Strike',
-  classNum: 3,
-  description: 'Learn to asdf after Three steps.',
-  image: 'classImageURL',
-};
+// console.log('-------------------------------');
+// console.log('Instructor');
+// console.log('-------------------------------');
+// for(var i=0; i<inst.length; i++){
+//   DBQuery.newInstructor(inst[i], '', function(model){
+//     console.log(model);
+//   });
+// }
+
+var dis = [
+  {
+    title: 'KENDO',
+    description: 'The practice of Kendo increases speed, agility, flexibility, strength, endurance, and overall cardiovascular health.  With regular practice, ideal body posture is developed and the flow of the Du and Ren energetic meridians are enhanced.  Further benefits include a more efficient immune system, higher bone density, and an attuned nervous system.',
+  },
+  {
+    title: 'QIGONG',
+    description: 'Developed using traditional systems of medical exercise, fused with contemporary physiological concepts, this practice of QiGong is a safe, powerful, and fulfilling method for people looking to enhance their physical structure, mental fortitude, and emotional well-being.',
+  },
+];
+
+// console.log('-------------------------------');
+// console.log('Discipline');
+// console.log('-------------------------------');
+// for(var i=0; i<dis.length; i++){
+//   DBQuery.newDiscipline(dis[i], function(model){
+//     console.log(model);
+//   });
+// }
+
+var clas = [
+  {
+    title: 'Kendo 101: Grip & Steps & Middle Stance',
+    description: 'Learn basic techniques and etiquette, breathing, holding of the JookDo (Bamboo Sword), standing and stepping, multiple strikes, exertion and recovery, and objectives.',
+    classNum: 1,
+    classImage: 'img/kendo_class_1.jpg',
+    classVideo: 'video/kendo_class_1.mp4',
+    discipline_id: 1,
+    instructor_id: 4,
+  },
+  {
+    title: 'Kendo 102: Basic 12 directional steps',
+    description: 'Learn how to apply basic techniques and multiple strikes with partner practice.  Begin training while wearing protective armour.',
+    classNum: 2,
+    classImage: 'img/kendo_class_2.jpg',
+    classVideo: 'video/kendo_class_2.mp4',
+    discipline_id: 1,
+    instructor_id: 3,
+  },
+  {
+    title: 'Kendo 103: Target hitting practice',
+    description: 'Increase attentiveness, awareness, speed, and accuracy while sparring with partners.  Enhance calmness and mental clarity during intense physical exertion.',
+    classNum: 3,
+    classImage: 'img/kendo_class_3.jpg',
+    classVideo: 'video/kendo_class_3.mp4',
+    discipline_id: 1,
+    instructor_id: 4,
+  },
+  {
+    title: 'Kendo 104: Sparring basics',
+    description: 'TBA Spring, 2016',
+    classNum: 4,
+    classImage: 'img/kendo_class_4.jpg',
+    classVideo: 'video/kendo_class_4.mp4',
+    discipline_id: 1,
+    instructor_id: 3,
+  },
+  {
+    title: 'Kendo 105: Sparring Intermediate',
+    description: 'TBA Spring, 2016',
+    classNum: 5,
+    classImage: 'img/kendo_class_5.jpg',
+    classVideo: 'video/kendo_class_5.mp4',
+    discipline_id: 1,
+    instructor_id: 4,
+  },
+  {
+    title: "Kendo 106: Instructor's program",
+    description: 'TBA Spring, 2016',
+    classNum: 6,
+    classImage: 'img/kendo_class_6.jpg',
+    classVideo: 'video/kendo_class_6.mp4',
+    discipline_id: 1,
+    instructor_id: 3,
+  },
+// ====================================================
+  {
+    title: 'Qigong 101: Philosophy of Qigong',
+    description: 'In this class, we will explain what Qigong is, how it works, who should do it, and the benefits one can reap from a regular practice. This workshop will provide foundational exercises to increase the strength, nerve sensitivity, and balance.',
+    classNum: 1,
+    classImage: 'img/qigong_class_1.jpg',
+    classVideo: 'video/qigong_class_1.mp4',
+    discipline_id: 2,
+    instructor_id: 1,
+  },
+  {
+    title: 'Qigong 102: 7 Star Stance, 5 Elemental Stance',
+    description: 'In this class, we will explain what Qigong is, how it works, who should do it, and the benefits one can reap from a regular practice. This workshop will provide foundational exercises to increase the strength, nerve sensitivity, and balance.',
+    classNum: 2,
+    classImage: 'img/qigong_class_2.jpg',
+    classVideo: 'video/qigong_class_2.mp4',
+    discipline_id: 2,
+    instructor_id: 2,
+  },
+  {
+    title: 'Qigong 103:',
+    description: 'Increase attentiveness, awareness, speed, and accuracy while sparring with partners.  Enhance calmness and mental clarity during intense physical exertion.',
+    classNum: 3,
+    classImage: 'img/qigong_class_3.jpg',
+    classVideo: 'video/qigong_class_3.mp4',
+    discipline_id: 2,
+    instructor_id: 1,
+  },
+  {
+    title: 'Qigong 104:',
+    description: 'TBA Spring, 2016',
+    classNum: 4,
+    classImage: 'img/qigong_class_4.jpg',
+    classVideo: 'video/qigong_class_4.mp4',
+    discipline_id: 2,
+    instructor_id: 2,
+  },
+  {
+    title: 'Qigong 105:',
+    description: 'TBA Spring, 2016',
+    classNum: 5,
+    classImage: 'img/qigong_class_5.jpg',
+    classVideo: 'video/qigong_class_5.mp4',
+    discipline_id: 2,
+    instructor_id: 1,
+  },
+  {
+    title: "Qigong 106:",
+    description: 'TBA Spring, 2016',
+    classNum: 6,
+    classImage: 'img/qigong_class_6.jpg',
+    classVideo: 'video/qigong_class_6.mp4',
+    discipline_id: 2,
+    instructor_id: 2,
+  },
+];
+
+
+
+
+// DBQuery.newClass(clas[0], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[1], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[2], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[3], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[4], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[5], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[6], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[7], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[8], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[9], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[10], function(model){
+// console.log('Make class');
+// console.log(model);
+// DBQuery.newClass(clas[11], function(model){
+// console.log('Make class');
+// console.log(model);
+
+// });
+// });
+// });
+// });
+// });
+// });
+// });
+// });
+// });
+// });
+// });
+// });
+
+
 
 var levl = {
-  title: 'Steps - 1',
-  description: 'The first step.',
-  videoURL: 'www.wat',
-  levelNum: 1,
+  title: 'Introduction to the art of swordfighting and qigong',
+  description: "Discipline is the acknowledgement of human mind's infinite potential and devotion to self-improvement and transformation through perseverance and practice.",
+  videoURL: 'https://www.youtube.com/embed/207ePUiLV_A',
   feedbackNeeded: false,
-  class_id: 4,
+  levelNum: 1,
+  class_id: 12,
 };
 var levl2 = {
-  title: 'Steps - 2',
-  description: 'The second step.',
-  videoURL: 'www.wat',
-  levelNum: 2,
+  title: 'Introduction to the art of swordfighting and qigong',
+  description: "Discipline is the acknowledgement of human mind's infinite potential and devotion to self-improvement and transformation through perseverance and practice.",
+  videoURL: 'https://www.youtube.com/embed/207ePUiLV_A',
   feedbackNeeded: false,
-  class_id: 4,
+  levelNum: 2,
+  class_id: 12,
 };
 var levl3 = {
-  title: 'Steps - 3',
-  description: 'The third step.',
-  videoURL: 'www.wat',
+  title: 'Introduction to the art of swordfighting and qigong',
+  description: "Discipline is the acknowledgement of human mind's infinite potential and devotion to self-improvement and transformation through perseverance and practice.",
+  videoURL: 'https://www.youtube.com/embed/207ePUiLV_A',
+  feedbackNeeded: false,
   levelNum: 3,
-  feedbackNeeded: true,
-  class_id: 4,
+  class_id: 12,
 };
 var levl4 = {
-  title: 'Strike - 1',
-  description: 'The first strike.',
-  videoURL: 'www.wat',
-  levelNum: 1,
+  title: 'Introduction to the art of swordfighting and qigong',
+  description: "Discipline is the acknowledgement of human mind's infinite potential and devotion to self-improvement and transformation through perseverance and practice.",
+  videoURL: 'https://www.youtube.com/embed/207ePUiLV_A',
   feedbackNeeded: false,
-  class_id: 2,
+  levelNum: 4,
+  class_id: 12,
 };
+var levl5 = {
+  title: 'Introduction to the art of swordfighting and qigong',
+  description: "Discipline is the acknowledgement of human mind's infinite potential and devotion to self-improvement and transformation through perseverance and practice.",
+  videoURL: 'https://www.youtube.com/embed/207ePUiLV_A',
+  feedbackNeeded: false,
+  levelNum: 5,
+  class_id: 12,
+};
+
+// console.log('-------------------------------');
+// console.log('Levels');
+// console.log('-------------------------------');
+// DBQuery.newLevel(levl, function(model){
+//   console.log(model);
+//   DBQuery.newLevel(levl2, function(model){
+//   console.log(model);
+//   DBQuery.newLevel(levl3, function(model){
+//   console.log(model);
+//   DBQuery.newLevel(levl4, function(model){
+//   console.log(model);
+//   DBQuery.newLevel(levl5, function(model){
+//   console.log(model);
+  
+// });
+// });
+// });
+// });
+// });
 
 var rank = {
   rankTitle: 'Beginner - 2',
   rankNum: 2,
-  rankIcon: 'rankBeginnerIcon'
-};
-
-var feed = {
-  username: '',
-  classNum: 1,
+  rankIcon: 'rankBeginnerIcon',
+  student_id: 5,
+  instructor_id: null,
   discipline_id: 1,
 };
 
-// DBQuery.newStudent(stu);
-// DBQuery.newStudent(stu2);
-// DBQuery.newStudent(stu3);
-// DBQuery.newStudent(stu4);
+var rank2 = {
+  rankTitle: 'Beginner - 2',
+  rankNum: 2,
+  rankIcon: 'rankBeginnerIcon',
+  student_id: 5,
+  instructor_id: null,
+  discipline_id: 2,
+};
 
-// DBQuery.newInstructor(inst);
-// DBQuery.newInstructor(inst2);
-// DBQuery.newInstructor(inst3);
-// DBQuery.newInstructor(inst4);
+// DBQuery.setRank(rank, false, function(data){
+//   console.log(data);
+// })
+// DBQuery.setRank(rank2, false, function(data){
+//   console.log(data);
+// })
 
-// DBQuery.newDiscipline(dis);
-// DBQuery.newDiscipline(dis2);
-// DBQuery.newDiscipline(dis3);
-
-// DBQuery.newClass(clas, 'Kendo', 'Key');
-// DBQuery.newClass(clas2, 'Tonfa', 'Quan');
-// DBQuery.newClass(clas3, 'Flying', 'Gandalf');
-// DBQuery.newClass(clas4, 'Kendo', 'Key');
-// DBQuery.newClass(clas5, 'Kendo', 'Gandalf');
-
-// DBQuery.newLevel(levl, function(data){
-//   if(!data.result){
-//     console.log(data.message);
+// DBQuery.setProgress('temple', 'Qigong 102: 7 Star Stance, 5 Elemental Stance', 5, 
+//   function(data){
+//     console.log(data);
 //   }
-// });
-// DBQuery.newLevel(levl2, function(data){
-//   if(!data.result){
-//     console.log(data.message);
+// );
+// DBQuery.setProgress('temple', 'Kendo 102: Basic 12 directional steps', 5, 
+//   function(data){
+//     console.log(data);
 //   }
-// });
-// DBQuery.newLevel(levl3, function(data){
-//   if(!data.result){
-//     console.log(data.message);
+// );
+
+
+// DBQuery.studentToClass('temple', 'Kendo 102: Basic 12 directional steps', 
+//   function(data){
+//     console.log(data);
 //   }
+// );
+
+
+new Student()
+.query(
+  'select', 
+  ['id', 'username']
+)
+.fetchAll()
+.then(function(collection){
+  console.log('------------------------------');
+  console.log('Student')
+  console.log('------------------------------');
+  collection.models.forEach(function(model){
+    console.log(model.attributes);
+  })
+});
+
+new Instructor()
+.query(
+  'select', 
+  ['id', 'username']
+)
+.fetchAll()
+.then(function(collection){
+  console.log('------------------------------');
+  console.log('Instructor')
+  console.log('------------------------------');
+  collection.models.forEach(function(model){
+    console.log(model.attributes);
+  })
+});
+
+new Discipline()
+.query(
+  'select', 
+  ['id', 'title', 'classCount']
+)
+.fetchAll()
+.then(function(collection){
+  console.log('------------------------------');
+  console.log('Discipline')
+  console.log('------------------------------');
+  collection.models.forEach(function(model){
+    console.log(model.attributes);
+  })
+});
+
+new Class()
+.query(
+  'select', 
+  ['id', 'title', 'classNum', 'levelCount']
+)
+.fetchAll()
+.then(function(collection){
+  console.log('------------------------------');
+  console.log('Class')
+  console.log('------------------------------');
+  collection.models.forEach(function(model){
+
+    console.log(model.attributes);
+  })
+});
+
+// new Level()
+// .query(
+//   'select', 
+//   ['id', 'title', 'levelNum']
+// )
+// .fetchAll()
+// .then(function(collection){
+//   console.log('------------------------------');
+//   console.log('Level')
+//   console.log('------------------------------');
+//   collection.models.forEach(function(model){
+
+//     console.log(model.attributes);
+//   })
 // });
-// DBQuery.newLevel(levl4, function(data){
-//   if(!data.result){
-//     console.log(data.message);
-//   }
-// });
 
-// DBQuery.setRank(1,2,rank, false, function(result){
-//   console.log(result);
-// });
+new Rank()
+.query(
+  'select', 
+  ['rankTitle', 'rankNum', 'student_id', 'discipline_id']
+)
+.fetchAll()
+.then(function(collection){
+  console.log('------------------------------');
+  console.log('Ranks')
+  console.log('------------------------------');
+  collection.models.forEach(function(model){
 
-// DBQuery.setProgress('Sokka', 'Steps', 1, function(result){
-//   console.log(result);
-// });
-
-// DBQuery.clearTable('progress');
-
-
-
-db.knex('students')
-.select('id','username')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('students');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('instructors')
-.select('id','username')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('Instructors');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('classes')
-.join('disciplines', 'classes.discipline_id', '=', 'disciplines.id')
-// .select('classes.*')
-.select('classes.id','classes.title as Class', 'classes.levelCount', 'disciplines.title as Discipline')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('classes');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('ranks')
-.select('rankTitle', 'rankNum', 'student_id', 'discipline_id')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('ranks');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('feedback')
-.select('*')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('feedback');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('levels')
-.select('id','title', 'levelNum', 'class_id as classID')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('levels');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('progress')
-.select('*')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('progress');
-  console.log(data);
-  console.log('-------------------------');
-});
-db.knex('disciplines')
-.select('id', 'title', 'description')
-.then(function(data){
-  console.log('-------------------------');
-  console.log('disciplines');
-  console.log(data);
-  console.log('-------------------------');
+    console.log(model.attributes);
+  })
 });
 
-DBQuery.studentToClass('ggg','Grips',function(data){
-  console.log(data);
-})
+new Progress()
+.query(
+  'select', 
+  ['student_id', 'class_id', 'levelNum']
+)
+.fetchAll()
+.then(function(collection){
+  console.log('------------------------------');
+  console.log('Progress')
+  console.log('------------------------------');
+  collection.models.forEach(function(model){
+
+    console.log(model.attributes);
+  })
+});
+
+
+// DBQuery.clearTable('disciplines');
+// DBQuery.clearTable('classes');
+
+
+
+
+
+
+
+

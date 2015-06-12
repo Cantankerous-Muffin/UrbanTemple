@@ -21,7 +21,7 @@ var DBQuery = {
     // Instructor
     // Classes
     // Rank 
-    // Feedback *
+    // Feedback 
     // Level 
     // Discipline
     // Progress 
@@ -193,123 +193,77 @@ var DBQuery = {
     });
   },
 
-  setRank: function(userID, disciplineID, rankInfo, isInstructor, callback){
+  setRank: function(info, isInstructor, callback){
     if(!isInstructor){
-      db.knex('students')
-      .join('ranks', 'students.id', '=', 'ranks.student_id')
-      .join('disciplines', 'ranks.discipline_id', '=', 'disciplines.id')
-      .where({
-        'students.id': userID,
-        'disciplines.id': disciplineID
-      })
-      .then(function(exist){
-        if(!exist || exist.length===0){
-          new Rank({
-            'student_id': userID,
-            'discipline_id': disciplineID,
-            rankTitle: rankInfo.rankTitle,
-            rankNum: rankInfo.rankNum,
-            rankIcon: rankInfo.rankIcon,
-          }).save()
-          .catch(function(err){
-            console.log(err);
-            if(callback){
-              callback({
-                result: false,
-                message: 'Internal Server Error.'
+      new Student({id: info.student_id})
+      .fetch()
+      .then(function(aStudent){
+        if(aStudent){
+          new Discipline({id: info.discipline_id})
+          .fetch()
+          .then(function(aDisc){
+            if(aDisc){
+              new Rank({
+                student_id: aStudent.get('id'),
+                discipline_id: aDisc.get('id'),
+              }).fetch()
+              .then(function(aRank){
+                if(aRank){
+                  aRank.save(info,
+                    {patch: true})
+                  .then(function(){
+                    callback('Rank updated.');
+                  })
+                }else{
+                  new Rank(info)
+                  .save()
+                  .then(function(){
+                    callback('Created new rank.');
+                  })
+                }
               });
-            }
-          })
-          .then(function(){
-            if(callback){
-              callback({
-                result: true,
-              });
+            }else{
+              callback('Discipline does not exist.');
             }
           });
         }else{
-          db.knex('ranks')
-          .where('id', exist[0].id)
-          .update({
-            rankTitle: rankInfo.rankTitle,
-            rankNum: rankInfo.rankNum,
-            rankIcon: rankInfo.rankIcon,
-          })
-          // exist[0].update({
-          //   rankTitle: rankInfo.rankTitle,
-          //   rankNum: rankInfo.rankNum,
-          //   rankIcon: rankInfo.rankIcon,
-          // })
-          .catch(function(err){
-            console.log(err);
-            if(callback){
-              callback({
-                result: false,
-                message: 'Internal Server Error.'
-              });
-            }
-          })
-          .then(function(){
-            console.log('Rank updated');
-            if(callback){
-              callback({
-                result: true,
-              });
-            }
-          });
+          callback('Student does not exist.');
         }
       });
     }else{
-      db.knex('instructors')
-      .join('ranks', 'instructors.id', '=', 'ranks.instructor_id')
-      .join('disciplines', 'ranks.discipline_id', '=', 'disciplines.id')
-      .where({
-        'instructors.id': userID,
-        'disciplines.title': disciplineID
-      })
-      .then(function(exist){
-        if(!exist || exist.length===0){
-          new Rank({
-            'instructor_id': userID,
-            'discipline_id': disciplineID,
-            rankTitle: rankInfo.rankTitle,
-            rankNum: rankInfo.rankNum,
-            rankIcon: rankInfo.rankIcon,
-          }).save()
-          .catch(function(err){
-            console.log(err);
-            if(callback){
-              callback({
-                result: false,
-                message: 'Internal Server Error.'
+      new Instructor({id: info.instructor_id})
+      .fetch()
+      .then(function(aInstructor){
+        if(aInstructor){
+          new Discipline({id: info.discipline_id})
+          .fetch()
+          .then(function(aDisc){
+            if(aDisc){
+              new Rank({
+                instructor_id: aInstructor.get('id'),
+                discipline_id: aDisc.get('id'),
+              }).fetch()
+              .then(function(aRank){
+                if(aRank){
+                  aRank.save(info,
+                    {patch: true})
+                  .then(function(){
+                    callback('Rank updated.');
+                  })
+                }else{
+                  new Rank(info)
+                  .save()
+                  .then(function(){
+                    callback('Created new rank.');
+                  })
+                }
               });
-            }
-          })
-          .then(function(){
-            if(callback){
-              callback({
-                result: true,
-              });
+            }else{
+              callback('Discipline does not exist.');
             }
           });
         }else{
-          exist.save(rankInfo, {patch: true})
-          .catch(function(err){
-            console.log(err);
-            if(callback){
-              callback({
-                result: false,
-                message: 'Internal Server Error.'
-              });
-            }
-          })
-          .then(function(){
-            if(callback){
-              callback({
-                result: true,
-              });
-            }
-          });
+          callback('Instructor does not exist.');
         }
       });
     }
@@ -320,79 +274,51 @@ var DBQuery = {
    * @classInfo  {[Object]} Object with new class info
    * @callback {[Function]}  Callback function
    */
-  newClass: function(classInfo, discipline, instructor, callback){
+  newClass: function(classInfo, callback){
 
-    //Check if discipline exists
-    var getInst = this.getInstructorUsing;
-
-    this.getDiscipline(discipline, function(disc){
-      if(!disc){
-        console.log('Something went wrong.');
-      }else{
-        getInst('username', instructor, function(instr){
-          if(instr){
+    new Discipline()
+    .where({
+      id: classInfo.discipline_id
+    })
+    .fetch()
+    .then(function(discipline){
+      if(discipline){
+        new Instructor({
+          id: classInfo.instructor_id
+        })
+        .fetch()
+        .then(function(instructor){
+          if(instructor){
             new Class({
-              discipline_id: disc.id,
-              classNum: classInfo.classNum,
-            }).fetch().then(function(exists){
-              if(!exists){
-                new Class({
-                  title: classInfo.title,
-                  discipline_id: disc.id,
-                }).fetch()
-                .then(function(used){
-                  if(!used){
-                    new Class({
-                      title: classInfo.title,
-                      classNum: classInfo.classNum,
-                      description: classInfo.description,
-                      image: classInfo.image,
-                      instructor_id: instr.id,
-                      discipline_id: disc.id,
-                    })
+              discipline_id: discipline.get('id'),
+              classNum: classInfo.classNum
+            }).fetch()
+            .then(function(aClass){
+              if(!aClass){
+                discipline.save({
+                    classCount: discipline.get('classCount')+1,
+                  },{patch: true})
+                  .then(function(){
+                    console.log('Incremented discipline classCount.');
+
+                    new Class(classInfo)
                     .save()
-                    .catch(function(err){
-                      console.log('Error in newClass: ', err);
-                      if(callback){
-                        callback({
-                          result: false,
-                          message: 'Internal server error.'
-                        });
-                      }
-                    })
                     .then(function(){
-                      console.log('Added new class to DB.');
-                      if(callback){
-                        callback({
-                          result: true
-                        });
-                      }
-                    });
-                  }else{
-                    console.log('Title already used.');
-                    callback({
-                      result: false,
-                      message: 'Title already used.'
-                    });
-                  }
-                });
+                      callback('Class Saved.');
+                    })
+                  })
               }else{
-                console.log('Class Number already exist');
-                //class of that title already exists
-                // console.log('Class of that title already exist.');
-                if(callback){
-                  callback({
-                    result: false,
-                    message: 'Class of that number already exists.'
-                  });
-                }
+                callback('Class of that number already exists in this discipline.');
               }
             });
+          }else{
+            callback('Instructor does not exist');
           }
-        });
+        })
+      }else{
+        callback('Discipline does not exist');
       }
     });
-    //check if class title already exists
   },
 
   /**
@@ -401,9 +327,165 @@ var DBQuery = {
    * @vidInfo  {[Object]}
    * @callback {[Function]} 
    */
-  submitFeedback: function(infoObject, callback){
-    //check if a video under the students id already exists
+  submitStudentFeedback: function(username, classNum, disciplineID, feedback, callback){
+    var checkDiscipline = this.getDisciplineByID;
+    this.getStudentUsing('username', username, function(student){
+      if(!student){
+        callback({
+          result: false,
+          message: 'Invalid student username',
+        });
+      }else{
+        //Get Discipline with ID
+        checkDiscipline(disciplineID, function(discipline){
+          if(!discipline){
+            callback(discipline);
+          }else{
+            //Get class with classNum and disciplineID
+            new Class({
+              discipline_id: disciplineID,
+              classNum: classNum
+            }).fetch()
+            .then(function(theClass){
+              if(!theClass){
+                callback(theClass);
+              }else{
+                submitFeedback(student.id, theClass.get('id'), theClass.get('instructor_id'));
+              }
+            });
+          }
+        });
+      }
+    });
     
+    var submitFeedback = function(studentID, classID, instructorID){
+      var newFeedback = new Feedback({
+        videoURL: feedback.videoURL,
+        approved: feedback.approved,
+        student_id: studentID,
+        class_id: classID,
+        instructor_id: instructorID,
+      });
+
+      new Feedback({
+        student_id: studentID,
+        class_id: classID,
+        instructor_id: instructorID,
+      }).fetch()
+      .then(function(exist){
+        if(!exist){
+          newFeedback.save()
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Saved student feedback.');
+            callback({
+              result: true,
+            });
+          });
+        }else{
+          exist.save({
+            videoURL: feedback.videoURL,
+            comment: feedback.comment,
+            student_id: studentID,
+            class_id: classID,
+            instructor_id: instructorID,
+          }, {patch: true})
+          .catch(function(err){
+            console.log(err);
+            callback({
+              result: false,
+              message: 'Internal Server Error.'
+            });
+          })
+          .then(function(){
+            console.log('Updated student feedback.');
+            callback({
+              result: true,
+            });
+          });
+        }
+      });
+    };
+  },
+
+
+  replyToFeedback: function(feedbackID, update, callback){
+    new Feedback({
+      id: feedbackID
+    }).fetch()
+    .then(function(feedback){
+      if(!feedback){
+        callback({
+          result: false,
+          message: 'Feedback of that ID not found.'
+        });
+      }else{
+        feedback.save({
+          approved: update.approved,
+          comment: update.comment,
+        }, {patch: true})
+        .then(function(feed){
+          console.log('Feedback updated');
+
+          if(update.approved){
+            //Here we have to update student's progress and rank.
+            new Progress()
+            .where({
+              student_id: feed.get('student_id')
+            })
+            .fetch()
+            .then(function(progress){
+              console.log('!!!!!!!!!!!!!!');
+              if(progress){
+                //Get the current classNum
+                new Class()
+                .where({
+                  id: progress.get('class_id')
+                })
+                .fetch()
+                .then(function(oldClass){
+                  new Class()
+                  .where({
+                    discipline_id: oldClass.get('discipline_id'),
+                    classNum: oldClass.get('classNum')+1
+                  })
+                  .fetch()
+                  .then(function(nextClass){
+                    if(nextClass){
+                      progress.save({
+                        class_id: nextClass.get('id')
+                      }, {patch: true})
+                      .then(function(data){
+                        console.log('Update progress from '+oldClass.get('title')+' to '+nextClass.get('title'));
+
+                        //Still need to do upgrade student's rank.
+
+                        callback(feed);
+                      });
+                    }else{
+                      console.log('Class of that number does not exist in this discipline.');
+                      callback({
+                        result: true,
+                        message: 'You have reached the top class of this discipline.'
+                      });
+                    }
+                  });
+                });
+              }
+            });
+          }else{
+            console.log('Student did not pass.');
+            callback(feed);
+          }
+        });
+      } 
+    });
   },
 
   /**
@@ -413,68 +495,40 @@ var DBQuery = {
    * @return {[Boolean]}  If successful
    */
   newLevel: function (infoObject, callback){
-    if(infoObject.class_id){
-      new Level({
-        class_id: infoObject.class_id,
-        levelNum: infoObject.levelNum,
-      }).fetch()
-      .then(function(exist){
-        if(!exist){
-          new Level({
-            title: infoObject.title
-          }).fetch()
-          .then(function(used){
-            if(!used){
+    new Class({
+      id: infoObject.class_id
+    })
+    .fetch()
+    .then(function(aClass){
+      if(aClass){
+        new Level({
+          class_id: aClass.get('id'),
+          levelNum: infoObject.levelNum,
+        }).fetch()
+        .then(function(aLevel){
+          if(!aLevel){
+            aClass.save({
+              levelCount: aClass.get('levelCount')+1,
+            }, {patch: true})
+            .then(function(){
+              console.log('LevelCount ++');
               new Level(infoObject)
               .save()
-              .catch(function(err){
-                console.log(err);
-                if(callback){
-                  callback({
-                    result: false,
-                    message: 'Internal Server Error'
-                  });
-                }
+              .then(function(){
+                callback('Level saved.')
               })
-              .then(function(data){
-                //Update level count for that class
-                new Class({
-                  id: infoObject.class_id
-                }).fetch()
-                .then(function(data){
-                  data.save({levelCount: data.get('levelCount')+1}, {patch: true})
-                  .then(function(){
-                    if(callback){
-                      callback({
-                        result: true
-                      });
-                    }
-                  });
-                });
-              });
-            }else{
-              console.log('Level title already used.');
-            }
-          });
-        }else{
-          console.log('Title number already used.');
-          if(callback){
-            callback({
-              result: false,
-              message: 'Title number already used.'
+            })
+          }else{  
+            aLevel.save(infoObject, {patch: true})
+            .then(function(){
+              console.log('Level Updated');
             });
           }
-        }
-      });
-    }else{
-      console.log('Internal Server Error: No class ID given.');
-      if(callback){
-        callback({
-          result: false,
-          message: 'Internal Server Error: No class ID given.'
         });
+      }else{
+        callback('Class of that ID not found.')
       }
-    }
+    })
 
   },
 
@@ -591,50 +645,7 @@ var DBQuery = {
           });
         }
       });
-
     };
-
-    // newProgress = new Progress({
-    //   student_id: studentID,
-    //   class_id: classID,
-    //   levelNum: 1,
-    // });
-    // new Progress({
-    //   student_id: studentID,
-    //   class_id: classID,
-    // }).fetch()
-    // .catch(function(err){
-    //   console.log(err);
-    //   if(callback){
-    //     callback({
-    //       result: false,
-    //       message: 'Internal Server Error.'
-    //     });
-    //   }
-    // })
-    // .then(function(exist){
-    //   if(!exist || exist.length===0){
-    //     newProgress.save()
-    //     .catch(function(err){
-    //       console.log(err);
-    //       if(callback){
-    //         callback({
-    //           result: false,
-    //           message: 'Internal Server Error.'
-    //         });
-    //       }
-    //     })
-    //     .then(function(){
-    //       if(callback){
-    //         callback({
-    //           result:true
-    //         });
-    //       }
-    //     });
-    //   }else{
-    //     exist.save({levelNum: levelNum}, {patch: true});
-    //   }
-    // });
   },
 
 
@@ -642,15 +653,43 @@ var DBQuery = {
                                   //Get Queries//
   //============================================================================//
   
-  getDiscipline: function(discipline, callback){
+  getDisciplineByTitle: function(title, callback){
     new Discipline({
-      title: discipline
+      title: title
     }).fetch()
     .then(function(exist){
       if(exist){
        callback(exist.attributes);
       }else{
-        console.log('Discipline does not exist.');
+        console.log('Discipline of that title does not exist.');
+        callback({
+          result: false,
+          message: 'No discipline with that title.'
+        });
+      }
+    });
+  },
+
+  getDisciplineByID: function(ID, callback){
+    new Discipline({
+      id: ID
+    }).fetch({required: true})
+    .catch(function(err){
+      console.log(err);
+      callback({
+        result: false,
+        message: 'Internal Server Error'
+      });
+    })
+    .then(function(exist){
+      if(exist){
+       callback(exist.attributes);
+      }else{
+        console.log('Discipline of that ID does not exist.');
+        callback({
+          result: false,
+          message: 'No discipline with that ID.'
+        });
       }
     });
   },
@@ -925,6 +964,30 @@ var DBQuery = {
 
     });
   },
+
+
+  getFeedbacksForUser: function(username, callback){
+    new Student({
+      username: username
+    })
+    .fetch({withrRelated: 'feedbacks'})
+    .then(function(model){
+      // callback(model.related('feedback').toJSON());
+      callback(model.related('feedbacks'));
+    });
+  },
+
+
+  getFeedbackUsing: function(using, info, callback){
+    new Feedback()
+    .where(using, info)
+    .fetch()
+    .then(function(model){
+      callback(model);
+    });
+  },
+
+
 
 
 
