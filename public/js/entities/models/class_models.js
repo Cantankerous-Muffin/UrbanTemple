@@ -8,9 +8,12 @@ define(
       // Class model 
       ClassModels.Class = Backbone.Model.extend({
         default: {
+          classImage: "",
+          classNum: null,
           classId: null,
-          disciplineId: null,
-          instructorId: null,
+          classVideo:"",
+          discipline_id: null,
+          instructor_name: null,
           userId: null,
           title: "",
           description: "",
@@ -21,9 +24,9 @@ define(
       // Classes collection
       ClassModels.Classes = Backbone.Collection.extend({
         model: ClassModels.Class,
-        findById: function(cid) {
-          return this.findWhere({classId: cid});
-        }
+        // findById: function(cid) {
+        //   return this.findWhere({classId: cid});
+        // }
       });
     });
     return VirtualDojo.Entities.Models.Classes;

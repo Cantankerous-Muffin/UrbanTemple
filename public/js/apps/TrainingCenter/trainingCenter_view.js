@@ -115,7 +115,10 @@ define([
         template: classListViewTpl,
         childView: View.ClassThumb,
         childViewContainer: ".training-container",
-
+        initialize: function() {
+          console.log("howhowhow", this.model);
+          console.log("howhowhow", this.collection);
+        },
         serializeData: function() {
           return {
             title: this.model.get("title"),

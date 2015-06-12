@@ -32,6 +32,7 @@ define([
             var fetchDiscipline = VirtualDojo.request("entities:training:get");
             fetchDiscipline
               .done(function(data){
+                console.log("displine data from ajax", data);
                 var disciplines = data;
                 if (disciplines) {
                   // instantiate disciplineCollection and models 
@@ -40,18 +41,18 @@ define([
                     disciplineCollection.add(new DisciplineModels.Discipline(discipline));
                   });
                 }
-                
+
                 var kendoModel = disciplineCollection.models[0];
                 var qigongModel = disciplineCollection.models[1];
-
+                
                 trainingLayoutView.kendoRegion.show(new TrainingView.ClassList({
                   model: kendoModel,
-                  collection: kendoModel.get("classes"),
+                  collection: kendoModel.get("classData"),
                 }));
 
                 trainingLayoutView.qigongRegion.show(new TrainingView.ClassList({
                   model: qigongModel,
-                  collection: qigongModel.get("classes"),
+                  collection: qigongModel.get("classData"),
                 }));
 
               });
