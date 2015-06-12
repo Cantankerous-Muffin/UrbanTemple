@@ -43,11 +43,11 @@ var stu = [
     lastName: 'Odin',
   },
   {
-    username: 'temple',
-    password: 'temple',
-    email: 'temple@mail.com',
-    firstName: 'Urban',
-    lastName: 'Temple',
+    username: 'Joseph',
+    password: '123',
+    email: 'Joseph@mail.com',
+    firstName: 'Joseph',
+    lastName: 'Hashir',
   }
 ];
 // console.log('-------------------------------');
@@ -58,6 +58,7 @@ var stu = [
 //     console.log(model);
 //   });
 // }
+
 
 //Instructors
 var inst = [
@@ -88,6 +89,13 @@ var inst = [
     email: 'morgan@mail.com',
     firstName: 'Morgan',
     lastName: 'Lefay',
+  },
+  {
+    username: 'Jonah',
+    password: 'Jonah',
+    email: 'Jonah@mail.com',
+    firstName: 'Jonah',
+    lastName: 'Chin',
   }
 ];
 
@@ -352,7 +360,7 @@ var rank = {
   rankTitle: 'Beginner - 2',
   rankNum: 2,
   rankIcon: 'rankBeginnerIcon',
-  student_id: 5,
+  student_id: 6,
   instructor_id: null,
   discipline_id: 1,
 };
@@ -361,9 +369,18 @@ var rank2 = {
   rankTitle: 'Beginner - 2',
   rankNum: 2,
   rankIcon: 'rankBeginnerIcon',
-  student_id: 5,
+  student_id: 6,
   instructor_id: null,
   discipline_id: 2,
+};
+
+var rankInst = {
+  rankTitle: 'Master - 6',
+  rankNum: 6,
+  rankIcon: 'rankBeginnerIcon',
+  student_id: null,
+  instructor_id: 5,
+  discipline_id: 1,
 };
 
 // DBQuery.setRank(rank, false, function(data){
@@ -373,19 +390,24 @@ var rank2 = {
 //   console.log(data);
 // })
 
-// DBQuery.setProgress('temple', 'Qigong 102: 7 Star Stance, 5 Elemental Stance', 5, 
+// DBQuery.setProgress('Joseph', 'Qigong 102: 7 Star Stance, 5 Elemental Stance', 5, 
 //   function(data){
 //     console.log(data);
 //   }
 // );
-// DBQuery.setProgress('temple', 'Kendo 102: Basic 12 directional steps', 5, 
+// DBQuery.setProgress('Joseph', 'Kendo 102: Basic 12 directional steps', 5, 
 //   function(data){
 //     console.log(data);
 //   }
 // );
 
 
-// DBQuery.studentToClass('temple', 'Kendo 102: Basic 12 directional steps', 
+// DBQuery.studentToClass('Joseph', 'Kendo 102: Basic 12 directional steps', 
+//   function(data){
+//     console.log(data);
+//   }
+// );
+// DBQuery.studentToClass('Joseph', 'Qigong 102: 7 Star Stance, 5 Elemental Stance', 
 //   function(data){
 //     console.log(data);
 //   }
