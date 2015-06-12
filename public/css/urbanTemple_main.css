@@ -183,7 +183,12 @@ video#bgvid {
   padding: 0 30px 0 0; 
 }
 
-.class-page-main {
+#class-page-main {
+  margin-top: 30px;
+  width: 80%;
+}
+
+.class-level-list {
   width: 80%;
 }
 
@@ -191,8 +196,8 @@ video#bgvid {
   margin: 10px 0 20px 0;
 }
 
-.class-title {
-  margin: 0 0 20px 0;
+#class-title {
+  margin: 20px 0 20px 0;
 }
 
 
