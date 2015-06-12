@@ -20,6 +20,7 @@ router.get('/', function(req, res) {
 
 			return db.knex('classes')
 				.where({'classes.discipline_id': discipline.id})
+				.orderBy('classNum', 'asc')
 				.map(function(classData){
 					console.log('classData',classData);
 					// discipline.classes = classData;
@@ -260,6 +261,7 @@ router.get('/:discipline_id/class/:class_id/level', function(req, res) {
 			}
 			return db.knex('levels')
 				.where({'levels.class_id':classData[0].id})
+				.orderBy('levelNum', 'asc')
 				.map(function(datapack){
 					console.log('datapack',datapack);
 					// classData[0].levelData = datapack;
