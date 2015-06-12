@@ -149,7 +149,7 @@ router.get('/:username/progress', function(req,res){
 								discData[0].levelNum = row.levelNum;
 								// discData[0].classNum = row.classNum;
 								// class_id is classNum for now since we might not have put the correct values of classNum in our DB.
-								discData[0]['currentClassNum'] = row.our_class_id;
+								discData[0]['currentClassNum'] = row.classNum;
 								return discData[0];
 							})
 					})
