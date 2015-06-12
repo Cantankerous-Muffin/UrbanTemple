@@ -120,72 +120,82 @@ router.get('/:username/progress', function(req,res){
 	var classNum;
 	var totalLevels;
 
-	db.knex('progress')
-		.where({'progress.student_id':14})
-		.map(function(row){
-			console.log('row',row);
-			return db.knex('classes')
-				.where({'classes.id':row.class_id})
-				.then(function(classData){
-					classData[0].levelNum = row.levelNum;
-					classData[0].our_class_id = row.class_id;
-					return classData[0];
-			});
-		})
-		.map(function(row){
-			console.log('classData',row);
-			return db.knex('disciplines')
-				.where({'disciplines.id':row.discipline_id})
-				.then(function(discData){
-					// console.log('discData',discData);
-					discData[0].levelNum = row.levelNum;
-					// discData[0].classNum = row.classNum;
-					// class_id is classNum for now since we might not have put the correct values of classNum in our DB.
-					discData[0]['currentClassNum'] = row.our_class_id;
-					return discData[0];
-				})
-		})
-		.map(function(row){
-			console.log('row',row);
-			// total classes for discipline
-			return db.knex('classes')
-				.where({'classes.discipline_id':row.id})
-				.then(function(x){
-					// x['title'] = row.title;
-					// x['description'] = row.description;
-					// x['discLogo'] = row.discLogo;
-					// x['currentLevelNum'] = row.levelNum;
-					// // x['currentClassNum'] = row.classNum;
-					// x['currentClassNum'] = row.our_class_id;
-					row['totalClass'] = x.length;
-					return row;
-				})
-		})
-		.map(function(y){
-			console.log('y',y);
-			// y['length'] = y.length;
-			// find levelTitle from levelNum
-			return db.knex('levels')
-				.where({'levels.levelNum':y.levelNum, 'levels.class_id': y.currentClassNum})
-				.then(function(l){
-					console.log('l',l);
-					y['currentLevelTitle'] = l[0].title;
-					return y;
-				})
-		})
-		.map(function(z){
-			console.log('z',z);
-			return db.knex('levels')
-				.where({'levels.class_id':z.currentClassNum})
-				.then(function(zz){
-					console.log('zz',zz);
-					z['percentage'] = 100*z.levelNum/zz.length;
-					return z;
-				})
-		})
-		.then(function(aa){
-			console.log('aa',aa);
-			res.json(aa);
+	db.knex('students')
+		.where({'students.username': username})
+		.select('id')
+		.then(function(studentData){
+			if (!studentData[0]){
+				res.json({'message': username + ' student Not Found'});
+			} else {
+				
+				db.knex('progress')
+					.where({'progress.student_id':studentData[0].id})
+					.map(function(row){
+						console.log('row',row);
+						return db.knex('classes')
+							.where({'classes.id':row.class_id})
+							.then(function(classData){
+								classData[0].levelNum = row.levelNum;
+								classData[0].our_class_id = row.class_id;
+								return classData[0];
+						});
+					})
+					.map(function(row){
+						console.log('classData',row);
+						return db.knex('disciplines')
+							.where({'disciplines.id':row.discipline_id})
+							.then(function(discData){
+								// console.log('discData',discData);
+								discData[0].levelNum = row.levelNum;
+								// discData[0].classNum = row.classNum;
+								// class_id is classNum for now since we might not have put the correct values of classNum in our DB.
+								discData[0]['currentClassNum'] = row.our_class_id;
+								return discData[0];
+							})
+					})
+					.map(function(row){
+						console.log('row',row);
+						// total classes for discipline
+						return db.knex('classes')
+							.where({'classes.discipline_id':row.id})
+							.then(function(x){
+								// x['title'] = row.title;
+								// x['description'] = row.description;
+								// x['discLogo'] = row.discLogo;
+								// x['currentLevelNum'] = row.levelNum;
+								// // x['currentClassNum'] = row.classNum;
+								// x['currentClassNum'] = row.our_class_id;
+								row['totalClass'] = x.length;
+								return row;
+							})
+					})
+					.map(function(y){
+						console.log('y',y);
+						// y['length'] = y.length;
+						// find levelTitle from levelNum
+						return db.knex('levels')
+							.where({'levels.levelNum':y.levelNum, 'levels.class_id': y.currentClassNum})
+							.then(function(l){
+								console.log('l',l);
+								y['currentLevelTitle'] = l[0].title;
+								return y;
+							})
+					})
+					.map(function(z){
+						console.log('z',z);
+						return db.knex('levels')
+							.where({'levels.class_id':z.currentClassNum})
+							.then(function(zz){
+								console.log('zz',zz);
+								z['percentage'] = 100*z.levelNum/zz.length;
+								return z;
+							})
+					})
+					.then(function(aa){
+						console.log('aa',aa);
+						res.json(aa);
+					});
+			}
 		});
 });
 
