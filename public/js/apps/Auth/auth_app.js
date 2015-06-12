@@ -54,7 +54,7 @@ define([
                   var fetchUser = VirtualDojo.request("entities:users:get", {username: UTConfig.username});
                   fetchUser
                     .done(function(data){
-                      console.log("xxxxxx", data);
+                      console.log("user data from ajax", data);
                       UTConfig.isInstructor = data.isInstructor;
                     });
                 });

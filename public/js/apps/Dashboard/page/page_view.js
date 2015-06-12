@@ -30,6 +30,7 @@ define([
             fetchUserProgress
               // instantiate user progress and show it on progress region
               .done(function(data){ 
+                console.log("yyyyyy", data);
                 var progresses = data;
                 if (progresses) {
                   var progressCollection = new UserModels.Progresses();
