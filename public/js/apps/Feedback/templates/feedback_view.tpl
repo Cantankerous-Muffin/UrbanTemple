@@ -22,14 +22,25 @@
               </div>
             </div>
           <% } %>
+
           <% if (UTConfig.isInstructor) { %>
-            <div class="positive ui button">Approve</div>
-            <div class="negative ui button">Disapprove</div>
+          <!-- <div class="approve-video"> -->
+            <div class="positive ui button approve-video">Approve</div>
+          <!-- </div> -->
+          <!-- <div class="disapprove-video"> -->
+            <div class="negative ui button disapprove-video">Disapprove</div>
+          <!-- </div> -->
           <% } %>
 
           <% if (UTConfig.isInstructor === false) { %>
             <h4>Instructor Comment:</h4>
-            <p><%= comment %></p>
+            <% if (comment.length > 0) { %>
+              <p><%= comment %></p>
+            <% } else { %>
+              <p> Awaiting instructor comments and approval </p>
+            <% } %> 
+
+
           <% } %>
         </div>
       </div>

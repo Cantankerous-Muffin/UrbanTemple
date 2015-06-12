@@ -1,9 +1,8 @@
-<div class="ui segment">
-  <h2 class="ui header">
-    <%= disciplineTitle %>
-    <div class="sub header"> <%= currentLevelTitle %></div>
-  </h2>
-
+<div class="ui segment dashboard-level">
+    <h2 class="sub header"> <%= disciplineTitle + " : " + currentLevelTitle %></h2>
+  <div class="progress-bar"></div>
+</div>
+<br>
 
   <!-- <div class="ui progress" data-percent="35" id="classProgress">
     <div class="bar">
@@ -11,6 +10,3 @@
     </div>
     <div class="label">Rank Progress</div>
   </div> -->
-  <div class="progress-bar"></div>
-</div>
-<br>

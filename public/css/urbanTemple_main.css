@@ -131,10 +131,24 @@ video#bgvid {
   height: 50px;
 }
 
+
 /* dashboard feedbacks */
 .user-feedbacks-header-container {
   padding-bottom: 20px;
 }
+
+
+/* dashboard current levels */
+
+.dashboard-level {
+  width: 1000px;
+}
+
+#current-level-video-header {
+  padding-top: 20px;
+  color: #C9C5C5;
+}
+
 
 /* training center */
 
