@@ -47,7 +47,7 @@ db.knex.schema.hasTable('disciplines').then(function(exists){
       table.increments('id').primary(); 
       table.string('title', 100).unique();
       table.text('description');
-      table.string('disLogo', 200);
+      table.integer('classCount').unsigned().defaultTo(0);
       table.timestamps();
 
     }).then(function (table) {
@@ -105,8 +105,8 @@ db.knex.schema.hasTable('classes').then(function(exists) {
       table.string('title', 100).unique().notNullable();
       table.integer('classNum').unsigned().notNullable();
       table.text('description');
-      table.string('image',255);
-      table.string('thumbVid', 255);
+      table.string('classImage',255);
+      table.string('classVideo', 255);
       table.integer('levelCount').unsigned().defaultTo(0);
       table.timestamps();
 
@@ -131,8 +131,6 @@ db.knex.schema.hasTable('progress').then(function(exists) {
       //Relations
       table.integer('student_id').unsigned().references('students.id');
       table.integer('class_id').unsigned().references('classes.id');
-
-      
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -144,7 +142,7 @@ db.knex.schema.hasTable('levels').then(function(exists) {
     db.knex.schema.createTable('levels', function (table) {
       table.increments('id').primary();
       table.integer('levelNum').unsigned();
-      table.string('title',100).unique();
+      table.string('title',100).notNullable();
       table.text('description');
       table.string('videoURL',255);
       table.boolean('feedbackNeeded').defaultTo(false);
