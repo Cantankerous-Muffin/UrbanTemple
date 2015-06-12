@@ -42,7 +42,7 @@ app.use(session({
 app.use('/', routes);
 app.use('/api', api);
 // app.use('/checkauth', routes);
-// app.use('/users', users);
+app.use('/api/user', users);
 app.use('/auth', auth);
 
 // checking authentication (auth_app line 31)

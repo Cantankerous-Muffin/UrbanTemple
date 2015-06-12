@@ -6,42 +6,42 @@ define(
     VirtualDojo.module("Entities.Users", function(Users, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getUser: function (params) {
-          var defer = $.Deferred();
+          // var defer = $.Deferred();
 
-          setTimeout(function(){
-            var data = {
-              isInstructor: false,
-              firstname: "Ken",
-              lastname: "Kang",
-              // ranks: null,
-              ranks: 
-              [
-              {
-                disciplineTitle: "Kendo",
-                rankNum: 1,
-                rankTitle: "Beginner",
-              },              
-              {
-                disciplineTitle: "Qigong",
-                rankNum: 4,
-                rankTitle: "Advanced",
-              }
-              ]
-            }; // mock result from server
+          // setTimeout(function(){
+          //   var data = {
+          //     isInstructor: false,
+          //     firstname: "Ken",
+          //     lastname: "Kang",
+          //     // ranks: null,
+          //     ranks: 
+          //     [
+          //     {
+          //       disciplineTitle: "Kendo",
+          //       rankNum: 1,
+          //       rankTitle: "Beginner",
+          //     },              
+          //     {
+          //       disciplineTitle: "Qigong",
+          //       rankNum: 4,
+          //       rankTitle: "Advanced",
+          //     }
+          //     ]
+          //   }; // mock result from server
 
-            defer.resolve(data);
-          }, 600);
+          //   defer.resolve(data);
+          // }, 600);
 
-          return defer.promise();
+          // return defer.promise();
 
-          // var ajax = Ajax.perform({
-          //  type: "GET",
-          //  url: 'api/user/' + params.username,
-          //  callback: function (data) {
-          //    return data;
-          //  }
-          // });
-          // return ajax.promise();
+          var ajax = Ajax.perform({
+           type: "GET",
+           url: 'api/user/' + params.username,
+           callback: function (data) {
+             return data;
+           }
+          });
+          return ajax.promise();
         }
       };
 

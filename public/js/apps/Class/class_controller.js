@@ -11,7 +11,6 @@ define([
             
         showClass: function(params) {
           var classLayoutView = new ClassView.classLayout();
-          
           // ajax call to retrieve user data and instantiate user model
           require(["entities/class"], function() {
             var fetchClasses = VirtualDojo.request("entities:classes:get", params);

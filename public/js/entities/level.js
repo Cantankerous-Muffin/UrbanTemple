@@ -66,9 +66,7 @@ define(
                           next: false
                         },
                       ];
-
-           // mock result from server
-
+                      
             defer.resolve(data);
           }, 200);
 

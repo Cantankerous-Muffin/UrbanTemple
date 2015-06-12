@@ -45,6 +45,7 @@ define([
 
         initialize: function() {
 
+          // permission access control 
           if (this.model.get("disciplineId") === 1 ) {
             if (this.model.get("classNum") > UTConfig.currentKendoClass) {
               this.$el.addClass("class-thumb card disabled");
@@ -82,9 +83,6 @@ define([
               vid.pause();
             });
           }
-
-          // console.log("class model", this.model);
-          // this.$el.addClass("disabled");
         },
         
         onCardClick: function(event) {
@@ -92,20 +90,24 @@ define([
            var disciplineId = this.model.get("disciplineId");
            var classNum = this.model.get("classNum");
 
+            // access control 
+            if (this.model.get("disciplineId") === 1 ) {
+              if (this.model.get("classNum") > UTConfig.currentKendoClass) {
+                console.log("kendo access denied!!")
+                return;
+              } 
+            } else {
+              if (this.model.get("classNum") > UTConfig.currentQigongClass) {
+                console.log("qigong access denied!!")
+                return;
+              } 
+            } 
+
             VirtualDojo.trigger("show:class", {
               disciplineId: disciplineId,
               classNum: classNum
             });
         },
-        
-        // initialize: function(){
-        //   if (this.model.get("classNum") === 1) {
-        //     this.$el.attr( "class", "card" );
-        //   } else {
-        //     this.$el.attr( "class", "card" );
-        //   }
-        // },
-
       });
 
       // ClassList composite view
