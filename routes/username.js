@@ -3,8 +3,11 @@ var router = express.Router();
 var db = require('../app/config.js')
 
 var usernameProgressRoute = require('./usernameProgress');
+var usernameFeedbackRoute = require('./usernameFeedback');
 
 router.use('/progress', usernameProgressRoute);
+
+router.use('/feedbacks', usernameFeedbackRoute);
 
 router.get('/', function(req, res) {
 	console.log('req.url for user/:username is', req.originalUrl);
