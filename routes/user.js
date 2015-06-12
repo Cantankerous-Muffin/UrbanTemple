@@ -25,8 +25,8 @@ router.get('/:username', function(req, res) {
 	var userPackage = {'isInstructor':false,'username':"",'firstname':"",'lastname':"",'ranks':userRank};
 	db.knex('students')
 		.where ({username: req.url.slice(1)})
-		.then(function(data){
-			if (!data || data.length === 0){
+		.then(function(originalData){
+			if (!originalData || originalData.length === 0){
 				// user is not a student, check instructor instead
 				db.knex('instructors')
 					.where({username: req.url.slice(1)})
@@ -51,7 +51,7 @@ router.get('/:username', function(req, res) {
 												console.log('data2',data2);
 												userRankArray.push({'disciplineTitle':data2[0].title, 'rankNum':data1[0].rankNum, 'rankTitle':data1[0].rankTitle, 'rankIcon':data1[0].rankIcon});
 											if (data1.length === userRankArray.length){
-												res.json({'isInstructor':true,'username':req.url.slice(1),'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':userRankArray});
+												res.json({'isInstructor':true,'username':req.url.slice(1),'firstname':originalData[0].firstName,'lastname':originalData[0].lastName,'ranks':userRankArray});
 											}
 											});
 									}
@@ -59,10 +59,10 @@ router.get('/:username', function(req, res) {
 						}
 					})
 			} else {
-				console.log('student data',data);
+				console.log('student data',originalData);
 				var userRankArray=[];
 				db.knex('classes_students')
-					.where({'classes_students.student_id':data[0].id})
+					.where({'classes_students.student_id':originalData[0].id})
 					.select('*')
 					.then(function(data){
 						console.log('classes_students data',data);
@@ -87,7 +87,7 @@ router.get('/:username', function(req, res) {
 												if (userRankArray.length === data.length){
 													console.log('userRankArray',userRankArray);
 													// res.json(userPackage);
-													res.json({'isInstructor':false,'username':req.url.slice(1),'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':userRankArray});
+													res.json({'isInstructor':false,'username':req.url.slice(1),'firstname':originalData[0].firstName,'lastname':originalData[0].lastName,'ranks':userRankArray});
 												}	
 											})
 									})
