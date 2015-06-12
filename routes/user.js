@@ -50,9 +50,9 @@ router.get('/:username', function(req, res) {
 											.then(function(data2){
 												console.log('data2',data2);
 												userRankArray.push({'disciplineTitle':data2[0].title, 'rankNum':data1[0].rankNum, 'rankTitle':data1[0].rankTitle, 'rankIcon':data1[0].rankIcon});
-											if (data1.length === userRankArray.length){
-												res.json({'isInstructor':true,'username':req.url.slice(1),'firstname':originalData[0].firstName,'lastname':originalData[0].lastName,'ranks':userRankArray});
-											}
+												if (data1.length === userRankArray.length){
+													res.json({'isInstructor':true,'username':req.url.slice(1),'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':userRankArray});
+												}
 											});
 									}
 								})
