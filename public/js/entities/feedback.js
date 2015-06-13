@@ -6,43 +6,43 @@ define(
     VirtualDojo.module("Entities.Feedbacks", function(Feedbacks, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getFeedback: function(params) {
-          var defer = $.Deferred();
-          setTimeout(function(){
-            var data = {
-              feedbackId: 30,
-              studentUsername: "Raymond Luong ",
-              instrUsername: "Ken Kang",
-              videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
-              comment: "Good Job Raymond! Overall, your neutral stance is good. For your 3 step strike, try to use your left elbow to yield power to slice. Be mindful that left hand is responsible for power and right hand is only for navigating your sword. Also, for your 1 step strike, use your tan tien (core) to throw your body forward and back. Other than that, you did great! Congratulations for your promotion.",
-              class: {
-                      classNum: 4,
-                      disciplineId: 1,
-                      instructorId: 14,
-                      instructorName: "Ken Kang", 
-                      instructorRank: 5,
-                      instructorRankTitle: "Master",
-                      title: "kendo 101",
-                      description: "description",
-                      classImage: "class img",
-                      totalLevel: 5
-                     },
-              approved: false,
-            }
+          // var defer = $.Deferred();
+          // setTimeout(function(){
+          //   var data = {
+          //     feedbackId: 30,
+          //     studentUsername: "Raymond Luong ",
+          //     instrUsername: "Ken Kang",
+          //     videoUrl: "https://www.youtube.com/embed/Q4SHWXQBVL4",
+          //     comment: "Good Job Raymond! Overall, your neutral stance is good. For your 3 step strike, try to use your left elbow to yield power to slice. Be mindful that left hand is responsible for power and right hand is only for navigating your sword. Also, for your 1 step strike, use your tan tien (core) to throw your body forward and back. Other than that, you did great! Congratulations for your promotion.",
+          //     class: {
+          //             classNum: 4,
+          //             disciplineId: 1,
+          //             instructorId: 14,
+          //             instructorName: "Ken Kang", 
+          //             instructorRank: 5,
+          //             instructorRankTitle: "Master",
+          //             title: "kendo 101",
+          //             description: "description",
+          //             classImage: "class img",
+          //             totalLevel: 5
+          //            },
+          //     approved: false,
+          //   }
 
-            defer.resolve(data);
-          }, 200);
+          //   defer.resolve(data);
+          // }, 200);
 
-          // var ajax = Ajax.perform({
-          //    type: "GET",
-          //    url: '/discipline',
-          //    callback: function (data) {
-          //      return data;
-          //    }
-          //   });
+          var ajax = Ajax.perform({
+             type: "GET",
+             url: 'api/feedback/' + params.feedbackId,
+             callback: function (data) {
+               return data;
+             }
+            });
             
-          //   return ajax.promise();
+            return ajax.promise();
 
-          return defer.promise();
+          // return defer.promise();
         },
 
         getUserFeedbacks: function(params) {
@@ -104,7 +104,7 @@ define(
             
             return ajax.promise();
 
-          return defer.promise();
+          // return defer.promise();
         },
 
         postFeedback: function(reqData) {
