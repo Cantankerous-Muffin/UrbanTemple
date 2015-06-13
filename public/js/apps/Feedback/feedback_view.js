@@ -38,13 +38,17 @@ define([
         },
 
         serializeData: function() {
+          var comment = this.model.get("comment");  
+          if (comment === null) {
+            comment = "";
+          }
             //bind model properties to data object properties here
           return {
             //return data object here
-            studentUsername: this.model.get("studentUsername"),
-            instrUsername: this.model.get("instrUsername"),
-            videoUrl: this.model.get("videoUrl"),
-            comment: this.model.get("comment"),
+            studentUsername: this.model.get("studentUserName"),
+            instrUsername: this.model.get("instructorUserName"),
+            videoUrl: this.model.get("videoURL"),
+            comment: comment,
           }
         },
 

@@ -27,6 +27,7 @@ define([
         submitVideo: function(e) {
           e.preventDefault();
           var requestData = {
+            disciplineID: this.model.get("discipline_id"), 
             username: UTConfig.username,
             classNum: this.model.get("classNum"),
             videoUrl: this.ui.urlInput.val()
