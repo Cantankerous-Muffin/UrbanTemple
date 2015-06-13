@@ -16,6 +16,7 @@ var Instructor        = require('../app/models/instructor');
 var auth         = require('./../routes/auth');
 var student         = require('./../routes/student');
 var api         = require('./../routes/api');
+
 // Authentication
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
-
+app.use('/doc', express.static('doc'));
 // Initiate passport and passport session
 app.use(passport.initialize());
 app.use(passport.session());
