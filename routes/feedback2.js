@@ -23,7 +23,37 @@ router.get('/:feedback_id', function(req, res) {
 			.then(function(instructorData){
 				console.log('instructorData', instructorData);
 				if (!instructorData[0]){
-					res.json({'message': 'no instructor found.'});
+					console.log('looking in students database');
+					db.knex('students')
+						.where({'students.username': req.session.user})
+						.then(function(studentsData){
+							if (!studentsData[0]){
+								res.json({'message': 'no user found in database.'});
+							} else {
+								// user is a student. check if this is the same student that owns the feedback
+								db.knex('feedback')
+									.where({'feedback.student_id': studentsData[0].id, 'feedback.id': req.url.slice(1)})
+									.select('*')
+									.then(function(feedbackData){
+										if (!feedbackData[0]) {
+											res.json({'message': 'feedbackData not found'});
+										}
+										db.knex('instructors')
+											.where({'instructors.id': feedbackData[0].instructor_id})
+											.then(function(instructorsData){
+												feedbackData[0].studentName = studentsData[0].username;
+												feedbackData[0].instructorName = instructorsData[0].username;
+												db.knex('classes')
+													.where({'classes.id': feedbackData[0].class_id})
+													.select('*')
+													.then(function(classesData){
+														feedbackData[0].Class = classesData[0];
+														res.json(feedbackData);
+													})
+											})
+									});
+							}
+						})
 				} else {
 					db.knex('feedback')
 						.where({'feedback.instructor_id': instructorData[0].id})
