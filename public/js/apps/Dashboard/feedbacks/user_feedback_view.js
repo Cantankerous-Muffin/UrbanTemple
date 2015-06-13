@@ -37,7 +37,6 @@ define([
         },
 
         initialize: function() {
-          console.log("feedback model", this.model);
         }
       });
 

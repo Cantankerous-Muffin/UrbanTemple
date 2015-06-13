@@ -13,8 +13,9 @@ define([
             var fetchFeed = VirtualDojo.request("entities:feedback:get", params)
               fetchFeed
                 .done(function(data){
+                  console.log("aaaaaaa show aaaaa", data);
                   if (data) {
-                    var feedbackModel = new FeedbackModels.Feedback(data);
+                    var feedbackModel = new FeedbackModels.Feedback(data[0]);
                   }
                   FeedView = new FeedbackView.Feedback({model: feedbackModel});
                   VirtualDojo.regions.main.show(FeedView);
@@ -27,6 +28,7 @@ define([
             var fetchFeed = VirtualDojo.request("entities:feedback:post", params)
               fetchFeed
                 .done(function(data){
+                  console.log("bbbbbbb post bbbbb", data);
                  if (data) {
                     var feedbackModel = new FeedbackModels.Feedback(data);
                   }
