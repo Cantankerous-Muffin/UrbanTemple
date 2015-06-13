@@ -2,6 +2,20 @@ var express = require('express');
 var router = express.Router();
 var db = require('../app/config.js')
 
+var returnFeedback = function(){
+		console.log('username',instructorData[0].username);
+		if (req.session.user === instructorData[0].username){
+			db.knex('feedback')
+				.where({'feedback.instructor_id': instructorData[0].id})
+				.then(function(feedbackData){
+					console.log('feedbackData', feedbackData);
+					res.json(feedbackData);
+				});
+		} else {
+			res.json({'message': 'incorrect user signed in to view instructor feedbacks'});
+		}
+};
+
 router.get('/', function(req, res) {
 	console.log('req.url is', req.originalUrl, req.session.user);
 	var markers = [];
@@ -20,19 +34,7 @@ router.get('/', function(req, res) {
 				console.log('perhaps an instructor?')
 				db.knex('instructors')
 					.where({'instructors.username': usernameFromURL})
-					.then(function(instructorData){
-						console.log('username',instructorData[0].username);
-						if (req.session.user === instructorData[0].username){
-							db.knex('feedback')
-								.where({'feedback.instructor_id': instructorData[0].id})
-								.then(function(feedbackData){
-									console.log('feedbackData', feedbackData);
-									res.json(feedbackData);
-								});
-						} else {
-							res.json({'message': 'incorrect user signed in to view instructor feedbacks'});
-						}
-					})
+					.then(returnFeedback)
 					.catch(function(err){
 						res.json({'message': 'No student/instructor with this username found.'});
 					});
@@ -41,9 +43,19 @@ router.get('/', function(req, res) {
 				if (usernameFromURL === req.session.user){
 					db.knex('feedback')
 						.where({'feedback.student_id': user_id[0].id})
-						.then(function(feedbackData){
-							console.log('feedbackData', feedbackData);
-							res.json(feedbackData);
+						.map(function(feedbackData){
+							// console.log('feedbackData', feedbackData);
+							return db.knex('classes')
+								.where({'classes.id': feedbackData.class_id})
+								.select('title')
+								.then(function(classesData){
+									feedbackData.classTitle = classesData[0].title;
+									return feedbackData;
+								})
+						})
+						.then(function(collatedFeedbackData){
+							console.log('collatedFeedbackData',collatedFeedbackData);
+							res.json(collatedFeedbackData);
 						});
 				} else {
 					res.json({'message': 'incorrect user signed in to view students'});
