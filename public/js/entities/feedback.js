@@ -96,7 +96,7 @@ define(
 
           var ajax = Ajax.perform({
              type: "GET",
-             url: '/discipline',
+             url: 'api/user/' + UTConfig.username + '/feedbacks',
              callback: function (data) {
                return data;
              }
