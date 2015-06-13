@@ -39,7 +39,7 @@ define([
 
         prevLevel: function(e) {
           e.preventDefault();
-          if (this.model.get("prev")) {
+          if (this.model.get("levelNum") !== 1) {
             var requestData = {
               disciplineId: this.model.get("discipline_id"),
               classNum: this.model.get("classNum"),
@@ -51,7 +51,7 @@ define([
 
         nextLevel: function(e) {
           e.preventDefault();
-          if (this.model.get("next")) {
+          if (this.model.get("levelNum") !== 5) {
             var requestData = {
               disciplineId: this.model.get("discipline_id"),
               classNum: this.model.get("classNum"),
@@ -67,14 +67,27 @@ define([
         },
 
         serializeData: function() {
-            //bind model properties to data object properties here
+          var prev, next;
+          
+          if (this.model.get("levelNum") === 1 ) {
+            prev = false;
+          } else {
+            prev = true;
+          }
+
+          if (this.model.get("levelNum") === 5 ) {
+            next = false;
+          } else {
+            next = true;
+          }
+
           return {
             //return data object here
             title: this.model.get("title"),
             videoUrl: this.model.get("videoURL"),
             description: this.model.get("description"),
-            next: this.model.get("next"),
-            prev: this.model.get("prev")
+            next: next,
+            prev: prev
           }
         },
 

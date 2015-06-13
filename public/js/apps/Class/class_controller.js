@@ -16,7 +16,6 @@ define([
             var fetchClasses = VirtualDojo.request("entities:classes:get", params);
             fetchClasses
               .done(function(data){
-                console.log("xxxxxxxxx", data);
                 var cls = new ClassModels.Class(data);
                 classLayoutView.classRegion.show(new ClassView.Class({
                   model: cls

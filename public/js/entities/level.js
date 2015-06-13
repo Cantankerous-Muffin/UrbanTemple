@@ -6,7 +6,6 @@ define(
     VirtualDojo.module("Entities.Levels", function(Levels, ExaApp, Backbone, Marionette, $, _) {
       var API = {
         getLevels: function (params) {
-          console.log("zzzzzzz", params);
           // var defer = $.Deferred();
 
           // setTimeout(function(){

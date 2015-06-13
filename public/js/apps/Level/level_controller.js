@@ -15,7 +15,6 @@ define([
             var fetchClass = VirtualDojo.request("entities:level:get", params)
               fetchClass
                 .done(function(data){
-                  console.log("ggggggg", data);
                   if (data) {
                     var videoModel = new LevelModel.Level(data);
                   }
