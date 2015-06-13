@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../app/config.js')
 
-var returnFeedback = function(){
+var returnFeedback = function(instructorData){
 		console.log('username',instructorData[0].username);
 		if (req.session.user === instructorData[0].username){
 			db.knex('feedback')
