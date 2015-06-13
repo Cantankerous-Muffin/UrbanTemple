@@ -107,9 +107,9 @@ router.post('/submit', function(req, res) {
 								.where({'instructors.id': data[0].instructor_id})
 								.select('username')
 								.then(function(instructor_username){
-									prev.instructorUserName = instructor_username[0].username;
+									prev.instructorName = instructor_username[0].username;
 									prev.instructor_id = data[0].instructor_id;
-									prev.studentUserName = req.session.user;
+									prev.studentName = req.session.user;
 									prev.Class = data[0];
 									res.json(prev);
 								})
