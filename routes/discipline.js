@@ -186,7 +186,7 @@ router.get('/:discipline_id/class/:class_id', function(req, res) {
 	var classIDfromURL = req.url.slice(markers[1]+1);
 	console.log('discIDfromURL',discIDfromURL,'classIDfromURL',classIDfromURL);
 	db.knex('classes')
-		.where({'classes.discipline_id': discIDfromURL, 'classes.id': classIDfromURL})
+		.where({'classes.discipline_id': discIDfromURL, 'classes.classNum': classIDfromURL})
 		.then(function(classData){
 			console.log('classData',classData);
 			// discipline.classes = classData;
@@ -249,7 +249,7 @@ router.get('/:discipline_id/class/:class_id/level', function(req, res) {
 	var classIDfromURL = req.url.slice(markers[1]+1, req.url.length - 6);
 	console.log('discIDfromURL',discIDfromURL,'classIDfromURL',classIDfromURL);
 	db.knex('classes')
-		.where({'classes.discipline_id': discIDfromURL, 'classes.id': classIDfromURL})
+		.where({'classes.discipline_id': discIDfromURL, 'classes.classNum': classIDfromURL})
 		.then(function(classData){
 			console.log('classData',classData);
 			// discipline.classes = classData;
@@ -297,7 +297,7 @@ router.get('/:discipline_id/class/:class_id/level/:level_id', function(req, res)
 
 	console.log('discIDfromURL',discIDfromURL,'classIDfromURL',classIDfromURL, 'levelIDfromURL',levelIDfromURL);
 	db.knex('classes')
-		.where({'classes.discipline_id': discIDfromURL, 'classes.id': classIDfromURL})
+		.where({'classes.discipline_id': discIDfromURL, 'classes.classNum': classIDfromURL})
 		.then(function(classData){
 			console.log('classData',classData);
 			// discipline.classes = classData;
@@ -322,7 +322,7 @@ router.get('/:discipline_id/class/:class_id/level/:level_id', function(req, res)
 					console.log('collatedClassData', collatedClassData);
 					// discipline.classData = collatedClassData;
 					if (!collatedClassData[0]){
-						res.json({'message':'Class id not found for particular discipline'+ req.url.slice(1)});
+						res.json({'message':'Class id not found for particular discipline '+ req.url.slice(1)});
 					}
 					res.json(collatedClassData[0]);
 				})
