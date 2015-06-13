@@ -37,7 +37,7 @@ define([
           // var urlFragment = VirtualDojo.getCurrentRoute().split("/");
           var model = this.model;
 
-          var disciplineId = model.get("disciplineId");
+          var disciplineId = model.get("discipline_id");
           var classNum = model.get("classNum");
           var levelNum = model.get("levelNum");
 

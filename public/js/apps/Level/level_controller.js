@@ -10,12 +10,12 @@ define([
         
         showLevel: function(params){
           var LevelMainView = null
-          console.log("show level controller !!")
           require(["entities/level"],function(){
             //API call
             var fetchClass = VirtualDojo.request("entities:level:get", params)
               fetchClass
                 .done(function(data){
+                  console.log("ggggggg", data);
                   if (data) {
                     var videoModel = new LevelModel.Level(data);
                   }

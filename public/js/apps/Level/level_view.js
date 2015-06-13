@@ -41,7 +41,7 @@ define([
           e.preventDefault();
           if (this.model.get("prev")) {
             var requestData = {
-              disciplineId: this.model.get("disciplineId"),
+              disciplineId: this.model.get("discipline_id"),
               classNum: this.model.get("classNum"),
               levelNum: this.model.get("levelNum") - 1
             }
@@ -53,7 +53,7 @@ define([
           e.preventDefault();
           if (this.model.get("next")) {
             var requestData = {
-              disciplineId: this.model.get("disciplineId"),
+              disciplineId: this.model.get("discipline_id"),
               classNum: this.model.get("classNum"),
               levelNum: this.model.get("levelNum") + 1
             }
@@ -71,7 +71,7 @@ define([
           return {
             //return data object here
             title: this.model.get("title"),
-            videoUrl: this.model.get("videoUrl"),
+            videoUrl: this.model.get("videoURL"),
             description: this.model.get("description"),
             next: this.model.get("next"),
             prev: this.model.get("prev")
