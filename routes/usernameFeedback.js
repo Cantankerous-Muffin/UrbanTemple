@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../app/config.js')
 
 var returnFeedback = function(instructorData){
-		console.log('username',instructorData[0].username);
+		console.log('username',instructorData[0].username,' req.session.user', req.session.user);
 		if (req.session.user === instructorData[0].username){
 			db.knex('feedback')
 				.where({'feedback.instructor_id': instructorData[0].id})
@@ -31,10 +31,22 @@ router.get('/', function(req, res) {
 		.select('id')
 		.then(function(user_id){
 			if (!user_id[0]){
-				console.log('perhaps an instructor?')
+				console.log('perhaps an instructor?');
 				db.knex('instructors')
 					.where({'instructors.username': usernameFromURL})
-					.then(returnFeedback)
+					.then(function(instructorData){
+						console.log('username',instructorData[0].username,' req.session.user', req.session.user);
+						if (req.session.user === instructorData[0].username){
+							db.knex('feedback')
+								.where({'feedback.instructor_id': instructorData[0].id})
+								.then(function(feedbackData){
+									console.log('feedbackData', feedbackData);
+									res.json(feedbackData);
+								});
+						} else {
+							res.json({'message': 'incorrect user signed in to view instructor feedbacks'});
+						}
+					})
 					.catch(function(err){
 						res.json({'message': 'No student/instructor with this username found.'});
 					});
