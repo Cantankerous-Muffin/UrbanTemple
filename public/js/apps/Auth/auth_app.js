@@ -49,7 +49,6 @@ define([
                 
                 // store the username on global object
                 UTConfig.username = data.username;
-                VirtualDojo.Utilities.enterApplication();
 
                 require(["entities/users"], function() {
                   var fetchUser = VirtualDojo.request("entities:users:get", {username: UTConfig.username});
@@ -57,6 +56,8 @@ define([
                     .done(function(data){
                       console.log("user data from ajax", data);
                       UTConfig.isInstructor = data.isInstructor;
+                      
+                      // get user's current progress
                       if (!UTConfig.isInstructor) {
                         require(["entities/progress"], function() {
                           var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
@@ -70,29 +71,15 @@ define([
                                   UTConfig.currentQigongClass = progress.currentClassNum;
                                 }
                               });
+                              VirtualDojo.Utilities.enterApplication();
                             });
                         });
+                      } else {
+                        VirtualDojo.Utilities.enterApplication();
                       }
                     });
                 });
-
-                // save user's current progress and save on global object
-                
-
-                // require(["entities/progress"], function() {
-                //   var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
-                //   fetchUserProgress
-                //     .done(function(data){ 
-                //       var progresses = data;
-                //       progresses.forEach(function(progress) {
-                //         if (progress.id === 1) {
-                //           UTConfig.currentKendoClass = progress.currentClassNum;
-                //         } else {
-                //           UTConfig.currentQigongClass = progress.currentClassNum;
-                //         }
-                //       });
-                //     });
-                // });
+                // VirtualDojo.Utilities.enterApplication();
 
               } else {
                 VirtualDojo.trigger("auth:login:show");

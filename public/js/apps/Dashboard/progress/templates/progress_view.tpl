@@ -1,6 +1,6 @@
 <div class="ui segment dashboard-level">
     <h2 class="sub header"> <%= disciplineTitle + " : " + currentLevelTitle %></h2>
-  <div class="progress-bar"></div>
+  <div class="progress-bar"><%= percentage %></div>
 </div>
 <br>
 
