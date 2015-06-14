@@ -2,20 +2,6 @@ var express = require('express');
 var router = express.Router();
 var db = require('../app/config.js')
 
-var returnFeedback = function(instructorData){
-		console.log('username',instructorData[0].username,' req.session.user', req.session.user);
-		if (req.session.user === instructorData[0].username){
-			db.knex('feedback')
-				.where({'feedback.instructor_id': instructorData[0].id})
-				.then(function(feedbackData){
-					console.log('feedbackData', feedbackData);
-					res.json(feedbackData);
-				});
-		} else {
-			res.json({'message': 'incorrect user signed in to view instructor feedbacks'});
-		}
-};
-
 router.get('/', function(req, res) {
 	console.log('req.url is', req.originalUrl, req.session.user);
 	var markers = [];
@@ -39,9 +25,25 @@ router.get('/', function(req, res) {
 						if (req.session.user === instructorData[0].username){
 							db.knex('feedback')
 								.where({'feedback.instructor_id': instructorData[0].id})
-								.then(function(feedbackData){
-									console.log('feedbackData', feedbackData);
-									res.json(feedbackData);
+								.map(function(feedbackData){
+									// console.log('feedbackData', feedbackData);
+									return db.knex('classes')
+										.where({'classes.id': feedbackData.class_id})
+										.select('title')
+										.then(function(classesData){
+											feedbackData.classTitle = classesData[0].title;
+											// console.log('feedbackData',feedbackData);
+											return db.knex('students')
+												.where({'students.id': feedbackData.student_id})
+												.then(function(studentData){
+													feedbackData.studentName = studentData[0].username; 
+													return feedbackData;
+												})
+										})
+								})
+								.then(function(collatedFeedbackData){
+									console.log('collatedFeedbackData',collatedFeedbackData);
+									res.json(collatedFeedbackData);
 								});
 						} else {
 							res.json({'message': 'incorrect user signed in to view instructor feedbacks'});
