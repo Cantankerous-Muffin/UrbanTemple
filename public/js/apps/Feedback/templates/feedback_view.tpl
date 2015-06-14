@@ -32,7 +32,16 @@
           <!-- </div> -->
           <% } %>
 
+          <% if (UTConfig.isInstructor === false) { %>
+            <h4>Instructor Comment:</h4>
+            <% if (comment.length > 0) { %>
+              <p><%= comment %></p>
+            <% } else { %>
+              <p> Awaiting instructor comments and approval </p>
+            <% } %> 
 
+
+          <% } %>
         </div>
       </div>
       </div>

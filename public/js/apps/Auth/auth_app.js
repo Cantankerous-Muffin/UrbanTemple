@@ -57,24 +57,42 @@ define([
                     .done(function(data){
                       console.log("user data from ajax", data);
                       UTConfig.isInstructor = data.isInstructor;
+                      if (!UTConfig.isInstructor) {
+                        require(["entities/progress"], function() {
+                          var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
+                          fetchUserProgress
+                            .done(function(data){ 
+                              var progresses = data;
+                              progresses.forEach(function(progress) {
+                                if (progress.id === 1) {
+                                  UTConfig.currentKendoClass = progress.currentClassNum;
+                                } else {
+                                  UTConfig.currentQigongClass = progress.currentClassNum;
+                                }
+                              });
+                            });
+                        });
+                      }
                     });
                 });
 
                 // save user's current progress and save on global object
-                require(["entities/progress"], function() {
-                  var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
-                  fetchUserProgress
-                    .done(function(data){ 
-                      var progresses = data;
-                      progresses.forEach(function(progress) {
-                        if (progress.id === 1) {
-                          UTConfig.currentKendoClass = progress.currentClassNum;
-                        } else {
-                          UTConfig.currentQigongClass = progress.currentClassNum;
-                        }
-                      });
-                    });
-                });
+                
+
+                // require(["entities/progress"], function() {
+                //   var fetchUserProgress = VirtualDojo.request("entities:users:progresses", {username: UTConfig.username});
+                //   fetchUserProgress
+                //     .done(function(data){ 
+                //       var progresses = data;
+                //       progresses.forEach(function(progress) {
+                //         if (progress.id === 1) {
+                //           UTConfig.currentKendoClass = progress.currentClassNum;
+                //         } else {
+                //           UTConfig.currentQigongClass = progress.currentClassNum;
+                //         }
+                //       });
+                //     });
+                // });
 
               } else {
                 VirtualDojo.trigger("auth:login:show");

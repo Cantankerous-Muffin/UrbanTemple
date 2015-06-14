@@ -45,14 +45,15 @@ define([
             //bind model properties to data object properties here
           return {
             //return data object here
-            studentUsername: this.model.get("studentUserName"),
-            instrUsername: this.model.get("instructorUserName"),
+            studentUsername: this.model.get("studentName"),
+            instrUsername: this.model.get("instructorName"),
             videoUrl: this.model.get("videoURL"),
             comment: comment,
           }
         },
 
         initialize: function() {
+          console.log("kkkkkrtrtrtrtkkkk", this.model);
         }
 
       });
