@@ -17,10 +17,10 @@ define([
 
         clickFeedback: function(e){
           e.preventDefault();
-          var feedbackId = this.model.get("feedbackId");
+          var feedbackId = this.model.get("id");
 
           VirtualDojo.trigger("show:feed", {
-            'feedbackId': feedbackId
+            feedbackId: feedbackId
           })
         },
 
@@ -28,11 +28,9 @@ define([
         },
         serializeData: function() {
           var model = this.model;
-          var cls = model.get("class");
-
           var instructorName = model.get("instrUsername");
-          var classTitle = cls.get("title");
-          var studentUsername = model.get("studentUsername");
+          var classTitle = model.get("classTitle");
+          var studentUsername = model.get("studentName");
 
           return {
             classTitle: classTitle,

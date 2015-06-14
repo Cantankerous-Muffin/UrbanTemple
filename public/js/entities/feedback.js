@@ -157,7 +157,7 @@ define(
 
           var ajax = Ajax.perform({
             type: "POST",
-            url: '/feedback/' + reqData.feedbackID + '/update',
+            url: 'api/feedback/' + reqData.feedbackId + '/update',
             data: reqData,
             callback: function (data) {
               return data;

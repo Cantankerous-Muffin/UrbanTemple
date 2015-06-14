@@ -23,7 +23,7 @@ define([
         submitApproval: function(e) {
           e.preventDefault();
           var requestData = {
-            feedbackId: this.model.get("feedbackId"),
+            feedbackId: this.model.get("id"),
             comment: this.ui.commentBox.val(),
             approved: true, 
           }
