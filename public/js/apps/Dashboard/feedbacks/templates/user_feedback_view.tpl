@@ -1,8 +1,17 @@
-<div class="label">
-  <i class="feed icon"></i>
-</div>
-<div class="content">
-  <div class="summary user-feedback">
-    Instructor <b><%= instructorName %></b> left feedback for your <a><%= classTitle %></a> class.
-  </div>
-</div>
+
+  <% if (approved) { %>
+  <h4><b><i> Approved: </i></b></h4>
+      <div class="summary user-feedback"><i class="feed icon"></i>
+        You've submitted video for <%= classTitle %> by instructor <b> Jonah Chin </b> </a>.
+      </div>
+  <% } %>
+
+  <% if (!approved) { %>
+   <h4><b><i> Pending: </i></b></h4>
+      <div class="summary user-feedback"><i class="feed icon"></i>
+        You've submitted video for <%= classTitle %> by instructor <b> Jonah Chin </b> </a>.
+      </div>
+  <% } %>
+
+
+  

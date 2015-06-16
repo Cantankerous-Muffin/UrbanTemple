@@ -240,7 +240,19 @@ video#bgvid {
 
 #register_form {
   position: relative;
-  max-width: 85%;
+  max-width: 45%;
+  margin: 0 auto;
+  margin-right: 430px;
+  margin-top: 100px;
+}
+
+.shorted-signin-input {
+  width:50%;
+}
+
+.signin-submit-button {
+  margin: 0 auto;
+  text-align: center;
 }
 
 

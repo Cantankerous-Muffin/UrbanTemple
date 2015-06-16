@@ -9,15 +9,15 @@ define(
       // Discipline model 
       DisciplineModels.Discipline = Backbone.Model.extend({
         default: {
-          disciplineId: null,
+          id: null,
           title: "",
           description: "",
           disciplineLogo: "",
-          classes: null
+          classData: null
         },
         initialize: function() {
           // instantiate Collections and Models from JSON
-          var classes = this.get("classes");
+          var classes = this.get("classData");
           if (classes) {
             var classesCollection = new ClassModels.Classes();
             classes.forEach(function(cls) {
@@ -25,7 +25,7 @@ define(
                 new ClassModels.Class(cls)
               );
             });
-            this.set("classes", classesCollection);
+            this.set("classData", classesCollection);
           }
         }
       });

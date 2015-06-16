@@ -18,7 +18,7 @@ define([
 
         clickFeedback: function(e){
           e.preventDefault();
-          var feedbackId = this.model.get("feedbackId");
+          var feedbackId = this.model.get("id");
 
           VirtualDojo.trigger("show:feed", {
             'feedbackId': feedbackId
@@ -26,21 +26,20 @@ define([
         },
 
         serializeData: function() {
+          console.log("gggggg", this.model);
           var model = this.model;
           var username = model.get("studentUsername");
-          var cls = model.get("class");
-          var classTitle = cls.get("title");
-          var instructorName = cls.get("instructorName");
+          var classTitle = model.get("classTitle");
+          var approved = model.get("approved");
 
           return {
             username: username,
             classTitle: classTitle,
-            instructorName: instructorName
+            approved: approved
           } 
         },
 
         initialize: function() {
-          console.log("feedback model", this.model);
         }
       });
 

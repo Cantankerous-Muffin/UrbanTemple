@@ -58,8 +58,8 @@ define([
             } else {
               this.$el.addClass("class-thumb card");
             }
-          } 
-
+          }
+          
           _.bindAll(this, "onCardClick");
 
           var that = this;
@@ -87,25 +87,25 @@ define([
         
         onCardClick: function(event) {
           event.preventDefault();
-           var disciplineId = this.model.get("disciplineId");
+           var disciplineId = this.model.get("discipline_id"); 
            var classNum = this.model.get("classNum");
-
+            
             // access control 
-            if (this.model.get("disciplineId") === 1 ) {
-              if (this.model.get("classNum") > UTConfig.currentKendoClass) {
+            if (disciplineId === 1 ) {
+              if (classNum > UTConfig.currentKendoClass) {
                 console.log("kendo access denied!!")
                 return;
               } 
             } else {
-              if (this.model.get("classNum") > UTConfig.currentQigongClass) {
+              if (classNum > UTConfig.currentQigongClass) {
                 console.log("qigong access denied!!")
                 return;
               } 
             } 
 
             VirtualDojo.trigger("show:class", {
-              disciplineId: disciplineId,
-              classNum: classNum
+              "disciplineId": disciplineId,
+              "classNum": classNum
             });
         },
       });
@@ -115,7 +115,8 @@ define([
         template: classListViewTpl,
         childView: View.ClassThumb,
         childViewContainer: ".training-container",
-
+        initialize: function() {
+        },
         serializeData: function() {
           return {
             title: this.model.get("title"),

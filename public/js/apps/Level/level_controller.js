@@ -10,7 +10,6 @@ define([
         
         showLevel: function(params){
           var LevelMainView = null
-          console.log("show level controller !!")
           require(["entities/level"],function(){
             //API call
             var fetchClass = VirtualDojo.request("entities:level:get", params)

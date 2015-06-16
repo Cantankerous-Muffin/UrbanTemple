@@ -19,8 +19,19 @@ define([
       }
 
       var API = {
-        showLevel: function(params){
-          LevelController.showLevel(params);
+        showLevel: function(disciplineId, classNum, levelNum){
+          if (classNum) {
+            LevelApp.Controller.showLevel(
+              {
+                disciplineId: disciplineId,
+                classNum: classNum,
+                levelNum: levelNum
+              }
+            );
+          } else {
+            LevelApp.Controller.showLevel(disciplineId);
+          }
+
         }
       };
 

@@ -14,7 +14,7 @@ define([
               fetchFeed
                 .done(function(data){
                   if (data) {
-                    var feedbackModel = new FeedbackModels.Feedback(data);
+                    var feedbackModel = new FeedbackModels.Feedback(data[0]);
                   }
                   FeedView = new FeedbackView.Feedback({model: feedbackModel});
                   VirtualDojo.regions.main.show(FeedView);
@@ -31,13 +31,12 @@ define([
                     var feedbackModel = new FeedbackModels.Feedback(data);
                   }
                   FeedView = new FeedbackView.Feedback({model: feedbackModel});
-                  VirtualDojo.navigate("/feedback/" + feedbackModel.get("feedbackId"));
+                  VirtualDojo.navigate("/feedback/" + feedbackModel.get("id"));
                   VirtualDojo.regions.main.show(FeedView);
                 });
           })
         },
         approveFeedback: function(params){
-          console.log("uuuuuuuu", params);
           require(["entities/feedback"],function(){
             var approveFeed = VirtualDojo.request("entities:feedback:approve", params)
               approveFeed

@@ -30,12 +30,12 @@
     <div class="prev ui button">
     <i class="left arrow icon"></i>
     Previous
-  <% } %>
   </div>
+  <% } %>
   <% if (next) { %>
     <div class="next ui button">
     Next
     <i class="right arrow icon"></i>
-  <% } %>
   </div>
+  <% } %>
 </div>

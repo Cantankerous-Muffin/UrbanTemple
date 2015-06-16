@@ -23,7 +23,7 @@ define([
         submitApproval: function(e) {
           e.preventDefault();
           var requestData = {
-            feedbackId: this.model.get("feedbackId"),
+            feedbackId: this.model.get("id"),
             comment: this.ui.commentBox.val(),
             approved: true, 
           }
@@ -38,17 +38,22 @@ define([
         },
 
         serializeData: function() {
+          var comment = this.model.get("comment");  
+          if (comment === null) {
+            comment = "";
+          }
             //bind model properties to data object properties here
           return {
             //return data object here
-            studentUsername: this.model.get("studentUsername"),
-            instrUsername: this.model.get("instrUsername"),
-            videoUrl: this.model.get("videoUrl"),
-            comment: this.model.get("comment"),
+            studentUsername: this.model.get("studentName"),
+            instrUsername: this.model.get("instructorName"),
+            videoUrl: this.model.get("videoURL"),
+            comment: comment,
           }
         },
 
         initialize: function() {
+          console.log("kkkkkrtrtrtrtkkkk", this.model);
         }
 
       });

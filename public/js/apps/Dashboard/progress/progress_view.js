@@ -17,9 +17,9 @@ define([
         clickVideo: function(e){
           e.preventDefault();
           var model = this.model;
-          var disciplineId = model.get('discipline').attributes.disciplineId;
+          var disciplineId = model.get('id');
           var classNum = model.get('currentClassNum');
-          var levelNum = model.get('currentLevelNum');
+          var levelNum = model.get('levelNum');
 
 
           VirtualDojo.trigger("show:video", {
@@ -30,13 +30,10 @@ define([
         },
         serializeData: function() {
           var model = this.model;
-          // discipline
           var discipline = model.get("discipline");
-          var disciplineTitle = discipline.get("title");
-
-          // class
-          var currentLevelTitle = model.get("currentLevelTitle");
+          var disciplineTitle = model.get("title");
           var percentage = model.get("percentage");
+          var currentLevelTitle = model.get("currentLevelTitle");
           
           return {
             disciplineTitle: disciplineTitle,
@@ -44,6 +41,16 @@ define([
             percentage: percentage
           };
         },
+
+        initialize: function() {
+          // calculate the percentage 
+          var model = this.model;
+          var currentClassNum = model.get("currentClassNum");
+          var currentRank = model.get("levelNum");
+          var percentage = (currentClassNum * 5 + currentRank) / 30 * 100;
+          model.set("percentage", percentage);
+        },
+
         // update user progress bar based on percentage data 
         onShow: function() {
           var $progressBar = this.$(".progress-bar");

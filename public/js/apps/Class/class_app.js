@@ -19,12 +19,17 @@ define([
      
     	var API = {
         showClass: function(disciplineId, classNum){
-        	ClassApp.Controller.showClass(
-            {
-              disciplineId: disciplineId,
-              classNum: classNum
-            }
-          );
+          if (classNum) {
+            ClassApp.Controller.showClass(
+              {
+                disciplineId: disciplineId,
+                classNum: classNum
+              }
+            );
+          } else {
+            ClassApp.Controller.showClass(disciplineId);
+          }
+
         }
       };
       
