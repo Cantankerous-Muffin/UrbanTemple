@@ -177,140 +177,144 @@ var DBQuery = {
   },
 
 
-  /**
-   * Either saves or updates a rank of a user. 
-   * @memberOf DBQuery
-   * @param {object}   info         Object with info on rank.
-   * @param {Boolean}  isInstructor Is this for Instructor or not?
-   * @param {Function} callback     Callback function.
-   */
-  setRank: function(info, isInstructor, callback){
-    if(!isInstructor){
-      new Student({id: info.student_id})
-      .fetch()
-      .then(function(aStudent){
-        if(aStudent){
-          new Discipline({id: info.discipline_id})
-          .fetch()
-          .then(function(aDisc){
-            if(aDisc){
-              new Rank({
-                student_id: aStudent.get('id'),
-                discipline_id: aDisc.get('id'),
-              }).fetch()
-              .then(function(aRank){
-                if(aRank){
-                  aRank.save(info,
-                    {patch: true})
-                  .then(function(){
-                    callback('Rank updated.');
-                  })
-                }else{
-                  new Rank(info)
-                  .save()
-                  .then(function(){
-                    callback('Created new rank.');
-                  })
-                }
-              });
-            }else{
-              callback('Discipline does not exist.');
-            }
-          });
-        }else{
-          callback('Student does not exist.');
-        }
-      });
-    }else{
-      new Instructor({id: info.instructor_id})
-      .fetch()
-      .then(function(aInstructor){
-        if(aInstructor){
-          new Discipline({id: info.discipline_id})
-          .fetch()
-          .then(function(aDisc){
-            if(aDisc){
-              new Rank({
-                instructor_id: aInstructor.get('id'),
-                discipline_id: aDisc.get('id'),
-              }).fetch()
-              .then(function(aRank){
-                if(aRank){
-                  aRank.save(info,
-                    {patch: true})
-                  .then(function(){
-                    callback('Rank updated.');
-                  })
-                }else{
-                  new Rank(info)
-                  .save()
-                  .then(function(){
-                    callback('Created new rank.');
-                  })
-                }
-              });
-            }else{
-              callback('Discipline does not exist.');
-            }
-          });
-        }else{
-          callback('Instructor does not exist.');
-        }
-      });
-    }
-  },
-
   // /**
-  //  * Create a new class. WIll check if class title already exists.
-  //  * @classInfo  {[Object]} Object with new class info
-  //  * @callback {[Function]}  Callback function
+  //  * Either saves or updates a rank of a user. 
+  //  * @memberOf DBQuery
+  //  * @param {object}   info         Object with info on rank.
+  //  * @param {Boolean}  isInstructor Is this for Instructor or not?
+  //  * @param {Function} callback     Callback function.
   //  */
-  // newClass: function(classInfo, callback){
-
-  //   new Discipline()
-  //   .where({
-  //     id: classInfo.discipline_id
-  //   })
-  //   .fetch()
-  //   .then(function(discipline){
-  //     if(discipline){
-  //       new Instructor({
-  //         id: classInfo.instructor_id
-  //       })
-  //       .fetch()
-  //       .then(function(instructor){
-  //         if(instructor){
-  //           new Class({
-  //             discipline_id: discipline.get('id'),
-  //             classNum: classInfo.classNum
-  //           }).fetch()
-  //           .then(function(aClass){
-  //             if(!aClass){
-  //               discipline.save({
-  //                   classCount: discipline.get('classCount')+1,
-  //                 },{patch: true})
+  // setRank: function(info, isInstructor, callback){
+  //   if(!isInstructor){
+  //     new Student({id: info.student_id})
+  //     .fetch()
+  //     .then(function(aStudent){
+  //       if(aStudent){
+  //         new Discipline({id: info.discipline_id})
+  //         .fetch()
+  //         .then(function(aDisc){
+  //           if(aDisc){
+  //             new Rank({
+  //               student_id: aStudent.get('id'),
+  //               discipline_id: aDisc.get('id'),
+  //             }).fetch()
+  //             .then(function(aRank){
+  //               if(aRank){
+  //                 aRank.save(info,
+  //                   {patch: true})
   //                 .then(function(){
-  //                   console.log('Incremented discipline classCount.');
-
-  //                   new Class(classInfo)
-  //                   .save()
-  //                   .then(function(){
-  //                     callback('Class Saved.');
-  //                   })
+  //                   callback('Rank updated.');
   //                 })
-  //             }else{
-  //               callback('Class of that number already exists in this discipline.');
-  //             }
-  //           });
-  //         }else{
-  //           callback('Instructor does not exist');
-  //         }
-  //       })
-  //     }else{
-  //       callback('Discipline does not exist');
-  //     }
-  //   });
+  //               }else{
+  //                 new Rank(info)
+  //                 .save()
+  //                 .then(function(){
+  //                   callback('Created new rank.');
+  //                 })
+  //               }
+  //             });
+  //           }else{
+  //             callback('Discipline does not exist.');
+  //           }
+  //         });
+  //       }else{
+  //         callback('Student does not exist.');
+  //       }
+  //     });
+  //   }else{
+  //     new Instructor({id: info.instructor_id})
+  //     .fetch()
+  //     .then(function(aInstructor){
+  //       if(aInstructor){
+  //         new Discipline({id: info.discipline_id})
+  //         .fetch()
+  //         .then(function(aDisc){
+  //           if(aDisc){
+  //             new Rank({
+  //               instructor_id: aInstructor.get('id'),
+  //               discipline_id: aDisc.get('id'),
+  //             }).fetch()
+  //             .then(function(aRank){
+  //               if(aRank){
+  //                 aRank.save(info,
+  //                   {patch: true})
+  //                 .then(function(){
+  //                   callback('Rank updated.');
+  //                 })
+  //               }else{
+  //                 new Rank(info)
+  //                 .save()
+  //                 .then(function(){
+  //                   callback('Created new rank.');
+  //                 })
+  //               }
+  //             });
+  //           }else{
+  //             callback('Discipline does not exist.');
+  //           }
+  //         });
+  //       }else{
+  //         callback('Instructor does not exist.');
+  //       }
+  //     });
+  //   }
   // },
+
+  /**
+   * Create a new class. WIll check if class title already exists.
+   * @classInfo  {object} Object with new class info
+   * @callback {Function}  Callback function
+   */
+  newClass: function(classInfo, callback){
+
+    new Discipline()
+    .where({
+      id: classInfo.discipline_id
+    })
+    .fetch()
+    .then(function(discipline){
+      if(discipline){
+        new Instructor({
+          id: classInfo.instructor_id
+        })
+        .fetch()
+        .then(function(instructor){
+          if(instructor){
+            new Class({
+              discipline_id: discipline.get('id'),
+              classNum: classInfo.classNum
+            }).fetch()
+            .then(function(aClass){
+              if(!aClass){
+                discipline.save({
+                    classCount: discipline.get('classCount')+1,
+                  },{patch: true})
+                  .then(function(){
+                    console.log('Incremented discipline classCount.');
+
+                    new Class(classInfo)
+                    .save()
+                    .then(function(){
+                      callback('Class Saved.');
+                    })
+                  })
+              }else{
+                aClass
+                .save(classInfo, {patch: true})
+                .then(function(){
+                  callback('Class updated');
+                })
+              }
+            });
+          }else{
+            callback('Instructor does not exist');
+          }
+        })
+      }else{
+        callback('Discipline does not exist');
+      }
+    });
+  },
 
   // /**
   //  * When student submits a video. Only one can exist at a time per student.

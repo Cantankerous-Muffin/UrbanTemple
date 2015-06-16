@@ -136,7 +136,7 @@ var clas = [
     classImage: 'img/kendo_class_1.jpg',
     classVideo: 'video/kendo_class_1.mp4',
     discipline_id: 1,
-    instructor_id: 4,
+    instructor_id: 5,
   },
   {
     title: 'Kendo 102: Basic 12 directional steps',
@@ -145,7 +145,7 @@ var clas = [
     classImage: 'img/kendo_class_2.jpg',
     classVideo: 'video/kendo_class_2.mp4',
     discipline_id: 1,
-    instructor_id: 3,
+    instructor_id: 5,
   },
   {
     title: 'Kendo 103: Target hitting practice',
@@ -154,7 +154,7 @@ var clas = [
     classImage: 'img/kendo_class_3.jpg',
     classVideo: 'video/kendo_class_3.mp4',
     discipline_id: 1,
-    instructor_id: 4,
+    instructor_id: 5,
   },
   {
     title: 'Kendo 104: Sparring basics',
@@ -163,7 +163,7 @@ var clas = [
     classImage: 'img/kendo_class_4.jpg',
     classVideo: 'video/kendo_class_4.mp4',
     discipline_id: 1,
-    instructor_id: 3,
+    instructor_id: 5,
   },
   {
     title: 'Kendo 105: Sparring Intermediate',
@@ -172,7 +172,7 @@ var clas = [
     classImage: 'img/kendo_class_5.jpg',
     classVideo: 'video/kendo_class_5.mp4',
     discipline_id: 1,
-    instructor_id: 4,
+    instructor_id: 5,
   },
   {
     title: "Kendo 106: Instructor's program",
@@ -181,7 +181,7 @@ var clas = [
     classImage: 'img/kendo_class_6.jpg',
     classVideo: 'video/kendo_class_6.mp4',
     discipline_id: 1,
-    instructor_id: 3,
+    instructor_id: 5,
   },
 // ====================================================
   {
@@ -191,7 +191,7 @@ var clas = [
     classImage: 'img/qigong_class_1.jpg',
     classVideo: 'video/qigong_class_1.mp4',
     discipline_id: 2,
-    instructor_id: 1,
+    instructor_id: 5,
   },
   {
     title: 'Qigong 102: 7 Star Stance, 5 Elemental Stance',
@@ -200,7 +200,7 @@ var clas = [
     classImage: 'img/qigong_class_2.jpg',
     classVideo: 'video/qigong_class_2.mp4',
     discipline_id: 2,
-    instructor_id: 2,
+    instructor_id: 5,
   },
   {
     title: 'Qigong 103:',
@@ -209,7 +209,7 @@ var clas = [
     classImage: 'img/qigong_class_3.jpg',
     classVideo: 'video/qigong_class_3.mp4',
     discipline_id: 2,
-    instructor_id: 1,
+    instructor_id: 5,
   },
   {
     title: 'Qigong 104:',
@@ -218,7 +218,7 @@ var clas = [
     classImage: 'img/qigong_class_4.jpg',
     classVideo: 'video/qigong_class_4.mp4',
     discipline_id: 2,
-    instructor_id: 2,
+    instructor_id: 5,
   },
   {
     title: 'Qigong 105:',
@@ -227,7 +227,7 @@ var clas = [
     classImage: 'img/qigong_class_5.jpg',
     classVideo: 'video/qigong_class_5.mp4',
     discipline_id: 2,
-    instructor_id: 1,
+    instructor_id: 5,
   },
   {
     title: "Qigong 106:",
@@ -236,7 +236,7 @@ var clas = [
     classImage: 'img/qigong_class_6.jpg',
     classVideo: 'video/qigong_class_6.mp4',
     discipline_id: 2,
-    instructor_id: 2,
+    instructor_id: 5,
   },
 ];
 
@@ -331,7 +331,7 @@ var levl5 = {
   title: 'Introduction to the art of swordfighting and qigong',
   description: "Discipline is the acknowledgement of human mind's infinite potential and devotion to self-improvement and transformation through perseverance and practice.",
   videoURL: 'https://www.youtube.com/embed/207ePUiLV_A',
-  feedbackNeeded: false,
+  feedbackNeeded: true,
   levelNum: 5,
   class_id: 12,
 };
