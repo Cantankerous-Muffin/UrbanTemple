@@ -49,6 +49,7 @@ define([
 
         },
         initialize: function() {
+          console.log("eeeeeee", this.model);
         }
       });
 

@@ -30,25 +30,10 @@ define([
         },
         serializeData: function() {
           var model = this.model;
-
-          console.log(";;;;;;;;", this.model);
-          // discipline
-          
-          // var currentClassNum = model.get("currentClassNum");
-          // var currentRank = model.get("levelNum");
-          // var percentage = (currentClassNum * 5 + currentRank) / 30 * 100;
-
-          // model.set("percentage", percentage);
-          
           var discipline = model.get("discipline");
           var disciplineTitle = model.get("title");
           var percentage = model.get("percentage");
-          // class
           var currentLevelTitle = model.get("currentLevelTitle");
-          
-          // calculate the percentage 
-
-          // var percentage = model.get("percentage");
           
           return {
             disciplineTitle: disciplineTitle,
@@ -58,12 +43,14 @@ define([
         },
 
         initialize: function() {
+          // calculate the percentage 
           var model = this.model;
           var currentClassNum = model.get("currentClassNum");
           var currentRank = model.get("levelNum");
           var percentage = (currentClassNum * 5 + currentRank) / 30 * 100;
           model.set("percentage", percentage);
         },
+
         // update user progress bar based on percentage data 
         onShow: function() {
           var $progressBar = this.$(".progress-bar");

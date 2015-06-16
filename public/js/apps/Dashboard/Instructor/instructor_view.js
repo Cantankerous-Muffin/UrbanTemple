@@ -31,11 +31,13 @@ define([
           var instructorName = model.get("instrUsername");
           var classTitle = model.get("classTitle");
           var studentUsername = model.get("studentName");
+          var approved = model.get("approved");
 
           return {
             classTitle: classTitle,
             instructorName: instructorName,
-            studentUsername: studentUsername
+            studentUsername: studentUsername,
+            approved: approved
           } 
         }
       });

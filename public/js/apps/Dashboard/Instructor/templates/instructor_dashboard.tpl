@@ -10,7 +10,7 @@
   <div class="ten wide column">
     <br>
     <div class="ui small feed">
-      <h4 class="ui header">Student Feedback Requests</h4>
+      <h3 class="ui header">Student Feedback Requests</h3>
 
     </div>
   <div class="three wide column">

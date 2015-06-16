@@ -19,7 +19,7 @@ define([
           var rankNum = this.model.get("rankNum");
           var rankColor = colorScale(rankNum/6).hex();
           this.$(".rank-color").css("background", rankColor);
-        }
+        },
       });
 
       View.RanksView = Marionette.CompositeView.extend({
