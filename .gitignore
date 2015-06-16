@@ -13,8 +13,6 @@ app/local_config.js
 # DS_Store
 .DS_Store
 
-public/video
-
 npm-debug.log
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
