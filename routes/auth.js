@@ -69,6 +69,30 @@ router.post('/signup', function(req, res, next) {
 
           new Student({username:username,password:password, firstName:req.body.firstname, lastName:req.body.lastname, email:req.body.email},{isNew:true}).save()
   	        .then(function(model){
+              console.log('model looks like', model);
+              // look for class_id where classNum = 1
+              db.knex('classes')
+                .where({'classes.classNum': 1})
+                .select('id','discipline_id')
+                .map(function(class_idData){
+                  console.log('class_idData', class_idData);
+                  db.knex.raw('insert into classes_students ("updated_at", "student_id","class_id") values ('+"'"+'now()'+"'"+','+model.attributes.id+','+class_idData.id+') RETURNING *;')
+                    .then(function(x){
+                      db.knex.raw('insert into progress ("updated_at", "student_id","class_id","levelNum") values ('+"'"+'now()'+"'"+','+model.attributes.id+','+class_idData.id+','+5+') RETURNING *;')
+                        .then(function(y){
+                          db.knex.raw('insert into ranks ("updated_at", "student_id","discipline_id","rankTitle","rankNum") values ('+"'"+'now()'+"'"+','+model.attributes.id+','+class_idData.discipline_id+','+"'"+"Beginner - 1"+"'"+','+1+') RETURNING *;')
+                            .then(function(z){
+                              console.log('z',z);
+                            })
+                        })
+                      console.log('x',x);
+                    });
+                  
+                  return class_idData;
+                })
+                .then(function(collatedClass_idData){
+
+                })
   	          handleAuth(req, res, username, model.attributes.id);
   	        });
           }

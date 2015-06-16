@@ -1,7 +1,7 @@
 define([
     "app",
-    "tpl!apps/Dashboard/instructor/templates/instructor_dashboard.tpl",
-    "tpl!apps/Dashboard/instructor/templates/pending_feedback.tpl",
+    "tpl!apps/Dashboard/Instructor/templates/instructor_dashboard.tpl",
+    "tpl!apps/Dashboard/Instructor/templates/pending_feedback.tpl",
   ],
   function(VirtualDojo, instructorDashboardTpl, pendingFeedbackTpl) {
     VirtualDojo.module("DashApp.Instructor.View", function(View, VirtualDojo, Backbone, Marionette, $, _){

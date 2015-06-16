@@ -9,6 +9,35 @@ router.use('/progress', usernameProgressRoute);
 
 router.use('/feedbacks', usernameFeedbackRoute);
 
+var fetchDataFromRankDiscipline = function(data){
+	if (!data || data.length === 0){
+		// user not found in student and instructor, so direct them to 404
+		res.end('user not found!');
+	} else {
+		console.log('instructor data',data);
+		var userRankArray=[];
+		db.knex('ranks')
+			.where({'ranks.instructor_id':data[0].id})
+			.select('*')
+			.then(function(data1){
+				console.log('data1',data1);
+				for (var i = 0; i < data1.length; i++){
+					console.log('item',data1[i]);
+					db.knex('disciplines')
+						.where({'disciplines.id':data1[i].discipline_id})
+						.select('title')
+						.then(function(data2){
+							console.log('data2',data2);
+							userRankArray.push({'disciplineTitle':data2[0].title, 'rankNum':data1[0].rankNum, 'rankTitle':data1[0].rankTitle, 'rankIcon':data1[0].rankIcon});
+							if (data1.length === userRankArray.length){
+								res.json({'isInstructor':true,'username':username,'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':userRankArray});
+							}
+						});
+				}
+			})
+	}
+};
+
 router.get('/', function(req, res) {
 	console.log('req.url for user/:username is', req.originalUrl);
 	var username = "";
@@ -30,34 +59,7 @@ router.get('/', function(req, res) {
 				// user is not a student, check instructor instead
 				db.knex('instructors')
 					.where({username: username})
-					.then(function(data){
-						if (!data || data.length === 0){
-							// user not found in student and instructor, so direct them to 404
-							res.end('user not found!');
-						} else {
-							console.log('instructor data',data);
-							var userRankArray=[];
-							db.knex('ranks')
-								.where({'ranks.instructor_id':data[0].id})
-								.select('*')
-								.then(function(data1){
-									console.log('data1',data1);
-									for (var i = 0; i < data1.length; i++){
-										console.log('item',data1[i]);
-										db.knex('disciplines')
-											.where({'disciplines.id':data1[i].discipline_id})
-											.select('title')
-											.then(function(data2){
-												console.log('data2',data2);
-												userRankArray.push({'disciplineTitle':data2[0].title, 'rankNum':data1[0].rankNum, 'rankTitle':data1[0].rankTitle, 'rankIcon':data1[0].rankIcon});
-												if (data1.length === userRankArray.length){
-													res.json({'isInstructor':true,'username':username,'firstname':data[0].firstName,'lastname':data[0].lastName,'ranks':userRankArray});
-												}
-											});
-									}
-								})
-						}
-					})
+					.then(fetchDataFromRankDiscipline)
 			} else {
 				console.log('student data',originalData);
 				var userRankArray=[];
