@@ -1,132 +1,270 @@
-Client/Server EndPoints
+-------------POST---------------
+///////////////////////////////
+//        Page: Login        //
+///////////////////////////////
 
------------------------------------------------------
-Login
------------------------------------------------------
-Client: Post
-  Data Type: JSON Object
-  Data: {
-    *key: String,
-    username: String,
-    password: String,
-  }
+/auth/login
 
-Server: Response
-  Data Type: JSON Object
-  Data: Status Code
-  Redirect: Dashboard or Login
------------------------------------------------------
+request: {
+  username: STRING, 
+  password: INT
+}
 
------------------------------------------------------
-SignUp
------------------------------------------------------
-Client: Post
-  Data Type: JSON Object
-  Data: {
-    *key: String,
-    username: String,
-    password: String,
-    isStudent: Boolean,
-  }
+-------------GET---------------
+///////////////////////////////
+//        Page: Logout       //
+///////////////////////////////
 
-Server: Response
-  Data Type: JSON Object
-  Data: Status Code
-  Redirect: Dashboard or SignUp
------------------------------------------------------
+/auth/logout
 
------------------------------------------------------
-Dashboard
------------------------------------------------------
-Client: GET
-  Data Type: JSON Object
-  
-Server: Response
-  Data Type: JSON Object
-  Data: {
-    *key: String,
-    profile: {
-      username: String,
-      //other profile data
-    },
-    classes: {
-      category1: {
-        className: {
-          instructor: String,
-          rank: Number,
-          progress: Number,
-          feedback: Boolean
-        }
-      }
-    }
-      //Example
-    classes:{
-      'Kendo': {
-        'Steps': {
-          instructor: 'Ken',
-          rank: 1,
-          progress: 2,
-          feedback: true
-        },
-        'Strike': {
-          instructor: 'Ken',
-          rank: 1,
-          progress: 1,
-          feedback: false
-        }
-      },
-      'QiGong': {
-        'QiGong Basics Part 1': {
-          instructor: 'Pranav',
-          rank: 1,
-          
-        }
-      }
-    }
-  }
------------------------------------------------------
+// destroy session 
 
------------------------------------------------------
-Dashboard ~ Instructor
------------------------------------------------------
-Client: GET
-  Data Type: JSON Object
-  
-Server: Response
-  Data Type: JSON Object
-  Data: {
-    profile: {
-      username: String,
-      //Other profile data
-    },
-    classes:[
-      {
-        className: String,
-        
-      }
-    ],
-    activities: [
-      {
-        student: {
-          name: String,
-        }
-      },
-    ]
-  }
+-------------POST---------------
+///////////////////////////////
+//       Page: Signup        //
+///////////////////////////////
+
+/auth/signup
+
+request: {
+  username: STRING,
+  password: INT,
+  firstname: STRING,
+  lastname: STRING,
+  email: STRING, ***NEW*** as of 6/4/2015
+  isInstructor: BOOLEAN,
+  PermissionKey: INT  // only for instructors 
+}
 
 
+-------------GET---------------
+////////////////////////////////////
+// Utility API Call to Check Auth //
+////////////////////////////////////
+
+/checkauth
+
+return:
+//if session not found
+{
+  isAuthed: false
+}
+
+//if session is validated
+{
+  isAuthed: true
+  username: <req.session.user>
+}
+
+-------------GET---------------
+///////////////////////////////
+// Page: Dashboard (profile)//
+///////////////////////////////
+
+/user/<username>    
+
+return:
+User = { // Student or Instructor
+  isInstructor: BOOLEAN,
+  username: STRING,
+  lastname: STRING,
+  ranks: UserRank[] // array of UserRank objects 
+}
+
+UserRank = {
+  disciplineTitle: STRING,
+  rankNum: INT,
+  rankTitle: STRING,
+  rankIcon: URL(STRING)
+}
+
+-------------GET---------------
+///////////////////////////////
+// Page: Dashboard (progress)//
+///////////////////////////////
+
+/user/<username>/progress     
+
+return:
+DisciplineProgress[] // array of DisciplineProgress objects 
+
+return:
+DisciplineProgress = { 
+  discipline: Discipline{}, //disciplines.*
+  currentClassNum: INT,   //classes.classNum
+  currentLevelNum: INT,   //levels.levelNum
+  currentLevelTitle: STRING,  //levels.title
+  percentage: INT // eg. 34 (%)
+}
+
+Discipline = {
+  disciplineId: INT,
+  title: STRING,
+  description: STRING, 
+  totalClass: INT
+}
+
+
+>> discipline, class, level routes should check session user's progress, to see if
+   the resource is accessible for it, if not should return 403 Forbidden
+<<
+
+-------------GET---------------
+///////////////////////////////
+//   Page: Training Center   //
+///////////////////////////////
+
+/discipline   
+
+return:
+Discipline[]  // array of Discipline objects
+
+/discipline/<discipline_id>
+
+return:
+Discipline = {
+  disciplineId: INT,
+  title: STRING,
+  description: STRING, 
+  disciplineLogo: STRING (URL),
+  classes: Class[],
+  totalClass: INT
+}
+
+Class = {
+  classNum: INT,
+  disciplineId: INT,
+  instructorId: INT,
+  instructorName: STRING, 
+  title: STRING,
+  description: STRING,
+  classImage: STRING (URL),
+  classVideo: STRING (URL), // ** NEW **
+  totalLevel: INT  //how many levels there are in this particular class
+}
+
+-------------GET---------------
+///////////////////////////////
+//        Page: Class        //
+///////////////////////////////
+
+/discipline/<discipline_id>/class
+
+return:
+Class[]
+
+/discipline/<discipline_id>/class/<class_num>
+
+return:
+Class = {
+  classNum: INT,
+  disciplineId: INT,
+  instructorName: STRING, 
+  instructorRank: INT,
+  instructorRankTitle: STRING,
+  title: STRING,
+  description: STRING,
+  classImage: STRING (URL),
+  totalLevel: INT  //how many levels there are in this particular class
+}
 
 
 
+-------------GET---------------
+///////////////////////////////
+//        Page: Level        //
+///////////////////////////////
 
-  This is a test
+/discipline/<discipline_id>/class/<class_num>/level
+
+return: Level[]  // array of Level objects 
 
 
+/discipline/<discipline_id>/class/<class_num>/level/<level_num>
+
+return:
+Level = {
+  disciplineId: INT, ** NEW **
+  classNum: INT, ** NEW **
+  levelNum: INT,
+  title: STRING,
+  description: STRING,
+  videoUrl: URL(STRING),
+  feedbackNeeded: false,
+}
 
 
+-------------GET---------------
+////////////////////////////////
+// Page: Feedback & Dashboard //
+////////////////////////////////
+
+/user/<username>/feedbacks    [AUTH: if user is an Instructor, need to match]
+
+return:
+UserFeedbacks = Feedback[]  // array of Feedback objects
 
 
+-------------GET---------------
+
+/feedback/<feedback_id>    [AUTH: Instructor, Creator (*only instructor and creator)]
+
+return:
+Feedback = {
+  feedbackId: INT,
+  studentUsername: STRING,
+  instrUsername: STRING,
+  videoUrl: URL(STRING),
+  comment: String,
+  class: Class{},
+  approved: Boolean
+}
+
+Class = {
+  classNum: INT,
+  disciplineId: INT
+}
+
+-------------POST---------------
+////////////////////////////////
+//      Page: Level (last)    //
+////////////////////////////////
+
+/feedback/submit
+
+request:
+{
+  username: STRING,
+  classNum: INT,
+  disciplineID: INT,
+  videoUrl: URL(STRING)
+}
+
+return: 
+Feedback = {
+  feedbackId: INT,
+  studentUsername: STRING,
+  instrUsername: STRING,
+  videoUrl: URL(STRING),
+  comment: String,
+  class: Class{},
+  approved: Boolean
+}
 
 
+-------------PUT---------------
+//////////////////////////////////////
+//    Page: Feedback (instructor)   //
+//////////////////////////////////////
 
+>> if approved, should also update user progress, (and RANK!!) <<
+
+/feedback/<feedback_id>/update   [AUTH: Instructor (*only instructor can update)]
+request:
+{
+  approved: Boolean // [AUTH: Instructor]
+  comment: STRING
+}
+
+return: Feedback
 

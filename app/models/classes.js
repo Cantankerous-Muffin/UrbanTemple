@@ -5,19 +5,30 @@ var Classes = db.Model.extend({
   hasTimestamps: true,
   initialize: function(){
   },
-  
-  studentVideos: function() {
-    return this.hasMany('StudentVideos', 'class_id');
+
+  students: function(){
+    return this.belongsToMany('Students');
   },
-  student: function() {
-    return this.belongsToMany(Students);
+
+  progress: function(){
+    return this.hasMany('Progress', 'class_id');
   },
-  instructor: function() {
-    return this.hasOne('Instructors');
+
+  instructors: function(){
+    return this.belongsTo('Instructors');
   },
-  instructorVideos: function() {
-    return this.hasMany('InstrVideos','class_id');
-  }
+
+  levels: function(){
+    return this.hasMany('Levels', 'class_id');
+  },
+
+  feedbacks: function(){
+    return this.hasMany('Feedbacks', 'class_id');
+  },
+
+  disciplines: function(){
+    return this.belongsTo('Disciplines');
+  },
 });
 
 

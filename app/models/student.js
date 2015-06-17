@@ -22,18 +22,25 @@ var Students = db.Model.extend({
         this.set('password', hash);
       });
   },
-  studentVideos: function() {
-    return this.hasMany('StudentVideos', 'student_id');
+  ranks: function() {
+    return this.hasMany('Ranks', 'student_id');
   },
-  classes: function() {
-    return this.belongsToMany('Classes');
+  feedbacks: function() {
+    return this.hasMany('Feedbacks', 'student_id');
   },
-  // Jimmy, you gotta debug this:
-  instructor: function(){
+  instructors: function(){
     return this.belongsToMany('Instructors').through('Classes');
+  },
+  progress: function(){
+    return this.hasMany('Progress', 'student_id');
+  },
+  classes: function(){
+    return this.belongsToMany('Classes');
   }
 
 });
 
 
 module.exports = db.model('Students', Students);
+
+

@@ -8,36 +8,26 @@ define([
     VirtualDojo.module("AuthApp", function(AuthApp, VirtualDojo, Backbone, Marionette, $, _){
       AuthApp.Controller = {
             
-        showLoginPage: function(options){
-          // options = {
-          //   entryCallback: function()
-          // }
+        showLoginPage: function(){
 
           var loginView = new LoginView.view();
           VirtualDojo.regions.main.show(loginView);
-
-          AuthApp.listenTo(loginView, 'authenticate:login', function(data) {
-            AuthApp.Controller.authenticate(data.username, data.password, options.entryCallback, data.unauthorized);
-          });
         },
 
         showSignUpPage: function() {
           var signupView = new SignupView.view();
           VirtualDojo.regions.main.show(signupView);
-          AuthApp.listenTo(signupView, 'authenticate:signup', function(data) {
-            AuthApp.Controller.signup(data.username, data.password)
-          });
         },
 
         initialize: function() {
         },
 
-        authenticate: function (username, password, authorized, unauthorized ) {
-          console.log(username, password, authorized, unauthorized);
+        authenticate: function (username, password, unauthorized ) {
+          // console.log(username, password, authorized, unauthorized);
           var ajaxData = {
             username: username,
             password: password
-          }
+          };
 
           var request = $.ajax({
             url: "/auth/login",
@@ -46,9 +36,12 @@ define([
             data: ajaxData
           });
 
-          request.done(function(data) {
-            console.log("[AJAX] login data", data);
-            authorized();
+          request.done(function() {
+
+            console.log("AuthCheck: on Ajax call success");
+            VirtualDojo.trigger("authenticate:init");
+
+            // VirtualDojo.Utilities.enterApplication()
           });
 
           request.fail(function(req, textStatus, err) {
@@ -57,11 +50,16 @@ define([
           });
         },
 
-        signup: function(username, password) {
+        signup: function(username, password, firstname, lastname, PermissionKey, email, done) {
         var ajaxData = {
             username: username,
-            password: password
+            password: password,
+            firstname: firstname,
+            lastname: lastname,
+            email: email, 
+            PermissionKey: PermissionKey
           }
+          console.log('ajax signup post request object', ajaxData)
 
           var request = $.ajax({
             url: "/auth/signup",
@@ -72,13 +70,23 @@ define([
 
           request.done(function(data) {
             console.log("[AJAX] signup done data", data);
-            authorized();
+            VirtualDojo.trigger("authenticate:init");
+            // done();
           });
 
-          request.fail(function(req, textStatus, err) {
-            console.log("[AJAX] signup failed", textStatus, err);
-            unauthorized();
-          });
+          // request.fail(function(req, textStatus, err) {
+          //   console.log("[AJAX] signup failed", textStatus, err);
+          //   unauthorized();
+          // });
+        },
+
+        logout: function() {
+          console.log('logout trigger detected: API.showLoginPage() executed')
+          $.get("/auth/logout")
+            .success(function() {
+              console.log("logged out, reload")
+              window.location.reload();
+            });
         }
       }
     });

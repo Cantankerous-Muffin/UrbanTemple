@@ -13,7 +13,8 @@ requirejs.config({
     "spin.jquery": "vendor/spin.jquery",
     text: "vendor/text",
     tpl: "vendor/underscore-tpl",
-    underscore: "vendor/underscore"
+    underscore: "vendor/underscore",
+    chroma: "vendor/chroma"
   },
 
   shim: {
@@ -39,12 +40,18 @@ requirejs.config({
 
 // Initialize App
 
+UTConfig = {};
+
 require(
   [
     "app",
     "apps/Auth/auth_app",
-    "apps/Haha/haha_app",
-    "apps/Sidenav/Sidenav_app"
+    "apps/Dashboard/dashboard_app",
+    "apps/Sidenav/sidenav_app",
+    "apps/TrainingCenter/trainingCenter_app",
+    "apps/Class/class_app",
+    "apps/Level/level_app",
+    "apps/Feedback/feedback_app",
   ],
   function(VirtualDojo){
     VirtualDojo.start();

@@ -22,16 +22,17 @@ var Instructors = db.Model.extend({
         this.set('password', hash);
       });
   },
-  studentVideos: function() {
-    return this.hasMany('StudentVideos', 'instructor_id');
+
+  rank: function(){
+    return this.hasMany('Ranks', 'instructor_id');
   },
-  instrVideos: function() {
-    return this.hasMany('InstrVideos', 'instructor_id');
+  
+  feedbacks: function() {
+    return this.hasMany('Feedbacks', 'instructor_id');
   },
   classes: function() {
     return this.hasMany('Classes','instructor_id');
   },
-  // Jimmy, you gotta debug this:
   student: function(){
     return this.belongsToMany('Students').through('Classes');
   }
@@ -40,3 +41,5 @@ var Instructors = db.Model.extend({
 
 
 module.exports = db.model('Instructors', Instructors);
+
+

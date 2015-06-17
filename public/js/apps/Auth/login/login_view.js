@@ -12,47 +12,45 @@ define([
         ui: {
           inputUsername: "input#username",
           inputPassword: "input#password",
-          loginButton: "button#loginButton",
-          signupButton: "button#signupButton"
+          loginButton: "#loginButton",
+          signupButton: "#signupLink"
         },
 
         events: {
-          "click @ui.loginButton": "login",
-          "click @ui.signupButton": "onSignupButtonClick"
+          "click @ui.loginButton": "onLoginButtonClick",
+          "click @ui.signupButton": "onSignupButtonClick",
+          "keydown .login-form-item": "onLoginItemKeyDown"
         },
 
-        login: function(event) {
-          event.preventDefault();
+        onLoginButtonClick: function(event) {
+          event && event.preventDefault();
           var username = this.ui.inputUsername.val();
           var password = this.ui.inputPassword.val();
           if (!username) return;
           if (!password) return;
-
-          var authorized = this.onAuthorized;
           var unauthorized = this.onUnauthorized;
-          this.trigger('authenticate:login', { 
+
+          VirtualDojo.trigger('authenticate:login', {
             username: username, 
             password: password, 
-            // authorized: authorized, 
             unauthorized: unauthorized 
           }); 
         },
         
         onSignupButtonClick: function(event) {
           event.preventDefault();
-           VirtualDojo.trigger("authenticate:signup");
+           VirtualDojo.trigger("auth:signup:show");
         },
 
-        // onAuthorized: function() {
-        //   console.log("autentication success!");
-        //   // route user to /dashboard
-        //   // window.location.replace('#')
-        // },
+        onLoginItemKeyDown: function(event) {
+          var code = event.keyCode || event.which;
+           if(code == 13) { 
+             this.onLoginButtonClick();
+           }
+        },
 
         onUnauthorized: function() {
           console.log("autentication failed");
-          // show error message 
-          // route back to login
         }
       });
     });
@@ -63,4 +61,3 @@ define([
 
 
 
- 
