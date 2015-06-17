@@ -56,7 +56,7 @@ router.get('/:feedback_id', function(req, res) {
 						})
 				} else {
 					db.knex('feedback')
-						.where({'feedback.instructor_id': instructorData[0].id})
+						.where({'feedback.instructor_id': instructorData[0].id, 'feedback.id': req.url.slice(1)})
 						.select('*')
 						.then(function(feedbackData){
 							console.log('feedbackData', feedbackData);

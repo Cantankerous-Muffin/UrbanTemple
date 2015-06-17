@@ -54,6 +54,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
 // Local Auth Sign-up
 router.post('/signup', function(req, res, next) {
+
   var isInstructor = req.body.isInstructor;
   var username  = req.body.username;
   var password  = req.body.password;
@@ -83,6 +84,7 @@ router.post('/signup', function(req, res, next) {
                           db.knex.raw('insert into ranks ("updated_at", "student_id","discipline_id","rankTitle","rankNum") values ('+"'"+'now()'+"'"+','+model.attributes.id+','+class_idData.discipline_id+','+"'"+"Beginner - 1"+"'"+','+1+') RETURNING *;')
                             .then(function(z){
                               console.log('z',z);
+
                             })
                         })
                       console.log('x',x);
@@ -91,7 +93,7 @@ router.post('/signup', function(req, res, next) {
                   return class_idData;
                 })
                 .then(function(collatedClass_idData){
-
+                  res.json(collatedClass_idData);
                 })
   	          handleAuth(req, res, username, model.attributes.id);
   	        });
