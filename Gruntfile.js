@@ -21,29 +21,8 @@ module.exports = function(grunt) {
   jsdoc: {
     dist: {
       src: [
-        'public/js/main.js',
-        'public/js/app.js',
-        //apps
-        'public/js/apps/Auth/*.js',
-        'public/js/apps/Auth/login/*.js',
-        'public/js/apps/Auth/signup/*.js',
-        'public/js/apps/Class/*.js',
-        'public/js/apps/Dashboard/*.js',
-        'public/js/apps/Dashboard/feedbacks/*.js',
-        'public/js/apps/Dashboard/Instructor/*.js',
-        'public/js/apps/Dashboard/page/*.js',
-        'public/js/apps/Dashboard/profile/*.js',
-        'public/js/apps/Dashboard/progress/*.js',
-        'public/js/apps/Feedback/*.js',
-        'public/js/apps/Level/*.js',
-        'public/js/apps/Sidenav/*.js',
-        'public/js/apps/Sidenav/list/*.js',
-        'public/js/apps/TrainingCenter/*.js',
-        // entities
-        'public/js/entities/*.js',
-        'public/js/entities/models/*.js',
-        //utilities
-        'public/js/utilities/*.js',
+        'routes/user.js',
+        'utils/*.js',
       ],
       options: {
         destination: 'doc',
